@@ -20,8 +20,9 @@ module.exports.sequelize= new Sequelize(databaseName, username, password, {
             min: 0,
             idle: 10000
         },
-    define:{
+        define:{
+            // enabling time-stamps for all tables
             timeStamp:true
+        }
     }
-    }
-    );
+);

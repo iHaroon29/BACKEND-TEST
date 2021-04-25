@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e3b8cba-0231-4028-98dc-fc1958c1ee8e" name="Default Changelist" comment="" />
+    <list default="true" id="9e3b8cba-0231-4028-98dc-fc1958c1ee8e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/mySQLConnection.js" beforeDir="false" afterPath="$PROJECT_DIR$/db/mySQLConnection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/bcrypt.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/bcrypt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/DataValidators.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/DataValidators.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/RouteMiddlewares.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/RouteMiddlewares.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,10 +47,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectId" id="1rWBLCMl7LoJ24XKt3kIpwNgbyD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -65,6 +78,23 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\modules" />
     </key>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -106,12 +136,23 @@
       <workItem from="1619325227823" duration="3120000" />
       <workItem from="1619334910538" duration="592000" />
       <workItem from="1619353694061" duration="1289000" />
-      <workItem from="1619359226395" duration="1952000" />
+      <workItem from="1619359226395" duration="4058000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="92" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619084866099">
@@ -122,6 +163,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="542" y="236" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.864@0.0.1536.864" timestamp="1619082121854" />
+    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2" timestamp="1619363594396">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1619363594396" />
     <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1619084873100">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -130,22 +175,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="160" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1619086099453" />
-    <state width="1515" height="350" key="GridCell.Tab.0.bottom" timestamp="1619361077488">
+    <state width="1493" height="350" key="GridCell.Tab.0.bottom" timestamp="1619363209680">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="350" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619361077488" />
-    <state width="1515" height="350" key="GridCell.Tab.0.center" timestamp="1619361077479">
+    <state width="1493" height="350" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
+    <state width="1493" height="350" key="GridCell.Tab.0.center" timestamp="1619363209680">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="350" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1619361077479" />
-    <state width="1515" height="350" key="GridCell.Tab.0.left" timestamp="1619361077479">
+    <state width="1493" height="350" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
+    <state width="1493" height="350" key="GridCell.Tab.0.left" timestamp="1619363209680">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="350" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1619361077479" />
-    <state width="1515" height="350" key="GridCell.Tab.0.right" timestamp="1619361077479">
+    <state width="1493" height="350" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
+    <state width="1493" height="350" key="GridCell.Tab.0.right" timestamp="1619363209680">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="350" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1619361077479" />
+    <state width="1493" height="350" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
     <state width="1493" height="255" key="GridCell.Tab.1.bottom" timestamp="1619279958998">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

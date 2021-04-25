@@ -1,4 +1,16 @@
+/*
+*
+* Network Data Validator module
+*
+ */
+
 const Joi = require('joi');
+
+/*
+*
+* function to validate Users registration data
+*
+ */
 module.exports.Users=(user)=>{
     const JoiSchema = Joi.object({
         id:Joi.number().optional(),

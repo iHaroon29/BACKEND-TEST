@@ -15,6 +15,7 @@ module.exports.AdminAuthValidator=(req,res,next)=>{
     {
         return res.send("Unauthorised").status(401);
     }
+    //check if the required token is available in the authorization field of HTTP headers
     console.log(req.headers);
     next();
 
