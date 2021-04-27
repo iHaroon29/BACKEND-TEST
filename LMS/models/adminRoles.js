@@ -3,7 +3,8 @@ let {sequelize}=require("../db/mySQLConnection");
 module.exports.AdminRoles=sequelize.define("adminRole",{
     id:{
         type:Sequelize.INTEGER,
-        primaryKey:true
+        primaryKey:true,
+        autoIncrement:true,
     },
     admin_id:{
         type:Sequelize.INTEGER,
