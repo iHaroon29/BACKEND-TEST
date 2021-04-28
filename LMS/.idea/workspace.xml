@@ -3,13 +3,88 @@
   <component name="ChangeListManager">
     <list default="true" id="9e3b8cba-0231-4028-98dc-fc1958c1ee8e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/mySQLConnection.js" beforeDir="false" afterPath="$PROJECT_DIR$/db/mySQLConnection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/bcrypt.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/bcrypt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/DataValidators.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/DataValidators.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/RouteMiddlewares.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/RouteMiddlewares.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/adminRoles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/admins.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/changeRequestApproval.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/changeRequestApprovals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/changeRequests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/courseTeacher.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/courseTeachers.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/courseTeachers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmChatTags.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmConversationFiles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmConversations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmDispositions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmGroupUsers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmGroups.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmLeadCallbackRequests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmLeadDetails.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmLeadGroups.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmLeadVisits.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmLeads.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmMeetLinkBookings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmTeamMembers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmTeams.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmTemplates.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmUserActivities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmUserDailyActivities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmUserRoles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/crmUsers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/employeeAttendances.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/employeeSalaries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/employees.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/failedJobs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pContents.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pContentsLibraries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pContentsTags.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pContentsUserData.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pCounters.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pEventLogs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pLibraries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesCachedassets.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesHubCache.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesLanguages.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesLibraries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pResults.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/h5pTmpfiles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrApplicantComments.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrApplicantDispositions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrApplicantInterviews.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrApplicantTypes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrApplicants.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrCallbacks.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrDispositions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrLetters.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrModules.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrRoomMeetings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrRoomMembers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrRoomPanelMembers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrRooms.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrRoundAnswers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrRoundQuestions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/hrRounds.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/interviewerAvailabilities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/learningSkills.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/lectureAttendances.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureAttendances.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/lectureFeedback.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureFeedback.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/lectureFeedbackCallbacks.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureFeedbackCallbacks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/lectureReschedules.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureReschedules.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/lectures.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectures.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/loginRecords.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/migrations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/oauthAccessTokens.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/oauthAuthCodes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/oauthClients.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/oauthPersonalAccessClients.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/oauthRefreshTokens.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/passwordResets.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/studentCourses.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/studentCourses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/taskAssignments.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/teachers.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/teachers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/trainerClassrooms.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/trainerMeetings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/trainerTrainees.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/websocketsStatisticsEntries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +115,9 @@
     </expand>
     <select />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="LMS" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -68,13 +146,16 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JavaScript" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.3" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/models" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JavaScript" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.3.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\models" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\modules" />
     </key>
@@ -136,8 +217,91 @@
       <workItem from="1619325227823" duration="3120000" />
       <workItem from="1619334910538" duration="592000" />
       <workItem from="1619353694061" duration="1289000" />
-      <workItem from="1619359226395" duration="4058000" />
+      <workItem from="1619359226395" duration="4395000" />
+      <workItem from="1619435394136" duration="778000" />
+      <workItem from="1619451907544" duration="9724000" />
+      <workItem from="1619529089061" duration="3576000" />
+      <workItem from="1619578905993" duration="487000" />
+      <workItem from="1619579494512" duration="44000" />
     </task>
+    <task id="LOCAL-00001" summary="added comments for description">
+      <created>1619363626068</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1619363626068</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Students Model work initiated">
+      <created>1619492828661</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492828661</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Courses Model work initiated">
+      <created>1619492851419</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492851419</updated>
+    </task>
+    <task id="LOCAL-00004" summary="CourseSections Model work initiated">
+      <created>1619492866074</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492866074</updated>
+    </task>
+    <task id="LOCAL-00005" summary="courseMaterials Model work initiated">
+      <created>1619492884811</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492884811</updated>
+    </task>
+    <task id="LOCAL-00006" summary="classroomStudents Model work initiated">
+      <created>1619492911345</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492911345</updated>
+    </task>
+    <task id="LOCAL-00007" summary="classrooms Model work initiated">
+      <created>1619492923243</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492923243</updated>
+    </task>
+    <task id="LOCAL-00008" summary="AssignmentSubmission Model work initiated">
+      <created>1619492938747</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492938747</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Assignments Model work initiated">
+      <created>1619492951584</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492951584</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added auto-increment of primary key for admins model">
+      <created>1619492995254</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1619492995254</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added auto-increment of primary key for adminRoles model">
+      <created>1619493010820</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1619493010820</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,13 +312,33 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added comments for description" />
+    <MESSAGE value="Students Model work initiated" />
+    <MESSAGE value="Courses Model work initiated" />
+    <MESSAGE value="CourseSections Model work initiated" />
+    <MESSAGE value="courseMaterials Model work initiated" />
+    <MESSAGE value="classroomStudents Model work initiated" />
+    <MESSAGE value="classrooms Model work initiated" />
+    <MESSAGE value="AssignmentSubmission Model work initiated" />
+    <MESSAGE value="Assignments Model work initiated" />
+    <MESSAGE value="added auto-increment of primary key for admins model" />
+    <MESSAGE value="added auto-increment of primary key for adminRoles model" />
+    <option name="LAST_COMMIT_MESSAGE" value="added auto-increment of primary key for adminRoles model" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="361" y="92" key="#Notifications" timestamp="1619493086932">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="361" y="92" key="#Notifications/0.0.1536.864@0.0.1536.864" timestamp="1619493086932" />
     <state x="361" y="92" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619084866099">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -163,10 +347,14 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="542" y="236" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.864@0.0.1536.864" timestamp="1619082121854" />
-    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2" timestamp="1619363594396">
+    <state x="499" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619579946902">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1619363594396" />
+    <state x="499" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1619579946902" />
+    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2" timestamp="1619493010020">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1619493010020" />
     <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1619084873100">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -175,22 +363,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="160" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1619086099453" />
-    <state width="1493" height="350" key="GridCell.Tab.0.bottom" timestamp="1619363209680">
+    <state width="1493" height="597" key="GridCell.Tab.0.bottom" timestamp="1619578270545">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="350" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
-    <state width="1493" height="350" key="GridCell.Tab.0.center" timestamp="1619363209680">
+    <state width="1493" height="597" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
+    <state width="1493" height="597" key="GridCell.Tab.0.center" timestamp="1619578270545">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="350" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
-    <state width="1493" height="350" key="GridCell.Tab.0.left" timestamp="1619363209680">
+    <state width="1493" height="597" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
+    <state width="1493" height="597" key="GridCell.Tab.0.left" timestamp="1619578270545">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="350" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
-    <state width="1493" height="350" key="GridCell.Tab.0.right" timestamp="1619363209680">
+    <state width="1493" height="597" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
+    <state width="1493" height="597" key="GridCell.Tab.0.right" timestamp="1619578270545">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="350" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1619363209680" />
+    <state width="1493" height="597" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
     <state width="1493" height="255" key="GridCell.Tab.1.bottom" timestamp="1619279958998">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -239,25 +427,41 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1493" height="255" key="GridCell.Tab.3.right/0.0.1536.864@0.0.1536.864" timestamp="1619279958999" />
-    <state x="277" y="76" key="SettingsEditor" timestamp="1619328354553">
+    <state x="554" y="59" key="RollbackChangesDialog" timestamp="1619582134069">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="277" y="76" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1619328354553" />
+    <state x="554" y="59" key="RollbackChangesDialog/0.0.1536.864@0.0.1536.864" timestamp="1619582134069" />
+    <state x="277" y="76" key="SettingsEditor" timestamp="1619583341000">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="277" y="76" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1619583341000" />
+    <state x="361" y="162" key="Vcs.Push.Dialog.v2" timestamp="1619493093251">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="361" y="162" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1619493093251" />
     <state x="462" y="138" key="com.intellij.database.run.actions.ShowCsvFormatsAction$ForExport" timestamp="1619086195220">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="462" y="138" key="com.intellij.database.run.actions.ShowCsvFormatsAction$ForExport/0.0.1536.864@0.0.1536.864" timestamp="1619086195220" />
-    <state x="465" y="258" key="com.intellij.ide.util.TipDialog" timestamp="1619334919427">
+    <state x="465" y="258" key="com.intellij.ide.util.TipDialog" timestamp="1619579498858">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="465" y="258" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1619334919427" />
-    <state x="425" y="197" key="run.anything.popup" timestamp="1619277177880">
+    <state x="465" y="258" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1619579498858" />
+    <state x="577" y="345" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1619363693494">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1619277177880" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1619278355624">
+    <state x="577" y="345" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1619363693494" />
+    <state x="209" y="158" key="new project wizard" timestamp="1619579536085">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1619278355624" />
+    <state x="209" y="158" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1619579536085" />
+    <state x="425" y="197" key="run.anything.popup" timestamp="1619539063417">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1619539063417" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1619491962309">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1619491962309" />
   </component>
 </project>
