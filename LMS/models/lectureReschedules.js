@@ -38,7 +38,9 @@ const LectureReschedule=sequelize.define("lectureReschedule", {
         type: Sequelize.NOW,
     }
 });
-LectureReschedule.belongsTo(Lectures);
+LectureReschedule.associate=(model)=>{
+    LectureReschedule.belongsTo(model.Lectures);
+}
 
 module.exports=LectureReschedule;
 

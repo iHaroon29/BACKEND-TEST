@@ -1,8 +1,5 @@
 const Sequelize=require("sequelize");
 const sequelize=require("../db/mySQLConnection").sequelize;
-const Classroom=require("./classrooms");
-const Assignments=require("./assignments");
-const CourseSection=require("./courseSections");
 const Courses=sequelize.define("course",{
     'id':{
         type:Sequelize.INTEGER,
@@ -37,7 +34,9 @@ const Courses=sequelize.define("course",{
         type:Sequelize.NOW,
     },
 });
-Courses.belongsTo(Classroom);
-Courses.hasMany(Assignments);
-Courses.hasMany(CourseSection);
+Courses.associate=(model)=>{
+    Courses.belongsTo(modek.Classroom);
+    Courses.hasMany(model.Assignments);
+    Courses.hasMany(model.CourseSection);
+}
 module.exports=Courses;

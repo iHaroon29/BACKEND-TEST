@@ -1,7 +1,5 @@
 const Sequelize=require("sequelize");
 const {sequelize}=require("../db/mySQLConnection");
-const Students=require("./students");
-const Courses=require("./courses");
 const Classroom=sequelize.define("classroom",{
     'id':{
         type:Sequelize.INTEGER,
@@ -37,6 +35,8 @@ const Classroom=sequelize.define("classroom",{
     },
 
 });
-Classroom.hasMany(Courses);
-Classroom.hasMany(Students);
+Classroom.associate=(model)=>{
+    Classroom.hasMany(model.Courses);
+    Classroom.hasMany(model.Students);
+};
 module.exports.Classroom=Classroom;

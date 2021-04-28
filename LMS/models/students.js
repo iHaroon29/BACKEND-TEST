@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 let sequelize=require("../db/mySQLConnection").sequelize;
-const ClassroomStudents=require("./classroomStudents");
+
 const Students=sequelize.define("student",{
     'id':{
         type:Sequelize.INTEGER,
@@ -72,5 +72,7 @@ const Students=sequelize.define("student",{
         type: Sequelize.NOW,
     }
 });
-Students.belongsTo(ClassroomStudents);
+Students.associate=(model)=>{
+    Students.belongsTo(model.ClassroomStudents);
+}
 module.exports=Students;

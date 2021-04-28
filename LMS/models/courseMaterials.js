@@ -39,5 +39,7 @@ const CourseMaterials=sequelize.define("courseMaterial",{
     }
 });
 
-CourseMaterials.belongsTo(CourseSections);
+CourseMaterials.associate=(model)=>{
+    CourseMaterials.belongsTo(model.CourseSections);
+};
 module.exports=CourseMaterials;
