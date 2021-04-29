@@ -15,14 +15,18 @@ const CourseSections=sequelize.define("courseSection",{
         type:Sequelize.BOOLEAN,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'deleted_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
 
 CourseSections.associate=(model)=>{

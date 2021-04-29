@@ -63,16 +63,20 @@ const Students=sequelize.define("student",{
         type: Sequelize.STRING,
     },
     'created_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-        type: Sequelize.NOW,
-    }
-});
+        type:Sequelize.DATE,
+    },
+},{
+    underscored: true
+});;
 Students.associate=(model)=>{
     Students.belongsTo(model.ClassroomStudents);
-}
+};
 module.exports=Students;

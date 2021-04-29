@@ -22,12 +22,15 @@ const Assignment=sequelize.define("assignment",{
         type: Sequelize.DATE
     },
     'created_at':{
-        type: Sequelize.NOW
+        type: Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
         type: Sequelize.NOW
     }
 
+},{
+    underscored: true
 });
 Assignment.associate=(model)=>{
     Assignment.belongsTo(model.Courses);

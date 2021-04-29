@@ -29,14 +29,18 @@ const CourseMaterials=sequelize.define("courseMaterial",{
         type:Sequelize.BOOLEAN,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'deleted_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     }
+},{
+    underscored: true
 });
 
 CourseMaterials.associate=(model)=>{

@@ -22,11 +22,14 @@ const AssignmentSubmission=sequelize.define("assignmentSubmission",{
         type:Sequelize.JSON,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
 
 AssignmentSubmission.associate=(model)=>{

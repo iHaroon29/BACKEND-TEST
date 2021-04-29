@@ -25,15 +25,19 @@ const Classroom=sequelize.define("classroom",{
         type:Sequelize.INTEGER,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'deleted_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     },
 
+},{
+    underscored: true
 });
 Classroom.associate=(model)=>{
     Classroom.hasMany(model.Courses);

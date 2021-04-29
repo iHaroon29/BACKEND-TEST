@@ -25,14 +25,18 @@ const LectureFeedbackCallbacks=sequelize.define("lectureFeedbackCallbacks",{
         default:1,
     },
     'created_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
 
 module.exports=LectureFeedbackCallbacks;

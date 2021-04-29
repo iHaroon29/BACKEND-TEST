@@ -16,14 +16,18 @@ const ClassroomStudent=sequelize.define("classroomStudent",{
         type:Sequelize.BOOLEAN,
     },
     "created_at":{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     "updated_at":{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     "deleted_at":{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
 ClassroomStudent.associate=(model)=>{
     ClassroomStudent.belongsTo(model.Classroom);

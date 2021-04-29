@@ -30,14 +30,18 @@ const Lecture=sequelize.define("teacher", {
         type: Sequelize.BOOLEAN,
     },
     'created_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
 
 Lecture.associate=(model)=>{
@@ -45,7 +49,7 @@ Lecture.associate=(model)=>{
     Lecture.hasMany(model.LectureFeedback);
     Lecture.hasMany(model.CrmMeetingLink);
     Lecture.hasMany(model.LectureReschedule);
-}
+};
 
 
 module.exports=Lecture;

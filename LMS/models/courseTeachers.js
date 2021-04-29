@@ -14,17 +14,21 @@ const CourseTeachers=sequelize.define("courseTeacher",{
         type:Sequelize.INTEGER,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
 CourseTeachers.associate=(model)=>{
     CourseTeachers.belongsTo(model.Course);
     CourseTeachers.belongsTo(model.Teacher);
-}
+};
 module.exports=CourseTeachers;

@@ -44,18 +44,21 @@ const Teacher=sequelize.define("teacher",{
         type:Sequelize.STRING,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-        type:Sequelize.NOW,
-    }
-
+        type:Sequelize.DATE,
+    },
+},{
+    underscored: true
 });
 Teacher.associate=(model)=>{
     Teacher.hasMany(model.Lectures);
     Teacher.belongsTo(model.CourseTeacher);
-}
+};
 module.exports=Teacher;
