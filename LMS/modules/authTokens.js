@@ -56,3 +56,28 @@ module.exports.verifyToken=(token, requiredRole)=>{
     }))
 };
 module.exports.roles=ROLES;
+
+
+
+module.exports.tokenGenerateForTeacher=(data)=> {
+    new Promise((resolve, reject) => {
+        generateToken(data,ROLES.teacher)
+            .then((data)=>{
+                resolve(data);
+            })
+            .catch((err)=>{
+                reject(err);
+            })
+    })
+};
+module.exports.tokenGenerateForStudent=(data)=> {
+    new Promise((resolve, reject) => {
+        generateToken(data,ROLES.student)
+            .then((data)=>{
+                resolve(data);
+            })
+            .catch((err)=>{
+                reject(err);
+            })
+    })
+};

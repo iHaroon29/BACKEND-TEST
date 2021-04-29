@@ -10,9 +10,7 @@ const password=process.env.DB_PASSWORD || "";
 //
 // console.log(DB_DIALECT,DB_HOST);
 
-
-
-module.exports.sequelize= new Sequelize(databaseName, username, password, {
+const connectionObject=new Sequelize(databaseName, username, password, {
         host: 'localhost',
         dialect: 'mysql',
         pool: {
@@ -26,3 +24,5 @@ module.exports.sequelize= new Sequelize(databaseName, username, password, {
         }
     }
 );
+
+module.exports.sequelize=connectionObject;
