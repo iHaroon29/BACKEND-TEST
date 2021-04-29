@@ -19,10 +19,10 @@ router.get('/',async (req,res) => {
 });
 
 router.post('/',async (req,res) => {
-    const student = await Student.findOne({ where: { email: req.body.email } });
+    let student = await Student.findOne({ where: { email: req.body.email } });
     if(student) return res.status(400).send('Student already registered');
     
-    const student = await Student.create({  
+     student = await Student.create({
         name: req.body.name,
         email: req.body.email,
         parent_name: req.body.parent_name,

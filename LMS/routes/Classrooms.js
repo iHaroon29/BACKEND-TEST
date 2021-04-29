@@ -16,10 +16,10 @@ router.get('/:id',async (req,res) => {
 });
 
 router.post('/',async (req,res) => {
-    const classroom = await Classroom.findOne({ where: { name: req.body.name } });
+    let classroom = await Classroom.findOne({ where: { name: req.body.name } });
     if(classroom) return res.status(400).send('Classroom already registered');
     
-    const classroom = await Classroom.create({  
+    classroom = await Classroom.create({
         name: req.body.name,
         status: req.body.status,
     });

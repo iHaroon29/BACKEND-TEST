@@ -14,10 +14,10 @@ router.get('/:id',async (req,res) => {
 });
 
 router.post('/',async (req,res) => {
-    const assignment = await Assignment.findOne({ where: { name: req.body.name } });
+    let assignment = await Assignment.findOne({ where: { name: req.body.name } });
     if(assignment) return res.status(400).send('Assignment already registered');
     
-    const assignment = await Assignment.create({  
+    assignment = await Assignment.create({
         title: req.body.title,
         instructions: req.body.instructions,
         last_submission_date: req.body.last_submission_date,
