@@ -12,19 +12,16 @@ module.exports.User= sequelize.define('user', {
     },
     email:{
         type:Sequelize.STRING,
-        primaryKey:false,
         required:true
 
     },
     email_verified_at:{
         type:Sequelize.STRING,
-        primaryKey:false,
         required:true
 
     },
     password:{
         type:Sequelize.STRING,
-        primaryKey:false,
         required:true
 
     },
@@ -34,14 +31,18 @@ module.exports.User= sequelize.define('user', {
         required:true
 
     },
-    created_at:{
-        type:Sequelize.NOW,
-        primaryKey:false,
-        required:true
 
+    'created_at':{
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
-    updated_at:{
-        type:Sequelize.NOW,
-        primaryKey:false
-    }
+    'updated_at':{
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
+    },
+    // 'deleted_at':{
+    //     type:Sequelize.DATE,
+    // },
+},{
+    underscored: true
 });

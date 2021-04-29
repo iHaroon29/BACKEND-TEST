@@ -1,9 +1,5 @@
 const Sequelize=require("sequelize");
 const sequelize=require("../db/mySQLConnection");
-const Student=require("./students");
-const Lecture=require("./lectures");
-const LectureFeedbackCallbacks=require("./lectureFeedbackCallbacks");
-
 
 const LectureFeedback=sequelize.define("lectureFeedback",{
     'id': {
@@ -18,16 +14,22 @@ const LectureFeedback=sequelize.define("lectureFeedback",{
         type: Sequelize.BOOLEAN,
     },
     'created_at':{
-         type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-         type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-         type: Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
-LectureFeedback.belongsTo(Student);
-LectureFeedback.belongsTo(Lecture);
-LectureFeedback.belongsTo(LectureFeedbackCallbacks);
+LectureFeedback.assocate=(model)=>{
+    LectureFeedback.belongsTo(model.Student);
+    LectureFeedback.belongsTo(model.Lecture);
+    LectureFeedback.belongsTo(model.LectureFeedbackCallbacks);
+};
 module.exports=LectureFeedback;

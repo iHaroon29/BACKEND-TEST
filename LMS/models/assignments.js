@@ -1,7 +1,5 @@
 const Sequelize=require("sequelize");
 const {sequelize}=require("../db/mySQLConnection");
-const Courses=require("./courses");
-const AssignmentSubmissions=require("./assignmentSubmissions");
 const Assignment=sequelize.define("assignment",{
     id:{
         type:Sequelize.INTEGER,
@@ -24,13 +22,18 @@ const Assignment=sequelize.define("assignment",{
         type: Sequelize.DATE
     },
     'created_at':{
-        type: Sequelize.NOW
+        type: Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
         type: Sequelize.NOW
     }
 
+},{
+    underscored: true
 });
-Assignment.belongsTo(Courses);
-Assignment.hasMany(AssignmentSubmissions);
+Assignment.associate=(model)=>{
+    Assignment.belongsTo(model.Courses);
+    Assignment.hasMany(model.AssignmentSubmissions);
+};
 module.exports=Assignment;

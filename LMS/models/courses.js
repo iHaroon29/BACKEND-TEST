@@ -1,43 +1,42 @@
 const Sequelize=require("sequelize");
 const sequelize=require("../db/mySQLConnection").sequelize;
-const Classroom=require("./classrooms");
-const Assignments=require("./assignments");
-const CourseSection=require("./courseSections");
 const Courses=sequelize.define("course",{
     'id':{
         type:Sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true,
     },
-    'name':{
+    'course_section_id':{
+        type:Sequelize.INTEGER,
+    },
+    'title':{
         type:Sequelize.STRING,
     },
-    'teacher_id':{
-        type:Sequelize.INTEGER,
+    'image':{
+        type:Sequelize.STRING,
     },
-    'course_id':{
-        type:Sequelize.INTEGER,
+    'description':{
+        type:Sequelize.STRING,
     },
-    'timeline':{
-        type:Sequelize.JSON,
+    'price':{
+        type:Sequelize.DECIMAL,
     },
-    'status':{
-        type:Sequelize.INTEGER,
+    'active':{
+        type:Sequelize.BOOLEAN,
     },
-    'classroom_type':{
-        type:Sequelize.INTEGER,
-    },
-    'created_at':{
-        type:Sequelize.NOW,
+    'createdAt':{
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
         type:Sequelize.NOW,
     },
-    'deleted_at':{
-        type:Sequelize.NOW,
-    },
+},{
+    underscored: true
 });
-Courses.belongsTo(Classroom);
-Courses.hasMany(Assignments);
-Courses.hasMany(CourseSection);
+Courses.associate=(model)=>{
+    Courses.belongsTo(modek.Classroom);
+    Courses.hasMany(model.Assignments);
+    Courses.hasMany(model.CourseSection);
+};
 module.exports=Courses;

@@ -15,16 +15,22 @@ const CourseSections=sequelize.define("courseSection",{
         type:Sequelize.BOOLEAN,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'deleted_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     },
+},{
+    underscored: true
 });
 
-CourseSections.belongsTo(Courses);
-CourseSections.belongsTo(CourseMaterials);
+CourseSections.associate=(model)=>{
+    CourseSections.belongsTo(model.Courses);
+    CourseSections.belongsTo(model.CourseMaterials);
+};
 module.exports=CourseSections;

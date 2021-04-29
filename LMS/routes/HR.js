@@ -1,3 +1,11 @@
-const router=require('express').Router();
+const router = require("express").Router();
 
-module.exports=router;
+router.post("/student", (req, res) => {
+  return res.send("newStudentFile").status(202);
+});
+
+router.post("/teacher", (req, res) => {
+  return res.send("newTeacherFile").status(202);
+});
+
+module.exports = router;

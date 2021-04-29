@@ -32,13 +32,22 @@ const LectureReschedule=sequelize.define("lectureReschedule", {
         type: Sequelize.INTEGER,
     },
     'created_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type: Sequelize.NOW,
-    }
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
+    },
+    // 'deleted_at':{
+    //     type:Sequelize.DATE,
+    // },
+},{
+    underscored: true
 });
-LectureReschedule.belongsTo(Lectures);
+LectureReschedule.associate=(model)=>{
+    LectureReschedule.belongsTo(model.Lectures);
+};
 
 module.exports=LectureReschedule;
 

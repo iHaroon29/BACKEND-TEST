@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 let sequelize=require("../db/mySQLConnection").sequelize;
-const ClassroomStudents=require("./classroomStudents");
+
 const Students=sequelize.define("student",{
     'id':{
         type:Sequelize.INTEGER,
@@ -63,14 +63,20 @@ const Students=sequelize.define("student",{
         type: Sequelize.STRING,
     },
     'created_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type: Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-        type: Sequelize.NOW,
-    }
-});
-Students.belongsTo(ClassroomStudents);
+        type:Sequelize.DATE,
+    },
+},{
+    underscored: true
+});;
+Students.associate=(model)=>{
+    Students.belongsTo(model.ClassroomStudents);
+};
 module.exports=Students;

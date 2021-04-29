@@ -1,7 +1,5 @@
 const Sequelize=require("sequelize");
 const {sequelize}=require("../db/mySQLConnection");
-const Students=require("./students");
-const Courses=require("./courses");
 const Classroom=sequelize.define("classroom",{
     'id':{
         type:Sequelize.INTEGER,
@@ -27,16 +25,22 @@ const Classroom=sequelize.define("classroom",{
         type:Sequelize.INTEGER,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW
     },
     'deleted_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
     },
 
+},{
+    underscored: true
 });
-Classroom.hasMany(Courses);
-Classroom.hasMany(Students);
+Classroom.associate=(model)=>{
+    Classroom.hasMany(model.Courses);
+    Classroom.hasMany(model.Students);
+};
 module.exports.Classroom=Classroom;

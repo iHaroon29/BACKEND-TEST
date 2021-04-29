@@ -1,7 +1,6 @@
 const Sequelize=require("sequelize");
 const sequelize=require("../db/mySQLConnection");
-const Lectures=require("./lectures");
-const CourseTeacher=require("./courseTeachers");
+
 const Teacher=sequelize.define("teacher",{
     'id':{
         type:Sequelize.INTEGER,
@@ -45,16 +44,21 @@ const Teacher=sequelize.define("teacher",{
         type:Sequelize.STRING,
     },
     'created_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'updated_at':{
-        type:Sequelize.NOW,
+        type:Sequelize.DATE,
+        default:Sequelize.NOW,
     },
     'deleted_at':{
-        type:Sequelize.NOW,
-    }
-
+        type:Sequelize.DATE,
+    },
+},{
+    underscored: true
 });
-Teacher.hasMany(Lectures);
-Teacher.belongsTo(CourseTeacher);
+Teacher.associate=(model)=>{
+    Teacher.hasMany(model.Lectures);
+    Teacher.belongsTo(model.CourseTeacher);
+};
 module.exports=Teacher;
