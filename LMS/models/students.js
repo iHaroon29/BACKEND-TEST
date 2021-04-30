@@ -1,6 +1,8 @@
 var Sequelize = require('sequelize');
+const AssignmentSubmission = require("./assignmentSubmissions").AssignmentSubmission;
 let sequelize=require("../db/mySQLConnection").sequelize;
 
+const Classroom=require("./classrooms");
 const Students=sequelize.define("student",{
     'id':{
         type:Sequelize.INTEGER,
@@ -75,8 +77,6 @@ const Students=sequelize.define("student",{
     },
 },{
     underscored: true
-});;
-Students.associate=(model)=>{
-    Students.belongsTo(model.ClassroomStudents);
-};
-module.exports=Students;
+});
+Students.belongsTo(Classroom,{foreignKey:"id"});
+module.exports.Students=Students;
