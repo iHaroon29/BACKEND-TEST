@@ -42,8 +42,8 @@ const CourseMaterials=sequelize.define("courseMaterial",{
 },{
     underscored: true
 });
+CourseSections.hasMany(CourseMaterials,{foreignKey:"course_id"});
+CourseMaterials.belongsTo(CourseSections,{foreignKey:"course_id"});
 
-CourseMaterials.associate=(model)=>{
-    CourseMaterials.belongsTo(model.CourseSections);
-};
-module.exports=CourseMaterials;
+
+module.exports.CourseMaterials=CourseMaterials;

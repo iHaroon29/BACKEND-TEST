@@ -1,12 +1,13 @@
 const Sequelize=require("sequelize");
 const sequelize=require("../db/mySQLConnection").sequelize;
+const CourseSections=require("./courseSections");
 const Courses=sequelize.define("course",{
     'id':{
         type:Sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true,
     },
-    'course_section_id':{
+    'classroom_id':{
         type:Sequelize.INTEGER,
     },
     'title':{
@@ -34,9 +35,7 @@ const Courses=sequelize.define("course",{
 },{
     underscored: true
 });
-Courses.associate=(model)=>{
-    Courses.belongsTo(modek.Classroom);
-    Courses.hasMany(model.Assignments);
-    Courses.hasMany(model.CourseSection);
-};
+
+CourseSections.belongsTo(Courses,{foreignKey:"course_id"});
+
 module.exports=Courses;

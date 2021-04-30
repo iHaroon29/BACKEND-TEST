@@ -1,12 +1,13 @@
 const Sequelize=require("sequelize");
 const sequelize=require("../db/mySQLConnection").sequelize;
-const Courses=require("./courses");
-const CourseMaterials=require("./courseMaterials");
 const CourseSections=sequelize.define("courseSection",{
     'id':{
         type:Sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true,
+    },
+    "course_id":{
+        type:Sequelize.INTEGER,
     },
     'name':{
         type:Sequelize.STRING,
@@ -29,8 +30,4 @@ const CourseSections=sequelize.define("courseSection",{
     underscored: true
 });
 
-CourseSections.associate=(model)=>{
-    CourseSections.belongsTo(model.Courses);
-    CourseSections.belongsTo(model.CourseMaterials);
-};
 module.exports=CourseSections;
