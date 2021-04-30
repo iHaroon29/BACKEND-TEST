@@ -1,5 +1,7 @@
 const Sequelize=require("sequelize");
 const {sequelize}=require("../db/mySQLConnection");
+const Courses=require("./courses");
+
 const Assignment=sequelize.define("assignment",{
     id:{
         type:Sequelize.INTEGER,
@@ -9,7 +11,7 @@ const Assignment=sequelize.define("assignment",{
     'title':{
         type: Sequelize.STRING
     },
-    'classroom_id':{
+    'course_id':{
         type: Sequelize.BIGINT
     },
     'instructions':{
@@ -32,8 +34,8 @@ const Assignment=sequelize.define("assignment",{
 },{
     underscored: true
 });
-Assignment.associate=(model)=>{
-    Assignment.belongsTo(model.Courses);
-    Assignment.hasMany(model.AssignmentSubmissions);
-};
-module.exports=Assignment;
+Courses.hasMany(Assignment,{foreignKey:"id"});
+Assignment.belongsTo(Courses,{foreignKey:"course_id"});
+
+
+module.exports.Assignment=Assignment;
