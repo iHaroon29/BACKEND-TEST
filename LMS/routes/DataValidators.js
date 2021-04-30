@@ -89,9 +89,28 @@ const HrRoundQuestions = (hr_rounds_questions) => {
   });
 };
 
+
+const TeacherValid = (teachers) => {
+  const JoiSchema = Joi.object({
+    id: Joi.number().optional(),
+    name: Joi.string().required(),
+    address: Joi.string().required(),
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  }).options({ abortEarly: false });
+  const isValid = JoiSchema.validate(teachers);
+  return new Promise((resolve, reject) => {
+    if (isValid.error) reject(isValid.error);
+    resolve(true);
+  });
+};
+
+
+
 module.exports = {
   Users,
   StudentReg,
   HrRounds,
   HrRoundQuestions,
+  TeacherValid,
 };
