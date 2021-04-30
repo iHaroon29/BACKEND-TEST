@@ -1,5 +1,4 @@
 var Sequelize = require('sequelize');
-const AssignmentSubmission = require("./assignmentSubmissions").AssignmentSubmission;
 let sequelize=require("../db/mySQLConnection").sequelize;
 
 const Classroom=require("./classrooms");
