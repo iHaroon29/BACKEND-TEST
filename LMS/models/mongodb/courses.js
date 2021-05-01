@@ -2,7 +2,7 @@ const mongoose=require("../../db/mongoDB");
 
 const CoursesSchema=new mongoose.Schema({
     'classroomId':{
-        type:Number,
+        type:mongoose.ObjectId,
     },
     'title':{
         type:String,
@@ -16,7 +16,15 @@ const CoursesSchema=new mongoose.Schema({
     'price':{
         type:Number,
     },
-    'active':{
+    'discount':{
+        type:Number,
+        default:0,
+    },
+    teachers:{
+        type:Object, // Teacher's id as key and details as values
+        default:{},
+    },
+    'isActive':{
         type:Boolean,
     },
     'createdAt':{

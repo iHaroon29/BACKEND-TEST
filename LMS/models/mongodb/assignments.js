@@ -1,28 +1,29 @@
 const mongoose=require("../../db/mongoDB");
 
 const AssignmentSchema=new mongoose.Schema({
-    'title':{
-        type: String
+        'course_id':{
+            type: mongoose.ObjectId,
+            required:true,
+        },
+        'instructions':{
+            type:String,
+            required:true,
+        },
+        'description':{
+            type:String,
+            required:true,
+        },
+        "files":{
+            type:Array(String),
+            default:[]
+        },
+        'last_submission_date':{
+            type: Date,
+            required:true,
+        },
     },
-    'course_id':{
-        type: Number
-    },
-    'instructions':{
-        type:String
-    },
-    'questionFile':{
-        type:String
-    },
-    'lastSubmissionDate':{
-        type: Date
-    },
-    'createdAt':{
-        type: Date,
-        default:Date.now
-    },
-    'updatedAt':{
-        type: Date
-    }
+    {
+        timestamps:true
 
-});
+    });
 module.exports=mongoose.model("assignment",AssignmentSchema);
