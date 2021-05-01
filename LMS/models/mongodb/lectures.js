@@ -1,10 +1,10 @@
 const mongoose=require("../../db/mongoDB");
 
 
-const Lecture=new mongoose.schema("teacher", {
+const Lecture=new mongoose.Schema( {
 
     'classroomId':{
-        type: Sequelize.INTEGER,
+        type: String,
     },
     'dateAndTime':{
         type:Date,
@@ -35,5 +35,5 @@ const Lecture=new mongoose.schema("teacher", {
 });
 
 
-module.exports.Lecture=Lecture;
+module.exports=mongoose.model("lecture",Lecture);
 

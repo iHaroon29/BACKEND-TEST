@@ -1,6 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 
-const Classroom=new mongoose.schema("classroom",{
+const ClassroomSchema= new mongoose.Schema({
     'name':{
         type:String,
     },
@@ -26,4 +26,4 @@ const Classroom=new mongoose.schema("classroom",{
     },
 });
 
-module.exports=Classroom;
+module.exports=mongoose.model("classroom",ClassroomSchema);

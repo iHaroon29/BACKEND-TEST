@@ -1,5 +1,5 @@
 const mongoose=require("../../db/mongoDB");
-const CourseSections=new mongoose.schema("courseSection",{
+const CourseSectionsSchema=new mongoose.Schema({
     "courseId":{
         type:Number,
     },
@@ -22,4 +22,4 @@ const CourseSections=new mongoose.schema("courseSection",{
     },
 });
 
-module.exports=CourseSections;
+module.exports=mongoose.model("courseSection",CourseSectionsSchema);

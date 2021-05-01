@@ -1,6 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 
-const CourseMaterials=new mongoose.schema("courseMaterial",{
+const CourseMaterialsSchema=new mongoose.Schema({
     'courseId':{
         type:String,
     },
@@ -36,4 +36,4 @@ const CourseMaterials=new mongoose.schema("courseMaterial",{
     },
 });
 
-module.exports.CourseMaterials=CourseMaterials;
+module.exports=mongoose.model("courseMaterial",CourseMaterialsSchema);

@@ -1,7 +1,7 @@
 const mongoose=require("../../db/mongoDB");
 
 
-const LectureFeedback=new mongoose.schema("lectureFeedback",{
+const LectureFeedbackSchema=new mongoose.Schema({
     'url':{
         type: String,
     },
@@ -22,4 +22,4 @@ const LectureFeedback=new mongoose.schema("lectureFeedback",{
 });
 
 
-module.exports=LectureFeedback;
+module.exports=mongoose.model("lectureFeedback",LectureFeedbackSchema);

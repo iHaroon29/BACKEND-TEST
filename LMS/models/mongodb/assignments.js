@@ -1,6 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 
-const Assignment=new mongoose.schema("assignment",{
+const AssignmentSchema=new mongoose.Schema({
     'title':{
         type: String
     },
@@ -25,4 +25,4 @@ const Assignment=new mongoose.schema("assignment",{
     }
 
 });
-module.exports=Assignment;
+module.exports=mongoose.model("assignment",AssignmentSchema);

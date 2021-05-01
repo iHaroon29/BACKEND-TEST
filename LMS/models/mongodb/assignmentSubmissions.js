@@ -1,6 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 
-const AssignmentSubmission=new mongoose.schema("assignmentSubmission",{
+const AssignmentSubmissionSchema=new mongoose.Schema({
     'assignmentId':{
         type:String,
     },
@@ -25,4 +25,4 @@ const AssignmentSubmission=new mongoose.schema("assignmentSubmission",{
     },
 });
 
-module.exports=AssignmentSubmission;
+module.exports=mongoose.model("assignmentSubmission",AssignmentSubmissionSchema);

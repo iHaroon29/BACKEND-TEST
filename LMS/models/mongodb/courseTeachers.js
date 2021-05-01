@@ -1,5 +1,5 @@
 const mongoose=require("../../db/mongoDB");
-const CourseTeachers=new mongoose.schema("courseTeacher",{
+const CourseTeachersSchema=new mongoose.Schema({
     'courseId':{
         type:String,
     },
@@ -18,4 +18,4 @@ const CourseTeachers=new mongoose.schema("courseTeacher",{
         type:Date,
     },
 });
-module.exports=CourseTeachers;
+module.exports=mongoose.model("courseTeacher",CourseTeachersSchema);

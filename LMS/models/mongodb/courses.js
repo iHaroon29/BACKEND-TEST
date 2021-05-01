@@ -1,6 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 
-const Courses=new mongoose.schema("course",{
+const CoursesSchema=new mongoose.Schema({
     'classroomId':{
         type:Number,
     },
@@ -26,7 +26,6 @@ const Courses=new mongoose.schema("course",{
     'updatedAt':{
         type:Date,
     },
-    "courseMaterial":Array(Object) // Array of course materials for course
 });
 
-module.exports=Courses;
+module.exports=mongoose.model("course",CoursesSchema);
