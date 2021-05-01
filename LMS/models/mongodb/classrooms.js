@@ -12,11 +12,11 @@ const ClassroomSchema= new mongoose.Schema({
         'status':{
             type:String,
         },
-        'classroomType':{
+        'classroom_type':{
             type:String,
             default:"demo"
         },
-        'enrolledStudents':{
+        'enrolled_students':{
             type: Object, // student id of enrolled student as key and enrollment details as values
             default:{},
         },
