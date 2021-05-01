@@ -12,10 +12,6 @@ const CourseSectionsSchema=new mongoose.Schema({
             default:"",
             required:false,
         },
-        "materials":{
-            type:Array(object),
-            default:[],
-        },
         'is_active':{
             type:Boolean,
             default:true

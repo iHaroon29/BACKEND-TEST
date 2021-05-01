@@ -1,8 +1,8 @@
 const mongoose=require("../../db/mongoDB");
 
 const CourseMaterialsSchema=new mongoose.Schema({
-        'course_id':{
-            type:String,
+        'course_section_id':{
+            type:mongoose.ObjectId,
         },
         'name':{
             type:String,
@@ -17,7 +17,7 @@ const CourseMaterialsSchema=new mongoose.Schema({
             required:true
         },
         'time_required':{
-            type:Number,
+            type:String,
             required:true
         },
         'file':{
