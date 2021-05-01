@@ -1,18 +1,21 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
+mongoose
+  .connect("mongodb://localhost:27017/digital_aided_school_lms", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((data) => {
+    console.log("connected");
+  })
+  .catch((err) => {
+    console.error(
+      "==============================================================="
+    );
+    console.error("DB Not Connected");
+    console.error(
+      "==============================================================="
+    );
+  });
 
-mongoose.connect('mongodb://localhost:/digital_aided_school_lms', {useNewUrlParser: true, useUnifiedTopology: true})
-    .then((data)=>{
-        console.log("connected");
-
-    })
-    .catch((err)=>{
-        console.error('===============================================================');
-        console.error('DB Not Connected');
-        console.error('===============================================================');
-
-    });
-
-
-module.exports=mongoose;
-
+module.exports = mongoose;
