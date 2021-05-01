@@ -2,7 +2,7 @@ const mongoose=require("../../db/mongoDB");
 const Schema=require("../../db/mongoDB").Schema;
 const LoginActivity=new Schema({
         user_role:{
-            type:mongoose.ObjectId,
+            type:String,
             required:true,
         },
         user_id:{
@@ -12,6 +12,10 @@ const LoginActivity=new Schema({
         activity:{
             type:Object,
             required:true,
+        },
+        has_logged_out:{
+            type:Boolean,
+            default:false
         }
     },
     {
