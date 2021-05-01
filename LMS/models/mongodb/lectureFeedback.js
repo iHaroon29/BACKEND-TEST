@@ -2,24 +2,22 @@ const mongoose=require("../../db/mongoDB");
 
 
 const LectureFeedbackSchema=new mongoose.Schema({
-    'url':{
-        type: String,
+        "lecture_id":{
+            type:mongoose.ObjectId,
+            required:true
+        },
+        "students_feedback":{
+            type:Array(object),
+            default:[]
+        },
+        "teachers_feedback":{
+            type:Array(object),
+            default:[]
+        }
     },
-    'active':{
-        type: Boolean,
-    },
-    'createdAt':{
-        type:Date,
-        default:Date.now,
-    },
-    'updatedAt':{
-        type:Date,
-        default:Date.now,
-    },
-    'deletedAt':{
-        type:Date,
-    },
-});
+    {
+        timestamps:true
+    });
 
 
 module.exports=mongoose.model("lectureFeedback",LectureFeedbackSchema);

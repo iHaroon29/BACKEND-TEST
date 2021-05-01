@@ -31,7 +31,7 @@ const AssignmentSubmissionSchema=new mongoose.Schema({
         }
     },
     {
-        timestamps
+        timestamps:true,
     }
 );
 

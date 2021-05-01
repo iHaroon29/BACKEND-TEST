@@ -5,17 +5,9 @@ const CourseTeachersSchema=new mongoose.Schema({
     },
     'teacherId':{
         type:String,
-    },
-    'createdAt':{
-        type:Date,
-        default:Date.now,
-    },
-    'updatedAt':{
-        type:Date,
-        default:Date.now,
-    },
-    'deletedAt':{
-        type:Date,
-    },
-});
+    }
+},
+    {
+        timestamps:true
+    });
 module.exports=mongoose.model("courseTeacher",CourseTeachersSchema);

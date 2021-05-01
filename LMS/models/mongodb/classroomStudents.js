@@ -1,28 +1,20 @@
 const mongoose=require("../../db/mongoDB");
 
 const ClassroomStudentSchema=new mongoose.Schema({
-    "classroomId":{
-        type:String,
+        "classroom_id":{
+            type:String,
+        },
+        "student_id":{
+            type:String,
+        },
+        "is_active":{
+            type:Boolean,
+            default:true,
+        },
     },
-    "studentId":{
-        type:String,
-    },
-    "isActive":{
-        type:Boolean,
-        default:true,
-    },
-    "createdAt":{
-        type:Date,
-        default:Date.now
-    },
-    "updatedAt":{
-        type:Date,
-        default:Date.now
-    },
-    "deletedAt":{
-        type:Date,
-    },
-});
+    {
+        timestamps:true
+    });
 
 module.exports=mongoose.model("classroomStudent",ClassroomStudentSchema);
 

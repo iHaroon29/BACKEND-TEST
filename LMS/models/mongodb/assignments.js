@@ -5,6 +5,10 @@ const AssignmentSchema=new mongoose.Schema({
             type: mongoose.ObjectId,
             required:true,
         },
+        "teacher_id":{
+            type: mongoose.ObjectId,
+            required:true,
+        },
         'instructions':{
             type:String,
             required:true,
