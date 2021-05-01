@@ -1,7 +1,7 @@
 const mongoose=require("../../db/mongoDB");
 
 
-const LectureReschedule=new mongoose.schema("lectureReschedule", {
+const LectureRescheduleSchema=new mongoose.Schema({
     'lectureId':{
         type: String,
     },
@@ -27,5 +27,5 @@ const LectureReschedule=new mongoose.schema("lectureReschedule", {
     },
 });
 
-module.exports=LectureReschedule;
+module.exports=mongoose.model("lectureReschedule",LectureRescheduleSchema);
 

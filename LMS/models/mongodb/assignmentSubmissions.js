@@ -1,28 +1,38 @@
 const mongoose=require("../../db/mongoDB");
 
-const AssignmentSubmission=new mongoose.schema("assignmentSubmission",{
-    'assignmentId':{
-        type:String,
+const AssignmentSubmissionSchema=new mongoose.Schema({
+        'assignment_id':{
+            type:mongoose.ObjectId,
+            required:true
+        },
+        'student_id':{
+            type:mongoose.ObjectId,
+            default:[],
+        },
+        'answer_files':{
+            type:Array(String),
+            default:[]
+        },
+        "answer_text":{
+            type:String,
+            default:"",
+        },
+        'comments':{
+            type:Array(Object),
+            default:[],
+        },
+        'status':{
+            type:Object,
+            default:"unchecked"
+        },
+        "grade":{
+            type:String,
+            default:"B+",
+        }
     },
-    'studentId':{
-        type:String,
-    },
-    'answerFile':{
-        type:String,
-    },
-    'comments':{
-        type:Object,
-    },
-    'status':{
-        type:Object,
-    },
-    'createdAt':{
-        type:Date,
-        default:Date.now
-    },
-    'updatedAt':{
-        type:Date,
-    },
-});
+    {
+        timestamps
+    }
+);
 
-module.exports=AssignmentSubmission;
+module.exports=mongoose.model("assignmentSubmission",AssignmentSubmissionSchema);

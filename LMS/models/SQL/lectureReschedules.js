@@ -1,5 +1,5 @@
 const Sequelize=require("sequelize");
-const sequelize=require("../db/mySQLConnection");
+const sequelize=require("../../db/mySQLConnection");
 const Lectures=require("./lectures");
 const LectureReschedule=sequelize.define("lectureReschedule", {
     'id': {
@@ -45,9 +45,9 @@ const LectureReschedule=sequelize.define("lectureReschedule", {
 },{
     underscored: true
 });
-LectureReschedule.associate=(model)=>{
-    LectureReschedule.belongsTo(model.Lectures);
-};
+
+LectureReschedule.belongsTo(Lectures);
+
 
 module.exports=LectureReschedule;
 

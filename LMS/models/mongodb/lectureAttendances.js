@@ -1,7 +1,7 @@
 const mongoose=require("../../db/mongoDB");
 
 
-const LectureAttendance=new mongoose.schema("lectureAttendance",{
+const LectureAttendanceSchema=new mongoose.Schema({
     'lectureId':{
         type: String,
     },
@@ -20,4 +20,4 @@ const LectureAttendance=new mongoose.schema("lectureAttendance",{
         type:Date,
     },
 });
-module.exports=LectureAttendance;
+module.exports=mongoose.model("lectureAttendance",LectureAttendanceSchema);

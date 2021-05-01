@@ -1,8 +1,8 @@
 const mongoose=require("../../db/mongoDB");
 
-const Courses=new mongoose.schema("course",{
+const CoursesSchema=new mongoose.Schema({
     'classroomId':{
-        type:Number,
+        type:mongoose.ObjectId,
     },
     'title':{
         type:String,
@@ -16,7 +16,15 @@ const Courses=new mongoose.schema("course",{
     'price':{
         type:Number,
     },
-    'active':{
+    'discount':{
+        type:Number,
+        default:0,
+    },
+    teachers:{
+        type:Object, // Teacher's id as key and details as values
+        default:{},
+    },
+    'isActive':{
         type:Boolean,
     },
     'createdAt':{
@@ -26,7 +34,6 @@ const Courses=new mongoose.schema("course",{
     'updatedAt':{
         type:Date,
     },
-    "courseMaterial":Array(Object) // Array of course materials for course
 });
 
-module.exports=Courses;
+module.exports=mongoose.model("course",CoursesSchema);

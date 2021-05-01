@@ -26,7 +26,7 @@ const Joi = require("joi");
 //   });
 // };
 
-const Users = (user) => {
+module.exports.Users = (user) => {
   const JoiSchema = Joi.object({
     id: Joi.number().optional(),
     name: Joi.string().required(),
@@ -41,7 +41,7 @@ const Users = (user) => {
   });
 };
 
-const StudentReg = (students) => {
+module.exports.NewStudentRegistration = (students) => {
   const JoiSchema = Joi.object({
     id: Joi.number().optional(),
     name: Joi.string().required(),
@@ -61,7 +61,7 @@ const StudentReg = (students) => {
   });
 };
 
-const HrRounds = (hr_rounds) => {
+module.exports.NewHrRounds = (hr_rounds) => {
   const JoiSchema = Joi.object({
     id: Joi.number().optional(),
     name: Joi.string().required(),
@@ -74,7 +74,7 @@ const HrRounds = (hr_rounds) => {
   });
 };
 
-const HrRoundQuestions = (hr_rounds_questions) => {
+module.exports.NewHrRoundQuestions = (hr_rounds_questions) => {
   const JoiSchema = Joi.object({
     id: Joi.number().optional(),
     hr_round_id: Joi.number().required(),
@@ -90,7 +90,7 @@ const HrRoundQuestions = (hr_rounds_questions) => {
 };
 
 
-const TeacherValid = (teachers) => {
+module.exports.NewTeacher = (teachers) => {
   const JoiSchema = Joi.object({
     id: Joi.number().optional(),
     name: Joi.string().required(),
@@ -105,12 +105,38 @@ const TeacherValid = (teachers) => {
   });
 };
 
+module.exports.NewCourseEnrollmentDetails=(data)=>{
+//  course original price, course id, discount percentage, enrollment date and time (optional and default of current time)
 
-
-module.exports = {
-  Users,
-  StudentReg,
-  HrRounds,
-  HrRoundQuestions,
-  TeacherValid,
 };
+
+module.exports.StudentEnrollmentDetails=(data)=>{
+//  student id, date and time of enrollment, status of enrollment (optional and default of waiting)
+
+};
+module.exports.AssignmentSubmissionComments=(data)=>{
+// assignment's id, sender's id, sender's type, date and time of comment(optional and default value of current time)
+
+};
+
+module.exports.NewAssignmentSubmission=(data)=>{
+//  student's id, assignment id, file or text of submission
+
+};
+
+module.exports.NewCourseSectionMaterial=(data)=>{
+// course's id, time stamps and materials (file/text)
+
+};
+
+module.exports.NewTeacherForCourse=(data)=>{
+//  teacher's id, course's ids,
+
+};
+
+
+module.exports.NewCourseSection=()=>{
+//  name, description, course's id, material (file/text), timestamps
+
+};
+

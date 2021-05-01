@@ -1,39 +1,34 @@
 const Sequelize=require("sequelize");
-const {sequelize}=require("../db/mySQLConnection");
-const Courses=require("./courses");
-const Classroom=sequelize.define("classroom",{
+const sequelize=require("../../db/mySQLConnection");
+
+const CourseTeachers=sequelize.define("courseTeacher",{
     'id':{
         type:Sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true,
     },
-    'name':{
-        type:Sequelize.STRING,
-    },
-    'timeline':{
-        type:Sequelize.JSON,
-    },
-    'status':{
+    'course_id':{
         type:Sequelize.INTEGER,
     },
-    'classroom_type':{
+    'teacher_id':{
         type:Sequelize.INTEGER,
     },
     'created_at':{
         type:Sequelize.DATE,
-        default:Sequelize.NOW
+        default:Sequelize.NOW,
     },
     'updated_at':{
         type:Sequelize.DATE,
-        default:Sequelize.NOW
+        default:Sequelize.NOW,
     },
     'deleted_at':{
         type:Sequelize.DATE,
     },
-
 },{
     underscored: true
 });
-Classroom.hasMany(Courses,{foreignKey:"id"});
-
-module.exports=Classroom;
+CourseTeachers.associate=(model)=>{
+    CourseTeachers.belongsTo(model.Course);
+    CourseTeachers.belongsTo(model.Teacher);
+};
+module.exports=CourseTeachers;

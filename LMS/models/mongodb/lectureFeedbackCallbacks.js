@@ -1,7 +1,7 @@
 const mongoose=require("../../db/mongoDB");
 
 
-const LectureFeedbackCallbacks=new mongoose.schema("lectureFeedbackCallbacks",{
+const LectureFeedbackCallbacksSchema=new mongoose.Schema({
     'lectureFeedbackId':{
         type: String,
     },
@@ -28,8 +28,6 @@ const LectureFeedbackCallbacks=new mongoose.schema("lectureFeedbackCallbacks",{
     'deletedAt':{
         type:Date,
     },
-},{
-    underscored: true
 });
 
-module.exports=LectureFeedbackCallbacks;
+module.exports=mongoose.model("lectureFeedback",LectureFeedbackCallbacksSchema);

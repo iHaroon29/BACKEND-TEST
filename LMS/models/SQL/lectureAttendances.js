@@ -1,5 +1,7 @@
 const Sequelize=require("sequelize");
-const sequelize=require("../db/mySQLConnection");
+const sequelize=require("../../db/mySQLConnection");
+const {Lecture} = require("./lectures");
+const {Students} = require("./students");
 
 const LectureAttendance=sequelize.define("lectureAttendance",{
     'id': {
@@ -26,8 +28,8 @@ const LectureAttendance=sequelize.define("lectureAttendance",{
 },{
     underscored: true
 });
-LectureAttendance.associate=(model)=>{
-    LectureAttendance.belongsTo(model.Student);
-    LectureAttendance.belongsTo(model.Lecture);
-};
+// LectureAttendance.associate=(model)=>{
+    LectureAttendance.belongsTo(Students);
+    LectureAttendance.belongsTo(Lecture);
+// };
 module.exports=LectureAttendance;

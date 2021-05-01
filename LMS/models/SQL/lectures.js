@@ -1,7 +1,9 @@
 const Sequelize=require("sequelize");
-const sequelize=require("../db/mySQLConnection");
+const sequelize=require("../../db/mySQLConnection");
 const Teachers=require("./teachers");
-
+const LectureReschedule = require("./lectureReschedules");
+const LectureFeedback=require("./lectureFeedback");
+const CrmMeetingLink=require("./crmMeetLinks");
 const Lecture=sequelize.define("teacher", {
     'id': {
         type: Sequelize.INTEGER,
@@ -44,13 +46,10 @@ const Lecture=sequelize.define("teacher", {
     underscored: true
 });
 
-Lecture.associate=(model)=>{
-    Lecture.belongsTo(model.Teachers);
-    Lecture.hasMany(model.LectureFeedback);
-    Lecture.hasMany(model.CrmMeetingLink);
-    Lecture.hasMany(model.LectureReschedule);
-};
+Lecture.belongsTo(Teachers);
+Lecture.hasMany(LectureFeedback);
+Lecture.hasMany(CrmMeetingLink);
+Lecture.hasMany(LectureReschedule);
 
-
-module.exports=Lecture;
+module.exports.Lecture=Lecture;
 

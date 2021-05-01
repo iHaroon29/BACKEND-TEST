@@ -1,5 +1,5 @@
 const Sequelize=require("sequelize");
-const sequelize=require("../db/mySQLConnection");
+const sequelize=require("../../db/mySQLConnection");
 
 const LectureFeedbackCallbacks=sequelize.define("lectureFeedbackCallbacks",{
     'id': {

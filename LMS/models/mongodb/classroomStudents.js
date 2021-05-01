@@ -1,6 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 
-const ClassroomStudent=new mongoose.schema("classroomStudent",{
+const ClassroomStudentSchema=new mongoose.Schema({
     "classroomId":{
         type:String,
     },
@@ -24,6 +24,6 @@ const ClassroomStudent=new mongoose.schema("classroomStudent",{
     },
 });
 
-module.exports=ClassroomStudent;
+module.exports=mongoose.model("classroomStudent",ClassroomStudentSchema);
 
 

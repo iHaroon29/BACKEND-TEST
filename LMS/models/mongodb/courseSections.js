@@ -1,25 +1,28 @@
 const mongoose=require("../../db/mongoDB");
-const CourseSections=new mongoose.schema("courseSection",{
-    "courseId":{
-        type:Number,
+const CourseSectionsSchema=new mongoose.Schema({
+        "course_id":{
+            type:mongoose.ObjectId,
+        },
+        'name':{
+            type:String,
+            default:"new section"
+        },
+        "description":{
+            type:String,
+            default:"",
+            required:false,
+        },
+        "materials":{
+            type:Array(object),
+            default:[],
+        },
+        'is_active':{
+            type:Boolean,
+            default:true
+        },
     },
-    'name':{
-        type:Number,
-    },
-    'active':{
-        type:Boolean,
-    },
-    'createdAt':{
-        type:Date,
-        default:Date.now
-    },
-    'updatedAt':{
-        type:Date,
-        default:Date.now
-    },
-    'deletedAt':{
-        type:Date,
-    },
-});
+    {
+        timestamps:true,
+    });
 
-module.exports=CourseSections;
+module.exports=mongoose.model("courseSection",CourseSectionsSchema);

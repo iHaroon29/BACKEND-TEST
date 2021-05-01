@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-let {sequelize}=require("../db/mySQLConnection");
+let {sequelize}=require("../../db/mySQLConnection");
 module.exports.User= sequelize.define('user', {
     id:{
         type:Sequelize.INTEGER,
