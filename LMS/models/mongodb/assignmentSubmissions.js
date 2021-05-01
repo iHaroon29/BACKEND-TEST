@@ -7,7 +7,7 @@ const AssignmentSubmissionSchema=new mongoose.Schema({
         },
         'student_id':{
             type:mongoose.ObjectId,
-            default:[],
+            required:true,
         },
         'answer_files':{
             type:Array(String),
@@ -31,7 +31,7 @@ const AssignmentSubmissionSchema=new mongoose.Schema({
         }
     },
     {
-        timestamps
+        timestamps:true,
     }
 );
 

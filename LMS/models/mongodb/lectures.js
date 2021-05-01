@@ -2,37 +2,41 @@ const mongoose=require("../../db/mongoDB");
 
 
 const Lecture=new mongoose.Schema( {
-
-    'classroomId':{
-        type: String,
+        'classroom_id':{
+            type: mongoose.ObjectId,
+            required:true,
+        },
+        "course_id":{
+            type:mongoose.ObjectId,
+            required:true,
+        },
+        'date_and_time':{
+            type:Date,
+            required:true,
+        },
+        'is_attendance_marked':{
+            type: Boolean,
+            required:true,
+        },
+        'crm_meeting_link':{
+            type: String,
+            default:"",
+        },
+        'status':{
+            type: String,
+            default:"not started yet"
+        },
+        'is_active':{
+            type: Boolean,
+        },
+        "reschedule_information":{
+            type:Array(Object),
+            default:[],
+        }
     },
-    'dateAndTime':{
-        type:Date,
-    },
-    'isAttendanceMarked':{
-        type: Boolean,
-    },
-    'crmMeetingLink':{
-        type: String,
-    },
-    'status':{
-        type: String,
-    },
-    'isActive':{
-        type: Boolean,
-    },
-    'createdAt':{
-        type:Date,
-        default:Date.now,
-    },
-    'updatedAt':{
-        type:Date,
-        default:Date.now,
-    },
-    'deletedAt':{
-        type:Date,
-    },
-});
+    {
+        timestamps:true
+    });
 
 
 module.exports=mongoose.model("lecture",Lecture);

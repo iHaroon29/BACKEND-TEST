@@ -4,9 +4,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
-const hrRoutes = require("./routes/HR");
 const teacherRoutes = require("./routes/Teachers");
-const crmRoutes = require("./routes/CRM");
 const studentRoutes = require("./routes/Students");
 const adminRouter = require("./routes/Admin");
 const authenticationRoutes = require("./routes/AuthenticationAndAuthorization");
@@ -23,8 +21,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", indexRouter);
-app.use("/api/hr", hrRoutes);
-app.use("/api/crm", crmRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/classroom", classroomRoutes);

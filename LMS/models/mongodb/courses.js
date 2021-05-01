@@ -1,39 +1,35 @@
 const mongoose=require("../../db/mongoDB");
 
 const CoursesSchema=new mongoose.Schema({
-    'classroomId':{
-        type:mongoose.ObjectId,
+        'classroom_id':{
+            type:mongoose.ObjectId,
+        },
+        'title':{
+            type:String,
+        },
+        'image':{
+            type:String,
+        },
+        'description':{
+            type:String,
+        },
+        'price':{
+            type:Number,
+        },
+        'discount':{
+            type:Number,
+            default:0,
+        },
+        teachers:{
+            type:Object, // Teacher's id as key and details as values
+            default:{},
+        },
+        'is_active':{
+            type:Boolean,
+        }
     },
-    'title':{
-        type:String,
-    },
-    'image':{
-        type:String,
-    },
-    'description':{
-        type:String,
-    },
-    'price':{
-        type:Number,
-    },
-    'discount':{
-        type:Number,
-        default:0,
-    },
-    teachers:{
-        type:Object, // Teacher's id as key and details as values
-        default:{},
-    },
-    'isActive':{
-        type:Boolean,
-    },
-    'createdAt':{
-        type:Date,
-        default:Date.now,
-    },
-    'updatedAt':{
-        type:Date,
-    },
-});
+    {
+        timestamps:true
+    });
 
 module.exports=mongoose.model("course",CoursesSchema);
