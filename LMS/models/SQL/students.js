@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-let sequelize=require("../db/mySQLConnection").sequelize;
+let sequelize=require("../../db/mySQLConnection").sequelize;
 
 const Classroom=require("./classrooms");
 const Students=sequelize.define("student",{

@@ -1,19 +1,23 @@
 const Sequelize=require("sequelize");
-const sequelize=require("../db/mySQLConnection").sequelize;
-const CourseSections=sequelize.define("courseSection",{
+const {sequelize}=require("../../db/mySQLConnection");
+const Courses=require("./courses");
+const Classroom=sequelize.define("classroom",{
     'id':{
         type:Sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true,
     },
-    "course_id":{
-        type:Sequelize.INTEGER,
-    },
     'name':{
         type:Sequelize.STRING,
     },
-    'active':{
-        type:Sequelize.BOOLEAN,
+    'timeline':{
+        type:Sequelize.JSON,
+    },
+    'status':{
+        type:Sequelize.INTEGER,
+    },
+    'classroom_type':{
+        type:Sequelize.INTEGER,
     },
     'created_at':{
         type:Sequelize.DATE,
@@ -26,8 +30,10 @@ const CourseSections=sequelize.define("courseSection",{
     'deleted_at':{
         type:Sequelize.DATE,
     },
+
 },{
     underscored: true
 });
+Classroom.hasMany(Courses,{foreignKey:"id"});
 
-module.exports=CourseSections;
+module.exports=Classroom;

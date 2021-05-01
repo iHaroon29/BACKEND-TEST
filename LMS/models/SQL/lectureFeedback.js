@@ -1,6 +1,9 @@
 const Sequelize=require("sequelize");
-const sequelize=require("../db/mySQLConnection");
+const sequelize=require("../../db/mySQLConnection");
 
+const Student=require("./students").Students;
+const Lecture=require("./lectures").Lecture;
+const LectureFeedbackCallbacks=require("./lectureFeedbackCallbacks");
 const LectureFeedback=sequelize.define("lectureFeedback",{
     'id': {
         type: Sequelize.INTEGER,
@@ -27,9 +30,9 @@ const LectureFeedback=sequelize.define("lectureFeedback",{
 },{
     underscored: true
 });
-LectureFeedback.assocate=(model)=>{
-    LectureFeedback.belongsTo(model.Student);
-    LectureFeedback.belongsTo(model.Lecture);
-    LectureFeedback.belongsTo(model.LectureFeedbackCallbacks);
-};
+// LectureFeedback.assocate=(model)=>{
+    LectureFeedback.belongsTo(Student);
+    LectureFeedback.belongsTo(Lecture);
+    LectureFeedback.belongsTo(LectureFeedbackCallbacks);
+// };
 module.exports=LectureFeedback;

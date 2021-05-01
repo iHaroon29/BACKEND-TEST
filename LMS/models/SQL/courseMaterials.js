@@ -1,5 +1,5 @@
 const Sequelize=require("sequelize");
-const sequelize=require("../db/mySQLConnection").sequelize;
+const sequelize=require("../../db/mySQLConnection").sequelize;
 const CourseSections=require("./courseSections");
 const CourseMaterials=sequelize.define("courseMaterial",{
     'id':{
