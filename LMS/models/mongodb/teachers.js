@@ -46,6 +46,11 @@ const TeacherSchema=new Schema({
     "address":{
         type:String,
         required:true
+    },
+    // Variable to mark if the teacher is available to assign a new class, is enabled by teacher and disabled by teacher and HR
+    is_available:{
+        type:Boolean,
+        default:true,
     }
 
 },{
