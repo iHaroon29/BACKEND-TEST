@@ -33,7 +33,7 @@ module.exports.genHash=(stringToHash)=>{
 module.exports.compareHash=(compareTo,compareFrom)=>{
     // initializing JS Promise
     return new Promise((resolve, reject) => {
-        bcrypt.comppare(compareFrom,compareTo,(err,result)=>{
+        bcrypt.compare(compareFrom,compareTo,(err,result)=>{
             if(result)
                 resolve(result);
             if(err)
