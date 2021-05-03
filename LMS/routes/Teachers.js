@@ -38,8 +38,18 @@ router.post("/assignment/new", async (req, res) => {
   res.send(assignment);
 });
 
-router.put("/assignment/update", (req, res) => {
-  return res.send("updateAssignmentFile").status(202);
+router.put("/assignment/update/:id", async (req, res) => {
+  const assignment = await Assignment.findOne({ where: { id: req.params.id } });
+  if (!assignment) return res.status(400).send("Invalid Assignment");
+
+  (assignment.title = req.body.title),
+    (assignment.instructions = req.body.instructions),
+    (assignment.last_submission_date = req.body.last_submission_date),
+    (assignment.question_file = req.body.question_file);
+
+  await assignment.save();
+  console.log(assignment);
+  res.send(assignment);
 });
 
 module.exports = router;

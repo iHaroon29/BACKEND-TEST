@@ -141,8 +141,4 @@ module.exports.NewAssignment = (data) => {
     last_submission_date: Joi.date().required(),
   }).options({ stripUnknown: true });
   return JoiSchema.validateAsync(data);
-  // return new Promise((resolve, reject) => {
-  //   if (isValid.error) reject(isValid.error);
-  //   resolve(true);
-  // });
 };
