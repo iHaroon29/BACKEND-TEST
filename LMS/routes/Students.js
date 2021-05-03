@@ -1,10 +1,10 @@
 const router = require("express").Router();
-const CourseSections = require("../models/courseSections");
+
 require("./RouteMiddlewares");
 const op = require("sequelize");
 
 const bcrypt = require("bcrypt");
-const Student = require("../models/students");
+// const Student = require("../models/students");
 
 router.get("/", (req, res) => {
   CourseSections.findAll()

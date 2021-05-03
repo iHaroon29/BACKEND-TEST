@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Assignment = require("../models/mongodb/assignments");
+const { NewAssignment } = require("./DataValidators");
 
 router.get("/", (req, res) => {
   Assignment.find()
@@ -11,8 +12,30 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/assignment/new", (req, res) => {
-  return res.send("newAssignmentFile").status(202);
+router.post("/assignment/new", async (req, res) => {
+  const result = await NewAssignment(req.body)
+    .then((data) => {
+      console.log("data", data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+
+  const assignment = new Assignment(
+    // result
+    {
+      course_id: req.body.course_id,
+      teacher_id: req.body.teacher_id,
+      instructions: req.body.instructions,
+      description: req.body.description,
+      last_submission_date: req.body.last_submission_date,
+    }
+  );
+
+  await assignment.save();
+  console.log(assignment);
+  res.send(assignment);
 });
 
 router.put("/assignment/update", (req, res) => {
