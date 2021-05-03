@@ -77,3 +77,16 @@ module.exports.NewHrApplicant=(data)=>{
   return NewHrApplicantSchema.validateAsync(data);
 };
 
+
+module.exports.NewLoginActivity=(data)=>{
+  const Schema=Joi.object({
+    user_type:Joi.string().required(),
+    user_id:Joi.string().alphanum().min(4).max(15).required(),
+    has_logged_out:Joi.boolean().optional().default(false),
+    activity:Joi.object({
+      created_at:Joi.date().timestamp(),
+      updated_at:Joi.date().timestamp(),
+    }).optional().options({stripUnknown:true})
+  }).options({stripUnknown:true});
+  return Schema.validateAsync(data);
+};
