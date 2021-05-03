@@ -84,8 +84,8 @@ module.exports.NewLoginActivity=(data)=>{
     user_id:Joi.string().alphanum().min(4).max(15).required(),
     has_logged_out:Joi.boolean().optional().default(false),
     activity:Joi.object({
-      created_at:Joi.date().timestamp(),
-      updated_at:Joi.date().timestamp(),
+      created_at:Joi.date().timestamp().optional(),
+      updated_at:Joi.date().timestamp().optional(),
     }).optional().options({stripUnknown:true})
   }).options({stripUnknown:true});
   return Schema.validateAsync(data);
