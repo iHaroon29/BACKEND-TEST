@@ -1,10 +1,27 @@
-const Assignment=require("../models/mongodb/assignments");
-const NewAssignmentValidator=require("../routes/DataValidators");
+const AssignmentSubmission=require("../models/mongodb/assignmentSubmissions");
+const NewAssignmentValidator=require("../routes/DataValidators").NewAssignmentSubmission;
 
 module.exports={
     addNewAssignment(assignmentDetails){
 
-    }
+    },
+    getAllSubmittedAssignmentsOfClass(){
 
+    },
+    updateAssignment(){
+
+    },
+    gradeAssignment(){
+
+    },
+    getAllStudentsOfClass(){
+
+    },
+    addLectureFeedback(){
+
+    },
+    updateAvailability(){
+
+    }
 
 };
