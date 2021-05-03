@@ -5,23 +5,16 @@
  */
 
 const bcrypt=require("bcrypt");
-const saltRounds = 8;
-bcrypt.genSaltSync(saltRounds);
+const saltRounds = 10;
+const salt = bcrypt.genSaltSync(saltRounds);
 /*
 *
 * function to generate hash and return as a JS promise
 *
  */
 module.exports.genHash=(stringToHash)=>{
-    bcrypt.hashSync(stringToHash,(err,hash)=>{
-        // initializing JS Promise
-        return new Promise(((resolve, reject) => {
-            if(err)
-                reject("unable to produce hash");
-            if(hash)
-                resolve(hash);
-        }));
-    });
+    console.log(stringToHash," ",salt);
+        return bcrypt.hash(stringToHash,salt); // returns promise of hash
 };
 
 /*
@@ -30,16 +23,18 @@ module.exports.genHash=(stringToHash)=>{
 *
  */
 
-module.exports.compareHash=(compareTo,compareFrom)=>{
+module.exports.compareHash=(plainText,encryptedText)=>{
     // initializing JS Promise
     return new Promise((resolve, reject) => {
-        bcrypt.comppare(compareFrom,compareTo,(err,result)=>{
-            if(result)
-                resolve(result);
-            if(err)
-                reject(err);
-
-        });
+        bcrypt.compare(plainText,encryptedText)
+            .then(result=>{
+                if(!result)
+                    reject("texts doesn't match"); // both texts doesn't match
+                resolve(true) // if both texts matches
+            })
+            .catch(err=>{
+                reject(err); // error by bcrypt compare method
+            })
     });
 };
 

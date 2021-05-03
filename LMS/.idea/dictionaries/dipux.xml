@@ -2,6 +2,7 @@
   <dictionary name="dipux">
     <words>
       <w>bcrypt</w>
+      <w>multer</w>
       <w>sequelize</w>
     </words>
   </dictionary>

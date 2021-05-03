@@ -1,89 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e3b8cba-0231-4028-98dc-fc1958c1ee8e" name="Default Changelist" comment="">
+    <list default="true" id="9e3b8cba-0231-4028-98dc-fc1958c1ee8e" name="Default Changelist" comment="update for mongoose">
+      <change afterPath="$PROJECT_DIR$/../HRMS/db/mongoDB.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/HR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/HrActivity.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/HrRoundQuestions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/HrTeam.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/assignmentSubmissions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/assignments.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/classrooms.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/courseActivities.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/courseMaterials.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/courseSections.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/courses.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/lectureAttendances.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/lectureFeedback.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/lectureFeedbackCallbacks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/lectures.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/logInActiviity.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/newHrApplicants.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/students.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/teachers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/modules/authTokens.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/modules/fileUploads.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/routes/AuthenticationAndAuthorization.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/routes/DataValidators.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HRMS/routes/RouteMiddlewares.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/db/mySQLConnection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/adminRoles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/admins.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/assignmentSubmissions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/assignments.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/changeRequestApproval.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/models/mongodb/HrRoundAnswers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/changeRequestApprovals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/changeRequests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/classroomStudents.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/classrooms.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/courseActivities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/courseMaterials.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/courseSections.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/courseTeacher.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/courseTeachers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/courses.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmChatTags.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmConversationFiles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmConversations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmDispositions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmGroupUsers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmGroups.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmLeadCallbackRequests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmLeadDetails.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmLeadGroups.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmLeadVisits.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmLeads.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmMeetLinkBookings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmMeetLinks.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmTeamMembers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmTeams.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmTemplates.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmUserActivities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmUserDailyActivities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmUserRoles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/crmUsers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/employeeAttendances.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/employeeSalaries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/employees.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/failedJobs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pContents.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pContentsLibraries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pContentsTags.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pContentsUserData.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pCounters.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pEventLogs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pLibraries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pLibrariesCachedassets.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pLibrariesHubCache.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pLibrariesLanguages.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pLibrariesLibraries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pResults.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/h5pTmpfiles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrApplicantComments.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrApplicantDispositions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrApplicantInterviews.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrApplicantTypes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrApplicants.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrCallbacks.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrDispositions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrLetters.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrModules.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrRoomMeetings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrRoomMembers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrRoomPanelMembers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrRooms.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrRoundAnswers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrRoundQuestions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/hrRounds.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/interviewerAvailabilities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/learningSkills.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/lectureAttendances.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/lectureFeedback.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/lectureFeedbackCallbacks.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/lectureFeedbackDetails.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/lectureJoins.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/lectureReschedules.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/lectures.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/loginRecords.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/migrations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/notes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/oauthAccessTokens.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/oauthAuthCodes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/oauthClients.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/oauthPersonalAccessClients.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/oauthRefreshTokens.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/passwordResets.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/roles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/studentCourses.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/studentDetails.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/students.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/taskAssignments.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/teacherAvailabilities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/teachers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/trainerClassrooms.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/trainerMeetings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/trainerTrainees.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/users.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/models/websocketsStatisticsEntries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/modules/bcrypt.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/modules/bcrypt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/routes/HrAdvisors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/routes/HrAdvisors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/routes/HrTeamLeaders.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/routes/HrTeamLeaders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/routes/HrTeamMembers.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/routes/HrTeamMembers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/routes/users.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HRMS/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/../HRMS/views/index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/dipux.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/dipux.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/adminRoles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/admins.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/changeRequestApproval.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/changeRequestApprovals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/changeRequests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/courseTeacher.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/courseTeachers.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/courseTeachers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmChatTags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmConversationFiles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmConversations.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmDispositions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmGroupUsers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmGroups.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmLeadCallbackRequests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmLeadDetails.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmLeadGroups.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmLeadVisits.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmLeads.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmMeetLinkBookings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmTeamMembers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmTeams.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmTemplates.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmUserActivities.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmUserDailyActivities.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmUserRoles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/crmUsers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/employeeAttendances.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/employeeSalaries.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/employees.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/failedJobs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pContents.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pContentsLibraries.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pContentsTags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pContentsUserData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pCounters.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pEventLogs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pLibraries.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesCachedassets.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesHubCache.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesLanguages.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pLibrariesLibraries.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pResults.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/h5pTmpfiles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrApplicantComments.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrApplicantDispositions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrApplicantInterviews.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrApplicantTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrApplicants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrCallbacks.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrDispositions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrLetters.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrModules.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrRoomMeetings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrRoomMembers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrRoomPanelMembers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrRooms.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrRoundAnswers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrRoundQuestions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hrRounds.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/interviewerAvailabilities.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/learningSkills.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/lectureAttendances.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureAttendances.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/lectureFeedback.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureFeedback.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/lectureFeedbackCallbacks.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureFeedbackCallbacks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/lectureReschedules.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectureReschedules.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/lectures.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/lectures.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/loginRecords.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/migrations.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/oauthAccessTokens.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/oauthAuthCodes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/oauthClients.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/oauthPersonalAccessClients.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/oauthRefreshTokens.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/passwordResets.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/studentCourses.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/studentCourses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/taskAssignments.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/teachers.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/teachers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/trainerClassrooms.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/trainerMeetings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/trainerTrainees.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/websocketsStatisticsEntries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/mySQLConnection.js" beforeDir="false" afterPath="$PROJECT_DIR$/db/mySQLConnection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/DataValidators.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/DataValidators.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,17 +161,7 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="FavoritesManager">
@@ -127,6 +176,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/Tamdupagal/teamdev.git" />
+      </set>
+    </option>
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
@@ -146,18 +202,21 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JavaScript" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.3" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JavaScript" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.3.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\models" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\models\SQL" />
       <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\modules" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS" />
+      <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\models\mongodb" />
+      <recent name="D:\internship\DigitalAidedSchool\nodeJS\LMS\models" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -171,9 +230,20 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -190,7 +260,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@7fc6e75" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@75956df6" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -223,6 +293,22 @@
       <workItem from="1619529089061" duration="3576000" />
       <workItem from="1619578905993" duration="487000" />
       <workItem from="1619579494512" duration="44000" />
+      <workItem from="1619587984265" duration="4633000" />
+      <workItem from="1619595977201" duration="1585000" />
+      <workItem from="1619608417661" duration="34000" />
+      <workItem from="1619665242937" duration="13335000" />
+      <workItem from="1619700788921" duration="4079000" />
+      <workItem from="1619706974832" duration="1844000" />
+      <workItem from="1619712905556" duration="18873000" />
+      <workItem from="1619778048732" duration="11794000" />
+      <workItem from="1619845446891" duration="12984000" />
+      <workItem from="1619865862421" duration="7028000" />
+      <workItem from="1619931026110" duration="207000" />
+      <workItem from="1619931622674" duration="822000" />
+      <workItem from="1619949496230" duration="11000" />
+      <workItem from="1619965616425" duration="1490000" />
+      <workItem from="1620011141516" duration="44000" />
+      <workItem from="1620012499200" duration="607000" />
     </task>
     <task id="LOCAL-00001" summary="added comments for description">
       <created>1619363626068</created>
@@ -301,7 +387,238 @@
       <option name="project" value="LOCAL" />
       <updated>1619493010820</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="removed redundant models from LMS file Structure and initialized major of the LMS required models">
+      <created>1619586705922</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1619586705922</updated>
+    </task>
+    <task id="LOCAL-00013" summary="work of Authentication and Authorization token generator initiated">
+      <created>1619592689555</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1619592689555</updated>
+    </task>
+    <task id="LOCAL-00014" summary="association error removed for models">
+      <created>1619623477034</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1619623477034</updated>
+    </task>
+    <task id="LOCAL-00015" summary="connection variable incorrect value glitch removed LMS">
+      <created>1619670695273</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1619670695273</updated>
+    </task>
+    <task id="LOCAL-00016" summary="correction of Sequelize Models to support table names with underscore">
+      <created>1619683792300</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1619683792300</updated>
+    </task>
+    <task id="LOCAL-00017" summary="MySQL connection made steady and token generator function for teachers and students added">
+      <created>1619698067415</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1619698067415</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Route correction for new assignment and update assignment">
+      <created>1619698733482</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1619698733482</updated>
+    </task>
+    <task id="LOCAL-00019" summary="file upload module work initiated">
+      <created>1619704214421</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1619704214421</updated>
+    </task>
+    <task id="LOCAL-00020" summary="file upload module work initiated">
+      <created>1619708674156</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1619708674156</updated>
+    </task>
+    <task id="LOCAL-00021" summary="working association between student and assignment submission">
+      <created>1619760713085</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1619760713085</updated>
+    </task>
+    <task id="LOCAL-00022" summary="working association between assignment and submitted assignment">
+      <created>1619760842300</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1619760842300</updated>
+    </task>
+    <task id="LOCAL-00023" summary="working association between classrooms and classroomStudents">
+      <created>1619761355598</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1619761355598</updated>
+    </task>
+    <task id="LOCAL-00024" summary="error removed caused while association of classroom and classroomStudents">
+      <created>1619761444002</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1619761444002</updated>
+    </task>
+    <task id="LOCAL-00025" summary="working associations between (courseMaterials, courseSections) and (CourseSection and courses)">
+      <created>1619765851591</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1619765851591</updated>
+    </task>
+    <task id="LOCAL-00026" summary="MongoDB models work initiated">
+      <created>1619783939468</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1619783939469</updated>
+    </task>
+    <task id="LOCAL-00027" summary="update for mongoose">
+      <created>1619785675125</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1619785675125</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Mysql Models moved to different folder">
+      <created>1619838257120</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1619838257120</updated>
+    </task>
+    <task id="LOCAL-00029" summary="deleted redundant files from route folder">
+      <created>1619838592301</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1619838592301</updated>
+    </task>
+    <task id="LOCAL-00030" summary="working mongoose models">
+      <created>1619843210090</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1619843210090</updated>
+    </task>
+    <task id="LOCAL-00031" summary="optimization of mongoose models and mongoose connection variables env support">
+      <created>1619851120807</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1619851120807</updated>
+    </task>
+    <task id="LOCAL-00032" summary="optimization of DataValidators module and new validation functions initiated without definition">
+      <created>1619851199809</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1619851199809</updated>
+    </task>
+    <task id="LOCAL-00033" summary="correction of mongoose models">
+      <created>1619861371100</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1619861371100</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Model to monitor login activities">
+      <created>1619862659133</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862659133</updated>
+    </task>
+    <task id="LOCAL-00035" summary="students model initialized">
+      <created>1619862689352</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862689352</updated>
+    </task>
+    <task id="LOCAL-00036" summary="correction of default value for student_id attribute">
+      <created>1619862748338</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862748338</updated>
+    </task>
+    <task id="LOCAL-00037" summary="attributes renaming">
+      <created>1619862766174</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862766174</updated>
+    </task>
+    <task id="LOCAL-00038" summary="course materials and course sections mapping completed">
+      <created>1619862813618</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862813618</updated>
+    </task>
+    <task id="LOCAL-00039" summary="removing redundant models">
+      <created>1619862842734</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862842734</updated>
+    </task>
+    <task id="LOCAL-00040" summary="initialized auth functions for students and teachers">
+      <created>1619862914984</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862914984</updated>
+    </task>
+    <task id="LOCAL-00041" summary="removed Hr and crm routes access">
+      <created>1619862964932</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1619862964932</updated>
+    </task>
+    <task id="LOCAL-00042" summary="addition of new attribute in loginActivity model">
+      <created>1619864092198</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1619864092198</updated>
+    </task>
+    <task id="LOCAL-00043" summary="corrected bcrypt module's compare function spelling">
+      <created>1619877715868</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1619877715868</updated>
+    </task>
+    <task id="LOCAL-00044" summary="availability variable for teacher">
+      <created>1619931745592</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1619931745593</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,18 +638,32 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added comments for description" />
-    <MESSAGE value="Students Model work initiated" />
-    <MESSAGE value="Courses Model work initiated" />
-    <MESSAGE value="CourseSections Model work initiated" />
-    <MESSAGE value="courseMaterials Model work initiated" />
-    <MESSAGE value="classroomStudents Model work initiated" />
-    <MESSAGE value="classrooms Model work initiated" />
-    <MESSAGE value="AssignmentSubmission Model work initiated" />
-    <MESSAGE value="Assignments Model work initiated" />
-    <MESSAGE value="added auto-increment of primary key for admins model" />
-    <MESSAGE value="added auto-increment of primary key for adminRoles model" />
-    <option name="LAST_COMMIT_MESSAGE" value="added auto-increment of primary key for adminRoles model" />
+    <MESSAGE value="file upload module work initiated" />
+    <MESSAGE value="working association between student and assignment submission" />
+    <MESSAGE value="working association between assignment and submitted assignment" />
+    <MESSAGE value="working association between classrooms and classroomStudents" />
+    <MESSAGE value="error removed caused while association of classroom and classroomStudents" />
+    <MESSAGE value="working associations between (courseMaterials, courseSections) and (CourseSection and courses)" />
+    <MESSAGE value="MongoDB models work initiated" />
+    <MESSAGE value="update for mongoose" />
+    <MESSAGE value="Mysql Models moved to different folder" />
+    <MESSAGE value="deleted redundant files from route folder" />
+    <MESSAGE value="working mongoose models" />
+    <MESSAGE value="optimization of mongoose models and mongoose connection variables env support" />
+    <MESSAGE value="optimization of DataValidators module and new validation functions initiated without definition" />
+    <MESSAGE value="correction of mongoose models" />
+    <MESSAGE value="Model to monitor login activities" />
+    <MESSAGE value="students model initialized" />
+    <MESSAGE value="correction of default value for student_id attribute" />
+    <MESSAGE value="attributes renaming" />
+    <MESSAGE value="course materials and course sections mapping completed" />
+    <MESSAGE value="removing redundant models" />
+    <MESSAGE value="initialized auth functions for students and teachers" />
+    <MESSAGE value="removed Hr and crm routes access" />
+    <MESSAGE value="addition of new attribute in loginActivity model" />
+    <MESSAGE value="corrected bcrypt module's compare function spelling" />
+    <MESSAGE value="availability variable for teacher" />
+    <option name="LAST_COMMIT_MESSAGE" value="availability variable for teacher" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="92" key="#Notifications" timestamp="1619493086932">
@@ -347,121 +678,141 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="542" y="236" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.864@0.0.1536.864" timestamp="1619082121854" />
-    <state x="499" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619579946902">
+    <state x="499" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619838436531">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="499" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1619579946902" />
-    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2" timestamp="1619493010020">
+    <state x="499" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1619838436531" />
+    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2" timestamp="1619931742016">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1619493010020" />
+    <state x="87" y="0" width="1292" height="864" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1619931742016" />
     <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1619084873100">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="254" height="195" key="DatabaseViewActions_Filter/0.0.1536.864@0.0.1536.864" timestamp="1619084873100" />
-    <state x="549" y="160" key="FileChooserDialogImpl" timestamp="1619086099453">
+    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1619850754836">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="549" y="160" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1619086099453" />
-    <state width="1493" height="597" key="GridCell.Tab.0.bottom" timestamp="1619578270545">
+    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog/0.0.1536.864@0.0.1536.864" timestamp="1619850754836" />
+    <state x="549" y="160" key="FileChooserDialogImpl" timestamp="1619700810781">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="597" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
-    <state width="1493" height="597" key="GridCell.Tab.0.center" timestamp="1619578270545">
+    <state x="549" y="160" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1619700810781" />
+    <state width="1493" height="273" key="GridCell.Tab.0.bottom" timestamp="1619865514942">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="597" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
-    <state width="1493" height="597" key="GridCell.Tab.0.left" timestamp="1619578270545">
+    <state width="1493" height="273" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619865514942" />
+    <state width="1493" height="273" key="GridCell.Tab.0.center" timestamp="1619865514942">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="597" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
-    <state width="1493" height="597" key="GridCell.Tab.0.right" timestamp="1619578270545">
+    <state width="1493" height="273" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1619865514942" />
+    <state width="1493" height="273" key="GridCell.Tab.0.left" timestamp="1619865514942">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="597" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1619578270545" />
-    <state width="1493" height="255" key="GridCell.Tab.1.bottom" timestamp="1619279958998">
+    <state width="1493" height="273" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1619865514942" />
+    <state width="1493" height="273" key="GridCell.Tab.0.right" timestamp="1619865514942">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619279958998" />
-    <state width="1493" height="255" key="GridCell.Tab.1.center" timestamp="1619279958998">
+    <state width="1493" height="273" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1619865514942" />
+    <state width="1493" height="529" key="GridCell.Tab.1.bottom" timestamp="1619699532890">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1619279958998" />
-    <state width="1493" height="255" key="GridCell.Tab.1.left" timestamp="1619279958997">
+    <state width="1493" height="529" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619699532890" />
+    <state width="1493" height="529" key="GridCell.Tab.1.center" timestamp="1619699532890">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1619279958997" />
-    <state width="1493" height="255" key="GridCell.Tab.1.right" timestamp="1619279958998">
+    <state width="1493" height="529" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1619699532890" />
+    <state width="1493" height="529" key="GridCell.Tab.1.left" timestamp="1619699532890">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1619279958998" />
-    <state width="1493" height="255" key="GridCell.Tab.2.bottom" timestamp="1619279958999">
+    <state width="1493" height="529" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1619699532890" />
+    <state width="1493" height="529" key="GridCell.Tab.1.right" timestamp="1619699532890">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.2.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619279958999" />
-    <state width="1493" height="255" key="GridCell.Tab.2.center" timestamp="1619279958998">
+    <state width="1493" height="529" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1619699532890" />
+    <state width="1493" height="529" key="GridCell.Tab.2.bottom" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.2.center/0.0.1536.864@0.0.1536.864" timestamp="1619279958998" />
-    <state width="1493" height="255" key="GridCell.Tab.2.left" timestamp="1619279958998">
+    <state width="1493" height="529" key="GridCell.Tab.2.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state width="1493" height="529" key="GridCell.Tab.2.center" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.2.left/0.0.1536.864@0.0.1536.864" timestamp="1619279958998" />
-    <state width="1493" height="255" key="GridCell.Tab.2.right" timestamp="1619279958998">
+    <state width="1493" height="529" key="GridCell.Tab.2.center/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state width="1493" height="529" key="GridCell.Tab.2.left" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.2.right/0.0.1536.864@0.0.1536.864" timestamp="1619279958998" />
-    <state width="1493" height="255" key="GridCell.Tab.3.bottom" timestamp="1619279958999">
+    <state width="1493" height="529" key="GridCell.Tab.2.left/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state width="1493" height="529" key="GridCell.Tab.2.right" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.3.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619279958999" />
-    <state width="1493" height="255" key="GridCell.Tab.3.center" timestamp="1619279958999">
+    <state width="1493" height="529" key="GridCell.Tab.2.right/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state width="1493" height="529" key="GridCell.Tab.3.bottom" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.3.center/0.0.1536.864@0.0.1536.864" timestamp="1619279958999" />
-    <state width="1493" height="255" key="GridCell.Tab.3.left" timestamp="1619279958999">
+    <state width="1493" height="529" key="GridCell.Tab.3.bottom/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state width="1493" height="529" key="GridCell.Tab.3.center" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.3.left/0.0.1536.864@0.0.1536.864" timestamp="1619279958999" />
-    <state width="1493" height="255" key="GridCell.Tab.3.right" timestamp="1619279958999">
+    <state width="1493" height="529" key="GridCell.Tab.3.center/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state width="1493" height="529" key="GridCell.Tab.3.left" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="255" key="GridCell.Tab.3.right/0.0.1536.864@0.0.1536.864" timestamp="1619279958999" />
-    <state x="554" y="59" key="RollbackChangesDialog" timestamp="1619582134069">
+    <state width="1493" height="529" key="GridCell.Tab.3.left/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state width="1493" height="529" key="GridCell.Tab.3.right" timestamp="1619699532891">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="554" y="59" key="RollbackChangesDialog/0.0.1536.864@0.0.1536.864" timestamp="1619582134069" />
+    <state width="1493" height="529" key="GridCell.Tab.3.right/0.0.1536.864@0.0.1536.864" timestamp="1619699532891" />
+    <state x="147" y="75" key="MergeDialog" timestamp="1619695047103">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="147" y="75" key="MergeDialog/0.0.1536.864@0.0.1536.864" timestamp="1619695047103" />
+    <state x="473" y="140" key="MultipleFileMergeDialog" timestamp="1619695047124">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="473" y="140" key="MultipleFileMergeDialog/0.0.1536.864@0.0.1536.864" timestamp="1619695047124" />
+    <state x="554" y="59" key="RollbackChangesDialog" timestamp="1619863080457">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="554" y="59" key="RollbackChangesDialog/0.0.1536.864@0.0.1536.864" timestamp="1619863080457" />
     <state x="277" y="76" key="SettingsEditor" timestamp="1619583341000">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="277" y="76" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1619583341000" />
-    <state x="361" y="162" key="Vcs.Push.Dialog.v2" timestamp="1619493093251">
+    <state x="361" y="162" key="Vcs.Push.Dialog.v2" timestamp="1619877736334">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="162" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1619493093251" />
+    <state x="361" y="162" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1619877736334" />
     <state x="462" y="138" key="com.intellij.database.run.actions.ShowCsvFormatsAction$ForExport" timestamp="1619086195220">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="462" y="138" key="com.intellij.database.run.actions.ShowCsvFormatsAction$ForExport/0.0.1536.864@0.0.1536.864" timestamp="1619086195220" />
-    <state x="465" y="258" key="com.intellij.ide.util.TipDialog" timestamp="1619579498858">
+    <state x="465" y="258" key="com.intellij.ide.util.TipDialog" timestamp="1620011141493">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="465" y="258" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1619579498858" />
+    <state x="465" y="258" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1620011141493" />
     <state x="577" y="345" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1619363693494">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="577" y="345" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1619363693494" />
+    <state x="497" y="207" key="git4idea.merge.GitPullDialog" timestamp="1619775604433">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="497" y="207" key="git4idea.merge.GitPullDialog/0.0.1536.864@0.0.1536.864" timestamp="1619775604433" />
+    <state x="574" y="329" key="git4idea.ui.GitStashDialog" timestamp="1619698570298">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="574" y="329" key="git4idea.ui.GitStashDialog/0.0.1536.864@0.0.1536.864" timestamp="1619698570298" />
     <state x="209" y="158" key="new project wizard" timestamp="1619579536085">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="209" y="158" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1619579536085" />
-    <state x="425" y="197" key="run.anything.popup" timestamp="1619539063417">
+    <state x="425" y="197" key="run.anything.popup" timestamp="1619760637107">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1619539063417" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1619491962309">
+    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1619760637107" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1619849106570">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1619491962309" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1619849106570" />
   </component>
 </project>
