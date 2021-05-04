@@ -1,9 +1,12 @@
 class ControllerClass{
+    addNewHrActivity(){
+
+    }
 
 }
 
 
 const Controller=new ControllerClass();
 
-module.exports.Controller=Controller;
-module.exports.ControllerClass=ControllerClass;
+module.exports.ActivityController=Controller;
+module.exports.ActivityControllerClass=ControllerClass;
