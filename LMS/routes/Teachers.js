@@ -2,7 +2,45 @@ const router = require("express").Router();
 const Assignment = require("../models/mongodb/assignments");
 const AssignmentSubmission = require("../models/mongodb/assignmentSubmissions");
 const LectureFeedback = require("../models/mongodb/lectureFeedback");
+const Teachers = require("../models/mongodb/teachers");
 const { NewAssignment } = require("./DataValidators");
+
+const bcrypt = require("bcrypt");
+
+//POST new teacher
+router.post("/new", async (req, res) => {
+  let teacher = await Teachers.findOne({ email: req.body.email });
+  if (teacher) return res.status(400).send("Teacher already registered");
+
+  // const result = Teachers(req.body)
+  //   .then((data) => {
+  //     console.log("data", data);
+  //     res.send(data);
+  //   })
+  //   .catch((err) => {
+  //     console.log("err ", err);
+  //   });
+
+  // console.log(result);
+  // console.log(req.body);
+
+  teacher = new Teachers({
+    name: req.body.name,
+    primary_phone_number: req.body.primary_phone_number,
+    email: req.body.email,
+    password: req.body.password,
+    last_seen: req.body.last_seen,
+    country: req.body.country,
+    zip_code: req.body.zip_code,
+    address: req.body.address,
+  });
+
+  const salt = await bcrypt.genSalt(10);
+  teacher.password = await bcrypt.hash(teacher.password, salt);
+  await teacher.save();
+  console.log(teacher);
+  res.send(teacher);
+});
 
 //GET All assignments given by Teacher
 router.get("/", (req, res) => {
