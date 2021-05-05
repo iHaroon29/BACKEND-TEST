@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const HrApplicantController=require("../controllers/HrApplicantController");
+const HrAdvisorController=require("../controllers/HrAdvisorController").Controller;
 const fileUpload=require("../modules/fileUploads");
 const HrController=require("../controllers/HrController");
 
@@ -41,6 +42,24 @@ router.post("/hr/applicant/new",fileUpload.fields([{name:"cv",count:1},{name:"pr
         })
 
 
+});
+
+
+router.post("/teacher/new",(req,res)=>{
+    require("./DataValidators").AddNewTeacherToTakeDemoClass(req.body)
+        .then((validData)=>{
+            // console.log(validData);
+            HrAdvisorController.addTeacherToClass(validData)
+                .then(()=>{
+                    return res.send("created").status(202);
+                }).catch((err)=>{
+                return res.send(err).status(400);
+            });
+        }).catch(invalidData=>{
+
+        // console.log(invalidData);
+            return res.send(invalidData.details).status(400);
+    })
 });
 
 

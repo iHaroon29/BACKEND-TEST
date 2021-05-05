@@ -24,6 +24,10 @@ const ClassroomSchema= new mongoose.Schema({
             type:Object, // course id of registered courses as key and course details as values
             default:{},
         },
+        'demo_class':{
+            type:Object,
+            default:{},
+        },
     },
     {
         timestamps:true,

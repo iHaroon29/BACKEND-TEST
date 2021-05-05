@@ -13,7 +13,7 @@ const salt = bcrypt.genSaltSync(saltRounds);
 *
  */
 module.exports.genHash=(stringToHash)=>{
-    console.log(stringToHash," ",salt);
+    // console.log(stringToHash," ",salt);
         return bcrypt.hash(stringToHash,salt); // returns promise of hash
 };
 

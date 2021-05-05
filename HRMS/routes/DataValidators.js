@@ -90,3 +90,42 @@ module.exports.NewLoginActivity=(data)=>{
   }).options({stripUnknown:true});
   return Schema.validateAsync(data);
 };
+
+module.exports.HrRoomComment=(data)=>{
+  const Schema=Joi.object({
+    user_type:Joi.string().required(),
+    user_id:Joi.string().alphanum().min(4).max(15).required(),
+    comment:Joi.string().required()
+
+
+  }).options({stripUnknown:true});
+  return Schema.validateAsync(data);
+};
+
+
+module.exports.AddNewTeacherToTakeDemoClass=(data)=>{
+  const Schema=Joi.object({
+    "teacher_details":Joi.object({
+      // "username":Joi.string().required(),
+      "password":Joi.string().required(),
+      "name":Joi.string().required(),
+      "profile_picture":Joi.string().optional(),
+      "primary_phone_number":Joi.string().required(),
+      "alternate_phone_number":Joi.string().optional(),
+      "email":Joi.string().lowercase().required(),
+      "last_seen":Joi.date().timestamp().default(Date.now()),
+      "country":Joi.string().required(),
+      "zip_code":Joi.string().required(),
+      "address":Joi.string().required(),
+      "is_available":Joi.boolean().default(false)
+
+    }).options({stripUnknown:true}),
+    "hr_id":Joi.string().required(),
+    "teacher_id":Joi.string().required(),
+    "classroom_id":Joi.string().required()
+
+  }).options({stripUnknown:true});
+  return Schema.validateAsync(data);
+};
+
+
