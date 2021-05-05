@@ -37,50 +37,62 @@ const generateToken=(data,role)=>{
         })
     });
 };
-module.exports.verifyToken=(token, requiredRole)=>{
+
+
+const verifyToken=(token, requiredRole)=>{
     return new Promise(((resolve, reject) => {
         if(!token || !requiredRole)
-            reject("token and requiredRole both are required fields.");
+            reject({
+                message:"token and requiredRole both are required fields."
+            });
         jwt.verify(token,SECRET,{},(err,decoded)=>{
             if(decoded)
             {
                 console.log(decoded);
-                resolve(decoded);
+                // verify if the required role is present or not
+                if(decoded.role===requiredRole)
+                    resolve(decoded);
+                reject({
+                    message:"not required role"
+                })
             }else {
                 if(err.name==="TokenExpiredError"){
-                    reject("Token expired");
+                    reject({
+                        message:"Token expired"
+                    });
                 }
-                reject(err);
+                reject({
+                    message:"unable to verify tokens",
+                    stack:err
+                });
             }
         });
     }))
 };
 
 
-
+//===========================================================================
 
 module.exports.tokenGenerateForHrTeamMember=(data)=> {
-    new Promise((resolve, reject) => {
-        generateToken(data,"HR_TEAM_MEMBER")
-            .then((data)=>{
-                resolve(data);
-            })
-            .catch((err)=>{
-                reject(err);
-            })
-    })
+    return generateToken(data, "HR_TEAM_MEMBER");
 };
 module.exports.tokenGenerateForHrTeamLeader=(data)=> {
-    new Promise((resolve, reject) => {
-        generateToken(data,"HR_TEAM_LEADER")
-            .then((data)=>{
-                resolve(data);
-            })
-            .catch((err)=>{
-                reject(err);
-            })
-    })
+    return generateToken(data,"HR_TEAM_LEADER");
 };
 module.exports.tokenGenerateForHrAdvisor=(data)=> {
-        return generateToken(data,"HR_ADVISOR")
+    return generateToken(data,"HR_ADVISOR")
 };
+//===========================================================================
+
+
+module.exports.verifyTokenForHrTeamMember=(data)=> {
+    return verifyToken(data, "HR_TEAM_MEMBER");
+};
+module.exports.verifyTokenForHrTeamLeader=(data)=> {
+    return verifyToken(data,"HR_TEAM_LEADER");
+};
+module.exports.verifyTokenForHrAdvisor=(data)=> {
+    return verifyToken(data,"HR_ADVISOR")
+};
+
+//===========================================================================

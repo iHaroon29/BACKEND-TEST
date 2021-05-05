@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const HrController=require("../controllers/HrController");
+const LoginActivityController=require("../controllers/LoginActivityController");
+// Every successful login attempt should be saved in the loginActivity
 
 
 router.post('/login/hr/advisor', function(req, res) {
