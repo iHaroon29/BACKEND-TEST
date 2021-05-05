@@ -1,7 +1,7 @@
 const mongoose=require("../../db/mongoDB");
 const {Schema}=mongoose;
 const HrRoomSchema=new Schema({
-        new_hr_applicant_id:{
+        new_hr_applicants:{
             type:Object,
             required:true,
         },
