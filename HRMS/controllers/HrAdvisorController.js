@@ -63,7 +63,9 @@ class HrAdvisorControllerClass extends HrActivityController{
 
     }
 
-    addTeacherToClass(details){
+    addTeacherToClass(req,res){
+        console.log(req);
+        const details=req.body;
         const Activity={
             hr_id:details.hr_id,
             activity:{
@@ -72,76 +74,84 @@ class HrAdvisorControllerClass extends HrActivityController{
                 teacher_id:details.teacher_id
             },
         };
-        return new Promise((resolve, reject) => {
-            Classrooms.findById(details.classroom_id)
-                .then((LmsClass)=>{
-                    if(!LmsClass)
-                    {
-                        // if no classroom exists with this classroom_id
-                        rejectResponseFormat.message="No classroom found";
-                        rejectResponseFormat.trace="classroom not found with id `"+details.classroom_id+"`";
-                        reject(rejectResponseFormat);
-                    }
-                    const teacherToBeAddedInClass=LmsClass.demo_class;
-                    if(LmsClass.demo_class.teacher)
-                    {
-                        // if a teacher is already present to take demo class
-                        rejectResponseFormat.message="Unable to add teacher";
-                        rejectResponseFormat.trace="Already a teacher to take demo class in classroom `"+details.classroom_id+"`";
-                        reject(rejectResponseFormat);
-                    }
-                    teacherToBeAddedInClass.teacher={};
-                    teacherToBeAddedInClass.teacher[details.teacher_id]={
-                        created_at:Date.now(),
-                    };
-                    // add a teacher take demo class
-                    Classrooms.findByIdAndUpdate(LmsClass._id,{"demo_class":teacherToBeAddedInClass},{useFindAndModify:false,new:true})
-                        .then((updateLmsClass)=>{
-                            encrypt(details.teacher_details.password)
-                                .then((hashedPassword)=>{
-                                    details.teacher_details.password=hashedPassword;
-                                    Teachers.findOneAndUpdate({email:details.teacher_details.email},details.teacher_details,{upsert:true,useFindAndModify:false})
-                                        .then((teacherDetails)=>{
-                                            // console.log(teacherDetails)
-                                            // adding into HRActivity for tracking purpose
-                                            this.addNewHrActivity(Activity)
-                                                .then((addedActivity)=>{
-                                                    // activity logged
-                                                    resolve({
-                                                        teacher_details:teacherDetails,
-                                                        classroom_details:LmsClass
-                                                    })
+        // return new Promise((resolve, reject) => {
+        Classrooms.findById(details.classroom_id)
+            .then((LmsClass)=>{
+                if(!LmsClass)
+                {
 
-                                                }).catch((errorInAddingActivity)=>{
-                                                rejectResponseFormat.message="unable to log in hr activity";
-                                                rejectResponseFormat.trace=errorInAddingActivity;
-                                                reject(rejectResponseFormat)
-                                            })
-                                        }).catch((teacherSavingError)=>{
-                                        rejectResponseFormat.message="unable to save teacher";
-                                        rejectResponseFormat.trace=teacherSavingError;
-                                        console.log(teacherSavingError)
-                                        reject(rejectResponseFormat)
-                                    })
-                                }).catch(encryptionErr=>{
-                                rejectResponseFormat.message="unable to encrypt password";
-                                rejectResponseFormat.trace=encryptionErr;
-                                reject(rejectResponseFormat);
-                            })
+                    // if no classroom exists with this classroom_id
+                    rejectResponseFormat.message="No classroom found";
+                    rejectResponseFormat.trace="classroom not found with id `"+details.classroom_id+"`";
 
-                        }).catch((UpdateClassToAddNewTeacher)=>{
-                        rejectResponseFormat.message="unable to add teacher to class";
-                        rejectResponseFormat.trace=UpdateClassToAddNewTeacher;
-                        reject(rejectResponseFormat);
+                    // reject(rejectResponseFormat);
+                    return res.send(rejectResponseFormat).status(400);
+                }
+                const teacherToBeAddedInClass=LmsClass.demo_class;
+                if(LmsClass.demo_class.teacher)
+                {
+                    // if a teacher is already present to take demo class
+                    rejectResponseFormat.message="Unable to add teacher";
+                    rejectResponseFormat.trace="Already a teacher to take demo class in classroom `"+details.classroom_id+"`";
+                    // reject(rejectResponseFormat);
+                    return res.send(rejectResponseFormat).status(400);
+                }
+                teacherToBeAddedInClass.teacher={};
+                teacherToBeAddedInClass.teacher[details.teacher_id]={
+                    created_at:Date.now(),
+                };
+                // add a teacher take demo class
+                Classrooms.findByIdAndUpdate(LmsClass._id,{"demo_class":teacherToBeAddedInClass},{useFindAndModify:false,new:true})
+                    .then((updateLmsClass)=>{
+                        encrypt(details.teacher_details.password)
+                            .then((hashedPassword)=>{
+                                details.teacher_details.password=hashedPassword;
+                                Teachers.findOneAndUpdate({email:details.teacher_details.email},details.teacher_details,{upsert:true,useFindAndModify:false})
+                                    .then((teacherDetails)=>{
+                                        // console.log(teacherDetails)
+                                        // adding into HRActivity for tracking purpose
+                                        this.addNewHrActivity(Activity)
+                                            .then((addedActivity)=>{
+                                                // activity logged
+                                                return  res.send({
+                                                    teacher_details:teacherDetails,
+                                                    classroom_details:LmsClass
+                                                }).status(202);
 
-                    })
-                }).catch(unableToFindClassroom=>{
-                rejectResponseFormat.message="unable to find classroom "+details.classroom_id;
-                rejectResponseFormat.trace=unableToFindClassroom;
-                console.log(unableToFindClassroom);
-                reject(rejectResponseFormat);
-            })
+                                            }).catch((errorInAddingActivity)=>{
+                                            rejectResponseFormat.message="unable to log in hr activity";
+                                            rejectResponseFormat.trace=errorInAddingActivity;
+                                            // reject(rejectResponseFormat)
+                                            return res.send(rejectResponseFormat).status(400);
+                                        })
+                                    }).catch((teacherSavingError)=>{
+                                    rejectResponseFormat.message="unable to save teacher";
+                                    rejectResponseFormat.trace=teacherSavingError;
+                                    console.log(teacherSavingError);
+                                    // reject(rejectResponseFormat)
+                                    return res.send(rejectResponseFormat).status(400);
+                                })
+                            }).catch(encryptionErr=>{
+                            rejectResponseFormat.message="unable to encrypt password";
+                            rejectResponseFormat.trace=encryptionErr;
+                            // reject(rejectResponseFormat);
+                            return res.send(rejectResponseFormat).status(400);
+                        })
+
+                    }).catch((UpdateClassToAddNewTeacher)=>{
+                    rejectResponseFormat.message="unable to add teacher to class";
+                    rejectResponseFormat.trace=UpdateClassToAddNewTeacher;
+                    // reject(rejectResponseFormat);
+                    return res.send(rejectResponseFormat).status(400);
+                })
+            }).catch(unableToFindClassroom=>{
+            rejectResponseFormat.message="unable to find classroom "+details.classroom_id;
+            rejectResponseFormat.trace=unableToFindClassroom;
+            // console.log(unableToFindClassroom);
+            // reject(rejectResponseFormat);
+            return res.send(rejectResponseFormat).status(400);
         })
+        // })
 
 
     }
