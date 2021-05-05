@@ -63,5 +63,5 @@ router.delete("/delete/:id", async (req, res) => {
   await student.destroy();
   res.send(student);
 });
-
+//student route
 module.exports = router;
