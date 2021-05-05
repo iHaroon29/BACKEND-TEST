@@ -1,6 +1,8 @@
-class ControllerClass{
-    addNewHrActivity(){
+const HrActivity=require("../models/mongodb/HrActivity");
 
+class ControllerClass{
+    addNewHrActivity(activity){
+        return new HrActivity(activity).save();
     }
 
 }
