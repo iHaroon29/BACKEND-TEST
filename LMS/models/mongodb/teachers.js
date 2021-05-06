@@ -13,7 +13,6 @@ const TeacherSchema=new Schema({
     "primary_phone_number":{
         type:String,
         required:true
-
     },
     "alternate_phone_number":{
         type:Array(String),
@@ -22,7 +21,6 @@ const TeacherSchema=new Schema({
     "email":{
         type:String,
         required:true
-
     },
     "password":{
         type:String,

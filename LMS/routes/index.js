@@ -8,7 +8,7 @@ const models = require("../models/mongodb/lectureAttendances");
 models
   .findById("507f1f77bcf86cd799439011")
   .then((result) => {
-    console.log(result);
+    // console.log(result)
   })
   .catch((err) => {
     console.log(err);
