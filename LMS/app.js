@@ -33,8 +33,8 @@ app.use("/api", indexRouter);
 app.use("/api/students", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/classroom", classroomRoutes);
-app.use("/api/Assignment", AssignmentRoutes);
-app.use("/api/AssignmentSubmmission", AssignmentSubmissionRoutes);
+app.use("/api/Assignment", assignmentRoutes);
+app.use("/api/AssignmentSubmmission", assignmentSubmissionRoutes);
 app.use("/api/auth", authenticationRoutes);
 
 module.exports = app;
