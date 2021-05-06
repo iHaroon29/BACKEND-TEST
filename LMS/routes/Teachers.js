@@ -70,7 +70,7 @@ router.get("/assignmentSubmission/:id", async (req, res) => {
 
 //POST new assignment by teacher
 router.post("/assignment/new", async (req, res) => {
-  const result = NewAssignment(req.body)
+  let result = await NewAssignment(req.body)
     .then((data) => {
       console.log("data", data);
       res.send(data);
@@ -78,22 +78,23 @@ router.post("/assignment/new", async (req, res) => {
     .catch((err) => {
       console.log("err ", err);
     });
-  console.log(result);
-  console.log(req.body);
-  const assignment = new Assignment(
-    // result
-    {
-      course_id: req.body.course_id,
-      teacher_id: req.body.teacher_id,
-      instructions: req.body.instructions,
-      description: req.body.description,
-      last_submission_date: req.body.last_submission_date,
-    }
-  );
 
-  await assignment.save();
-  console.log(assignment);
-  res.send(assignment);
+  console.log(req.body);
+  const assignment = new Assignment({
+    course_id: req.body.course_id,
+    teacher_id: req.body.teacher_id,
+    instructions: req.body.instructions,
+    description: req.body.description,
+    last_submission_date: req.body.last_submission_date,
+  });
+  try {
+    await assignment.save();
+    console.log(assignment);
+    res.send(assignment);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error.message);
+  }
 });
 
 //PUT Update a assignment given by a teacher
@@ -118,7 +119,7 @@ router.put("/assignment/update/:id", async (req, res) => {
 router.post("/lectureFeedback", async (req, res) => {
   const lectureFeedback = new LectureFeedback({
     lecture_id: req.body.lecture_id,
-    //teachers_feedback: req.body.teachers_feedback,
+    teachers_feedback: req.body.teachers_feedback,
   });
 
   await lectureFeedback.save();
