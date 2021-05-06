@@ -7,11 +7,11 @@ const LectureFeedbackSchema=new mongoose.Schema({
             required:true
         },
         "students_feedback":{
-            type:Array(object),
+            type:Array(Object),
             default:[]
         },
         "teachers_feedback":{
-            type:Array(object),
+            type:Array(Object),
             default:[]
         }
     },

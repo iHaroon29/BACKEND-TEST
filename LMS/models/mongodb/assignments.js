@@ -23,7 +23,7 @@ const AssignmentSchema=new mongoose.Schema({
         },
         'last_submission_date':{
             type: Date,
-            required:true,
+            // required:true,
         },
     },
     {
