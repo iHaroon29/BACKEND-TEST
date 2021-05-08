@@ -7,7 +7,6 @@ const LoginActivity=require("../models/mongodb/logInActiviity");
 const ROLES={
     EMPLOYEE:"DIGITAL_AIDED_SCHOOL_HRMS_EMPLOYEE",
     HR_ADVISOR:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_ADVISOR",
-    LMS_TEACHER:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_ADVISOR",
     HR_TEAM_LEADER:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_LEADER",
     NEW_HR_APPLICANT:"DIGITAL_AIDED_SCHOOL_HRMS_NEW_HR_APPLICANT",
 };
@@ -27,24 +26,93 @@ class AuthenticationAndAuthorizationController{
                         // match password
                         bcrypt.compareHash(validLoginData.password,employeePassword)
                             .then((passwordMatched)=>{
-                                // generate auth token
-                                AuthToken.generateToken({},employee.role)
-                                    .then((token)=>{
-                                        const LoginActivityData={
-                                            user_type:"employee",
-                                            user_id:employee._id,
-                                            activity:{token:token},
-                                            has_logged_out:false,
-                                        };
-                                        // saving login
-                                        new LoginActivity(LoginActivityData).save().then(r => {
-                                            console.log("new user logged in ",r)
-                                        }).catch(()=>{
-                                        });
-                                        return res.send(token).status(202);
-                                    }).catch((unableToGenerateAuthToken)=>{
-                                    return res.send("unable to make you login please try again later");
-                                })
+                                const role=employee.role;
+                                if(role==="EMPLOYEE"){
+                                    AuthToken.tokenGenerateForEmployee({id:employee._id})
+                                        .then((token)=>{
+                                            const LoginActivityData={
+                                                user_type:"employee",
+                                                user_id:employee._id,
+                                                activity:{token:token},
+                                                has_logged_out:false,
+                                            };
+                                            // saving login
+                                            new LoginActivity(LoginActivityData).save().then(r => {
+                                                console.log("new user logged in ",r)
+                                            }).catch(()=>{
+                                            });
+                                            return res.send(token).status(202);
+                                        }).catch((unableToGenerateAuthToken)=>{
+                                        return res.send("unable to make you login please try again later");
+                                    })
+
+                                }
+
+                                if(role==="HR_ADVISOR"){
+                                    // generate auth token
+                                    AuthToken.tokenGenerateForHrAdvisor({id:employee._id})
+                                        .then((token)=>{
+                                            const LoginActivityData={
+                                                user_type:"employee",
+                                                user_id:employee._id,
+                                                activity:{token:token},
+                                                has_logged_out:false,
+                                            };
+                                            // saving login
+                                            new LoginActivity(LoginActivityData).save().then(r => {
+                                                console.log("new user logged in ",r)
+                                            }).catch(()=>{
+                                            });
+                                            return res.send(token).status(202);
+                                        }).catch((unableToGenerateAuthToken)=>{
+                                        return res.send("unable to make you login please try again later");
+                                    })
+
+                                }
+                                if(role==="HR_TEAM_LEADER"){
+                                    // generate auth token
+                                    AuthToken.tokenGenerateForHrTeamLeader({id:employee._id})
+                                        .then((token)=>{
+                                            const LoginActivityData={
+                                                user_type:"employee",
+                                                user_id:employee._id,
+                                                activity:{token:token},
+                                                has_logged_out:false,
+                                            };
+                                            // saving login
+                                            new LoginActivity(LoginActivityData).save().then(r => {
+                                                console.log("new user logged in ",r)
+                                            }).catch(()=>{
+                                            });
+                                            return res.send(token).status(202);
+                                        }).catch((unableToGenerateAuthToken)=>{
+                                        return res.send("unable to make you login please try again later");
+                                    })
+
+                                }
+                                if(role==="NEW_HR_APPLICANT"){
+                                    // generate auth token
+                                    AuthToken.tokenGenerateForHrApplicant({id:employee._id})
+                                        .then((token)=>{
+                                            const LoginActivityData={
+                                                user_type:"employee",
+                                                user_id:employee._id,
+                                                activity:{token:token},
+                                                has_logged_out:false,
+                                            };
+                                            // saving login
+                                            new LoginActivity(LoginActivityData).save().then(r => {
+                                                console.log("new user logged in ",r)
+                                            }).catch(()=>{
+                                            });
+                                            return res.send(token).status(202);
+                                        }).catch((unableToGenerateAuthToken)=>{
+                                        return res.send("unable to make you login please try again later");
+                                    })
+
+                                }
+
+
                             }).catch((invalidPassword)=>{
                             return res.send("invalid username or password").status(401);
                         })
@@ -76,13 +144,69 @@ class AuthenticationAndAuthorizationController{
         })
     }
     getLoggedInUserDetails(req,res){
-        AuthToken.verifyToken(req.headers.authorization)
+        AuthToken.getTokenDetails(req.headers.authorization)
             .then((decodedData)=>{
                 req.body.authenticatedUser=decodedData;
                 return res.send(decodedData).status(200);
             }).catch(errorInDecoding=>{
             return res.send("unable to verify login").status(500);
         })
+    }
+
+
+    verifyLoginForHrAdvisor(req,res){
+        const token=req.headers.authorization;
+        AuthToken.verifyTokenForHrAdvisor(token)
+            .then((data)=>{
+                Employee.findById(data.id)
+                    .then((employee)=>{
+                        return res.send(employee).status(202);
+                    }).catch(employeeFindingError=>{
+                    return res.status(401);
+                })
+            }).catch(authTokenVerificationError=> {
+            return res.status(500);
+        })
+    }
+    verifyLoginForHrApplicant(req,res){
+        const token=req.headers.authorization;
+        AuthToken.verifyTokenForHrApplicant(token)
+            .then((data)=>{
+                Employee.findById(data.id)
+                    .then((employee)=>{
+                        return res.send(employee).status(202);
+                    }).catch(employeeFindingError=>{
+                    return res.status(401);
+                })
+            }).catch(authTokenVerificationError=> {
+            return res.status(500);
+        })
+    }
+    verifyLoginForHrTeamLeader(req,res){
+        const token=req.headers.authorization;
+        AuthToken.verifyTokenForHrTeamLeader(token)
+            .then((data)=>{
+                Employee.findById(data.id)
+                    .then((employee)=>{
+                        return res.send(employee).status(202);
+                    }).catch(employeeFindingError=>{
+                    return res.status(401);
+                })
+            }).catch(authTokenVerificationError=> {
+            return res.status(500);
+        })
+    }
+    makeLoginToHrAdvisor(){
+
+    }
+    makeLoginToHrTeamLeader(){
+
+    }
+    makeLoginToEmployee(){
+
+    }
+    makeLoginToHrApplicant(){
+
     }
 }
 const Controller=new AuthenticationAndAuthorizationController();
