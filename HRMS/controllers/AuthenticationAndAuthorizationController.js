@@ -27,90 +27,30 @@ class AuthenticationAndAuthorizationController{
                         bcrypt.compareHash(validLoginData.password,employeePassword)
                             .then((passwordMatched)=>{
                                 const role=employee.role;
-                                if(role==="EMPLOYEE"){
-                                    AuthToken.tokenGenerateForEmployee({id:employee._id})
-                                        .then((token)=>{
-                                            const LoginActivityData={
-                                                user_type:"employee",
-                                                user_id:employee._id,
-                                                activity:{token:token},
-                                                has_logged_out:false,
-                                            };
-                                            // saving login
-                                            new LoginActivity(LoginActivityData).save().then(r => {
-                                                console.log("new user logged in ",r)
-                                            }).catch(()=>{
-                                            });
-                                            return res.send(token).status(202);
-                                        }).catch((unableToGenerateAuthToken)=>{
-                                        return res.send("unable to make you login please try again later");
-                                    })
-
-                                }
-
-                                if(role==="HR_ADVISOR"){
+                                // console.log(role!=="EMPLOYEE" && role!=="NEW_HR_APPLICANT" && role!=="HR_ADVISOR" && role!=="HR_TEAM_LEADER")
+                                if(role!=="EMPLOYEE" && role!=="NEW_HR_APPLICANT" && role!=="HR_ADVISOR" && role!=="HR_TEAM_LEADER"){
                                     // generate auth token
-                                    AuthToken.tokenGenerateForHrAdvisor({id:employee._id})
-                                        .then((token)=>{
-                                            const LoginActivityData={
-                                                user_type:"employee",
-                                                user_id:employee._id,
-                                                activity:{token:token},
-                                                has_logged_out:false,
-                                            };
-                                            // saving login
-                                            new LoginActivity(LoginActivityData).save().then(r => {
-                                                console.log("new user logged in ",r)
-                                            }).catch(()=>{
-                                            });
-                                            return res.send(token).status(202);
-                                        }).catch((unableToGenerateAuthToken)=>{
-                                        return res.send("unable to make you login please try again later");
-                                    })
-
+                                    return res.send("Unauthorized").status(401);
                                 }
-                                if(role==="HR_TEAM_LEADER"){
-                                    // generate auth token
-                                    AuthToken.tokenGenerateForHrTeamLeader({id:employee._id})
-                                        .then((token)=>{
-                                            const LoginActivityData={
-                                                user_type:"employee",
-                                                user_id:employee._id,
-                                                activity:{token:token},
-                                                has_logged_out:false,
-                                            };
-                                            // saving login
-                                            new LoginActivity(LoginActivityData).save().then(r => {
-                                                console.log("new user logged in ",r)
-                                            }).catch(()=>{
-                                            });
-                                            return res.send(token).status(202);
-                                        }).catch((unableToGenerateAuthToken)=>{
-                                        return res.send("unable to make you login please try again later");
-                                    })
 
-                                }
-                                if(role==="NEW_HR_APPLICANT"){
-                                    // generate auth token
-                                    AuthToken.tokenGenerateForHrApplicant({id:employee._id})
-                                        .then((token)=>{
-                                            const LoginActivityData={
-                                                user_type:"employee",
-                                                user_id:employee._id,
-                                                activity:{token:token},
-                                                has_logged_out:false,
-                                            };
-                                            // saving login
-                                            new LoginActivity(LoginActivityData).save().then(r => {
-                                                console.log("new user logged in ",r)
-                                            }).catch(()=>{
-                                            });
-                                            return res.send(token).status(202);
-                                        }).catch((unableToGenerateAuthToken)=>{
-                                        return res.send("unable to make you login please try again later");
-                                    })
-
-                                }
+                                // generate auth token
+                                AuthToken.generateToken({id:employee._id},role)
+                                    .then((token)=>{
+                                        const LoginActivityData={
+                                            user_type:token.role,
+                                            user_id:employee._id,
+                                            activity:{token:token.token},
+                                            has_logged_out:false,
+                                        };
+                                        // saving login
+                                        new LoginActivity(LoginActivityData).save().then(r => {
+                                            console.log("new user logged in ",r)
+                                        }).catch(()=>{
+                                        });
+                                        return res.send(token).status(202);
+                                    }).catch((unableToGenerateAuthToken)=>{
+                                    return res.send("unable to make you login please try again later");
+                                })
 
 
                             }).catch((invalidPassword)=>{
@@ -125,13 +65,14 @@ class AuthenticationAndAuthorizationController{
     }
     logout(req,res){
         const token=req.headers.authorization;
-        AuthToken.verifyToken(token)
+        AuthToken.getTokenDetails(token)
             .then((decodedToken)=>{
+                console.log(decodedToken)
                 LoginActivity.findOne({"activity.token":token, has_logged_out:false})
                     .then((employee)=>{
                         if(!employee)
-                            return res.status(401);
-                        LoginActivity.updateOne({_id:employee._id})
+                            return res.send("Unauthorized").status(401);
+                        LoginActivity.updateOne({_id:employee._id},{has_logged_out:true})
                             .then(updatedValue=>{
                                 return res.send("logged out successfully").status(202);
                             }).catch((errorInUpdation)=>{
@@ -140,7 +81,7 @@ class AuthenticationAndAuthorizationController{
                         })
                     })
             }).catch((invalidToken)=>{
-            return res.status(401);
+            return res.send("Unauthorized").status(401);
         })
     }
     getLoggedInUserDetails(req,res){
@@ -153,60 +94,79 @@ class AuthenticationAndAuthorizationController{
         })
     }
 
+    /*
+    *
+    * TO BE USED AS ROUTER MIDDLEWARE
+    *
+    */
 
-    verifyLoginForHrAdvisor(req,res){
+
+    verifyLoginForHrAdvisor(req,res,next){
         const token=req.headers.authorization;
-        AuthToken.verifyTokenForHrAdvisor(token)
+        if(!token)
+            return res.send("Unauthorized").status(401);
+
+        AuthToken.getTokenDetails(token)
             .then((data)=>{
-                Employee.findById(data.id)
-                    .then((employee)=>{
-                        return res.send(employee).status(202);
-                    }).catch(employeeFindingError=>{
-                    return res.status(401);
-                })
+                if(data.role!=="HR_ADVISOR")
+                    return res.send("Unauthorized").status(401);
+                next();
             }).catch(authTokenVerificationError=> {
-            return res.status(500);
+            return res.send("Internal Server Error").status(500);
         })
     }
-    verifyLoginForHrApplicant(req,res){
+
+
+
+    verifyLoginForHrApplicant(req,res,next){
         const token=req.headers.authorization;
-        AuthToken.verifyTokenForHrApplicant(token)
+
+        if(!token)
+            return res.send("Unauthorized").status(401);
+
+
+        AuthToken.getTokenDetails(token)
             .then((data)=>{
-                Employee.findById(data.id)
-                    .then((employee)=>{
-                        return res.send(employee).status(202);
-                    }).catch(employeeFindingError=>{
-                    return res.status(401);
-                })
+                if(data.role!=="NEW_HR_APPLICANT")
+                    return res.send("Unauthorized").status(401);
+                next();
             }).catch(authTokenVerificationError=> {
-            return res.status(500);
+            return res.send("Internal Server Error").status(500);
         })
     }
-    verifyLoginForHrTeamLeader(req,res){
+
+
+    verifyLoginForHrTeamLeader(req,res,next){
         const token=req.headers.authorization;
-        AuthToken.verifyTokenForHrTeamLeader(token)
+
+        if(!token)
+            return res.send("Unauthorized").status(401);
+
+        AuthToken.getTokenDetails(token)
             .then((data)=>{
-                Employee.findById(data.id)
-                    .then((employee)=>{
-                        return res.send(employee).status(202);
-                    }).catch(employeeFindingError=>{
-                    return res.status(401);
-                })
+                if(data.role!=="HR_TEAM_LEADER")
+                    return res.send("Unauthorized").status(401);
+                next();
             }).catch(authTokenVerificationError=> {
-            return res.status(500);
+            return res.send("Internal Server Error").status(500);
         })
     }
-    makeLoginToHrAdvisor(){
 
-    }
-    makeLoginToHrTeamLeader(){
+    verifyLoginForEmployee(req,res,next){
+        const token=req.headers.authorization;
 
-    }
-    makeLoginToEmployee(){
+        if(!token)
+            return res.send("Unauthorized").status(401);
 
-    }
-    makeLoginToHrApplicant(){
 
+        AuthToken.getTokenDetails(token)
+            .then((data)=>{
+                if(data.data.role!=="EMPLOYEE")
+                    return res.send("Unauthorized").status(401);
+                next();
+            }).catch(authTokenVerificationError=> {
+            return res.send("Internal Server Error").status(500);
+        })
     }
 }
 const Controller=new AuthenticationAndAuthorizationController();

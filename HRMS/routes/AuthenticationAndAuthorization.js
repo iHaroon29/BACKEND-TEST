@@ -4,7 +4,8 @@ const AuthController=require("../controllers/AuthenticationAndAuthorizationContr
 
 router.post('/login', AuthController.makeLogin);
 router.post('/logout', AuthController.logout);
-router.post('/login/details', AuthController.getLoggedInUserDetails);
+router.get('/login/details', AuthController.getLoggedInUserDetails);
+router.get('/login/verify/employee', AuthController.verifyLoginForEmployee);
 
 
 

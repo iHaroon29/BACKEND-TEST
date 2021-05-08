@@ -45,6 +45,8 @@ const generateToken=(data,role)=>{
 };
 
 
+module.exports.generateToken=generateToken;
+
 const verifyToken=(token,requiredRole)=>{
     return new Promise(((resolve, reject) => {
         if(!token)
