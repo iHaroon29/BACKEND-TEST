@@ -38,7 +38,7 @@ router.put('/addCourse/:id',async (req,res) => {
     if(!course) return res.status(400).send('This course id is not found in db');
     // console.log(course);
     // console.log(classroom);
-    classroom.courses[req.body.course_id]= course;
+    classroom.courses[req.body.course_id] = course;
     // console.log(classroom);
     classroom.markModified('courses');
     await classroom.save();
