@@ -15,15 +15,19 @@ const HrSchema=new Schema({
         },
         role:{
             type:String,
-            default:"HR"
+            default:"HR_ADVISOR"
         },
         is_active:{
             type:Boolean,
             default:true
         },
+        team:{
+            type:mongoose.ObjectId,
+            required:true
+        }
 
     },
     {
         timestamps:true
     });
-module.exports=mongoose.model("hr",HrSchema);
+module.exports=mongoose.model("new_employee_form",HrSchema);
