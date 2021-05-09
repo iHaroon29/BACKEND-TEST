@@ -5,12 +5,12 @@ const env=require("dotenv");
 env.config();
 
 const ROLES={
-    HR_TEAM_MEMBER:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_MEMBER",
+    EMPLOYEE:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_MEMBER",
     HR_ADVISOR:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_ADVISOR",
     HR_TEAM_LEADER:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_LEADER",
     NEW_HR_APPLICANT:"DIGITAL_AIDED_SCHOOL_HRMS_NEW_HR_APPLICANT",
 };
-module.exports.ROLES=ROLES;
+// module.exports.ROLES=ROLES;
 const SECRET=process.env.TOKEN_SECRET || "SECRET";
 
 const generateToken=(data,role)=>{
@@ -22,16 +22,22 @@ const generateToken=(data,role)=>{
         if(!ROLES[role]) {
             reject("Not valid role");
         }
-
+        if(!data.id)
+        {
+            reject("id field is required")
+        }
         jwt.sign({data:{
                 token_details:data,
                 role:role
             }},SECRET,{
             expiresIn: TOKEN_EXPIRATION_IN_SECONDS,
             algorithm:ALGORITHM
-        },(err,decode)=>{
-            if(decode)
-                resolve(decode);
+        },(err,encode)=>{
+            if(encode)
+                resolve({
+                    token:encode,
+                    role:role
+                });
             else
                 reject(err);
         })
@@ -39,17 +45,18 @@ const generateToken=(data,role)=>{
 };
 
 
-const verifyToken=(token, requiredRole)=>{
+module.exports.generateToken=generateToken;
+
+const verifyToken=(token,requiredRole)=>{
     return new Promise(((resolve, reject) => {
-        if(!token || !requiredRole)
+        if(!token)
             reject({
-                message:"token and requiredRole both are required fields."
+                message:"Provide a valid token."
             });
         jwt.verify(token,SECRET,{},(err,decoded)=>{
             if(decoded)
             {
-                console.log(decoded);
-                // verify if the required role is present or not
+
                 if(decoded.role===requiredRole)
                     resolve(decoded);
                 reject({
@@ -71,10 +78,34 @@ const verifyToken=(token, requiredRole)=>{
 };
 
 
+
+module.exports.getTokenDetails=(token)=>{
+    return new Promise((resolve, reject) => {
+        jwt.verify(token,SECRET,{},(err,decoded)=>{
+            if(decoded)
+            {
+                    resolve(decoded);
+            }else {
+                if(err.name==="TokenExpiredError"){
+                    reject({
+                        message:"Token expired"
+                    });
+                }
+                reject({
+                    message:"unable to verify tokens",
+                    stack:err
+                });
+            }
+        });
+    })
+};
+
+
+
 //===========================================================================
 
-module.exports.tokenGenerateForHrTeamMember=(data)=> {
-    return generateToken(data, "HR_TEAM_MEMBER");
+module.exports.tokenGenerateForEmployee=(data)=> {
+    return generateToken(data, "EMPLOYEE");
 };
 module.exports.tokenGenerateForHrTeamLeader=(data)=> {
     return generateToken(data,"HR_TEAM_LEADER");
@@ -82,17 +113,26 @@ module.exports.tokenGenerateForHrTeamLeader=(data)=> {
 module.exports.tokenGenerateForHrAdvisor=(data)=> {
     return generateToken(data,"HR_ADVISOR")
 };
+module.exports.tokenGenerateForHrApplicant=(data)=> {
+    return generateToken(data,"NEW_HR_APPLICANT")
+};
 //===========================================================================
 
 
-module.exports.verifyTokenForHrTeamMember=(data)=> {
-    return verifyToken(data, "HR_TEAM_MEMBER");
+module.exports.verifyTokenForEmployee=(data)=> {
+    return verifyToken(data, "EMPLOYEE");
 };
+
 module.exports.verifyTokenForHrTeamLeader=(data)=> {
     return verifyToken(data,"HR_TEAM_LEADER");
 };
+
 module.exports.verifyTokenForHrAdvisor=(data)=> {
     return verifyToken(data,"HR_ADVISOR")
+};
+
+module.exports.verifyTokenForHrApplicant=(data)=> {
+    return verifyToken(data,"NEW_HR_APPLICANT")
 };
 
 //===========================================================================

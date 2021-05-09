@@ -1,4 +1,4 @@
-const Hr=require("../models/mongodb/HR");
+const Hr=require("../models/mongodb/employees");
 const NewHrValidation=require("../routes/DataValidators").NewHr;
 const bcrypt=require("../modules/bcrypt");
 const {Login}=require("../routes/DataValidators");
