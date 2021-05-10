@@ -4,10 +4,15 @@ require("./RouteMiddlewares");
 const op = require("sequelize");
 const bcrypt = require("bcrypt");
 const Student = require("../models/mongodb/students");
+<<<<<<< Updated upstream
 const Classroom = require("../models/mongodb/classrooms");
 const Course = require("../models/mongodb/courses");
 const Assignment = require("../models/mongodb/assignments");
 const AssignmentSubmission = require("../models/mongodb/assignmentSubmissions");
+=======
+const AssignmentSubmission = require("../models/mongodb/assignmentSubmissions");
+
+>>>>>>> Stashed changes
 // router.get('/', (req, res) => {
 //      CourseSections.findAll().then((data) => {
 //       return  res.send(data).status(202)
@@ -99,5 +104,7 @@ router.delete("/delete/:id", async (req, res) => {
 
   res.send(student);
 });
+
+
 //student route
 module.exports = router;

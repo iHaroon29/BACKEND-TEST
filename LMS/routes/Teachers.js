@@ -64,10 +64,20 @@ router.get("/assignmentSubmission", async (req, res) => {
 
 //GET assignment submitted given by a Student with ID
 router.get("/assignmentSubmission/:id", async (req, res) => {
-  const assignment = await AssignmentSubmission.findOne({ id: req.params.id });
-  if (!assignment) return res.status(400).send("Invalid Assignment ID");
+  let assignments = await Assignment.find({
+    course_id: req.params.id,
+  });
+  if (!assignments) return res.status(400).send("Invalid course ID");
+  //start a loop for each assignment
 
-  res.send(assignment);
+  console.log(assignments);
+
+  // const submittedAssignments = await assignments.forEach((element) => {
+  //   AssignmentSubmission.find((data) => data.assignment_id === element._id);
+  // });
+  // //use _id and student id to find one submitted assignment and repeat it for each assignment
+
+  // res.send(submittedAssignments);
 });
 
 //POST new assignment by teacher

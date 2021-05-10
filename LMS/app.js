@@ -29,12 +29,12 @@ app.use("/api/AssignmentSubmmission", assignmentSubmissionRoutes);
 app.use("/api/auth", authenticationRoutes);
 app.use("/api/course", courseRoutes);
 
-app.use("/api", indexRouter);
-app.use("/api/students", studentRoutes);
-app.use("/api/teachers", teacherRoutes);
-app.use("/api/classroom", classroomRoutes);
-app.use("/api/Assignment", assignmentRoutes);
-app.use("/api/AssignmentSubmmission", assignmentSubmissionRoutes);
-app.use("/api/auth", authenticationRoutes);
+// app.use("/api", indexRouter);
+// app.use("/api/students", studentRoutes);
+// app.use("/api/teachers", teacherRoutes);
+// app.use("/api/classroom", classroomRoutes);
+// app.use("/api/Assignment", assignmentRoutes);
+// app.use("/api/AssignmentSubmmission", assignmentSubmissionRoutes);
+// app.use("/api/auth", authenticationRoutes);
 
 module.exports = app;
