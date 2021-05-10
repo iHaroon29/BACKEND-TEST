@@ -7,7 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 const HrAdvisorRoutes= require("./routes/HrAdvisors");
 const HrTeamLeadersRoutes= require("./routes/HrTeamLeaders");
-const HrTeamMembersRoutes= require("./routes/HrTeamMembers");
+const EmployeeRoutes= require("./routes/Employees");
 const Auth=require("./routes/AuthenticationAndAuthorization");
 
 var app = express();
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', indexRouter);
 app.use("/api/hr/advisor",HrAdvisorRoutes);
 app.use("/api/hr/team/leader",HrTeamLeadersRoutes);
-app.use("/api/hr/team/member",HrTeamMembersRoutes);
+app.use("/api/employee",EmployeeRoutes);
 app.use("/api/auth",Auth);
 
 // catch 404 and forward to error handler

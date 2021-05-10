@@ -129,3 +129,21 @@ module.exports.AddNewTeacherToTakeDemoClass=(data)=>{
 };
 
 
+module.exports.MakeLogin=(loginDetails)=>{
+
+  const Schema=Joi.object({
+    username:Joi.string().email().required(),
+    password:Joi.string().required(),
+  }).options({stripUnknown:true});
+  return Schema.validateAsync(loginDetails);
+};
+
+// module.exports.MakeLogOut=(loginDetails)=>{
+//
+//   const Schema=Joi.object({
+//     username:Joi.string().email().required(),
+//     password:Joi.string().required(),
+//   }).options({stripUnknown:true});
+//   return Schema.validateAsync(loginDetails);
+// };
+

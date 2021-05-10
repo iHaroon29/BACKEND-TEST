@@ -1,9 +1,10 @@
 const mongoose=require("../../db/mongoDB");
 const Schema=mongoose.Schema;
 const HrTeamSchema=new Schema({
-        members:{
-            type:Object, // HR's id as key and details as values
-            default:{},
+        name:{
+            type:String,
+            default:"New Team"
+
         },
         leader:{
             type:mongoose.ObjectId,
