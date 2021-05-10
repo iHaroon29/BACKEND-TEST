@@ -6,7 +6,7 @@ const HrActivitySchema=new Schema({
             required:true
         },
         activity:{
-            type:Array(Object),
+            type:Object,
             default:[],
         }
 
