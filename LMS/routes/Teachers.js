@@ -6,6 +6,7 @@ const Teacher = require("../models/mongodb/teachers");
 const { NewAssignment } = require("./DataValidators");
 
 const bcrypt = require("bcrypt");
+const assignmentSubmissions = require("../models/mongodb/assignmentSubmissions");
 
 //POST new teacher
 router.post("/register", async (req, res) => {
@@ -70,14 +71,20 @@ router.get("/assignmentSubmission/:id", async (req, res) => {
   if (!assignments) return res.status(400).send("Invalid course ID");
   //start a loop for each assignment
 
-  console.log(assignments);
+  let result = await AssignmentSubmission.find();
 
-  // const submittedAssignments = await assignments.forEach((element) => {
-  //   AssignmentSubmission.find((data) => data.assignment_id === element._id);
-  // });
-  // //use _id and student id to find one submitted assignment and repeat it for each assignment
+  let submitted = [];
 
-  // res.send(submittedAssignments);
+  for (let i = 0; i < assignments.length; i++) {
+    for (let j = 0; j < result.length; j++) {
+      if (assignments[i]._id.equals(result[j].assignment_id)) {
+        submitted.push(result[j]);
+      }
+    }
+  }
+  console.log(submitted);
+  res.send(submitted);
+  //use _id and student id to find one submitted assignment and repeat it for each assignment
 });
 
 //POST new assignment by teacher
