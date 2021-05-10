@@ -1,7 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 const {Schema}=require("../../db/mongoDB");
 
-
 const StudentSchema=new Schema({
     'name':{
         type: String,
@@ -10,7 +9,6 @@ const StudentSchema=new Schema({
     'email':{
         type: String,
         required:true,
-        unique:true
     },
     'avatar':{
         type: String,
@@ -31,7 +29,6 @@ const StudentSchema=new Schema({
     },
     'parent_email':{
         type: String,
-        unique:true
     },
     'parent_mobile_number':{
         type: String,

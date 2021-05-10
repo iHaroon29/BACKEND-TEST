@@ -19,10 +19,12 @@ const ClassroomSchema= new mongoose.Schema({
         'enrolled_students':{
             type: Object, // student id of enrolled student as key and enrollment details as values
             default:{},
+            required: true
         },
         'courses':{
             type:Object, // course id of registered courses as key and course details as values
             default:{},
+            required: true
         },
     },
     {
