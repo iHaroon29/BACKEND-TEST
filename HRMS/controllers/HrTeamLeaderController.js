@@ -13,21 +13,18 @@ class HrTeamLeaderController extends HrAdvisorController{
         const roomDetails = req.body;
         createNewRoomValidation(roomDetails)
             .then((validData) => {
-                const newHrApplicats = validData.members.new_hr_applicant;
-                const teamLeader = validData.members.team_leader;
-                const hrAdvisor = validData.members.hr_adivisor;
-
-                // delete validData.members.new_hr_applicant
                 new HrRoom({
-                    new_hr_applicants: newHrApplicats,
-                    hr_room_members:{team_leader:teamLeader, hr_advisor:hrAdvisor},
+                    new_hr_applicants: validData.members.new_hr_applicant,
+                    hr_room_members:{
+                        team_leader:validData.members.team_leader,
+                        hr_advisor:validData.members.hr_advisor
+                    },
                     room_name:validData.room_name,
                     description:validData.description
                 }).save()
-                .then(() => {
-                    console.log('user created')
-                    return res.send('created').status(203)
-                }).catch(()=>{
+                    .then(() => {
+                        return res.send('created').status(203)
+                    }).catch(()=>{
                     return res.status(400).send('unable to create')
                 })
             });
