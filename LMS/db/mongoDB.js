@@ -6,9 +6,9 @@ const MONGODB_LOCALHOST_CONNECTION_PORT=process.env.MONGODB_CONNECTION_PORT || "
 
 const MONGODB_CONNECTION_URI=process.env.MONGODB_CONNECTION_URI || `mongodb://localhost:${MONGODB_LOCALHOST_CONNECTION_PORT}/${MONGODB_LOCALHOST_DATABASE_NAME}`;
 
-mongoose.connect(MONGODB_CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(MONGODB_CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true })
     .then((data)=>{
-        console.log("connected");
+        console.log("connected to mongodb");
 
     })
     .catch((err)=>{
