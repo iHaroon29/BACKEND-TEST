@@ -12,10 +12,17 @@ const HrRoomSchema=new Schema({
         comments:{
             type:Array(Object),
             default:[],
+        },
+        room_name:{
+            type:String,
+        },
+        description:{
+            type:String,
         }
+        
 
     },
     {
         timestamps:true,
     });
-module.exports=mongoose.model("new_hr_rooms",HrRoomSchema);
+module.exports=mongoose.model("new_hr_room",HrRoomSchema);
