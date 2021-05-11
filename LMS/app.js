@@ -11,6 +11,8 @@ const classroomRoutes = require("./routes/Classrooms");
 const assignmentRoutes = require("./routes/Assignment");
 const assignmentSubmissionRoutes = require("./routes/AssignmentSubmission");
 const courseRoutes = require("./routes/Course");
+const courseActivity = require("./routes/CourseActivity");
+const courseMaterial = require("./routes/CourseMaterial");
 
 const app = express();
 
@@ -28,13 +30,7 @@ app.use("/api/Assignment", assignmentRoutes);
 app.use("/api/AssignmentSubmmission", assignmentSubmissionRoutes);
 app.use("/api/auth", authenticationRoutes);
 app.use("/api/course", courseRoutes);
-
-// app.use("/api", indexRouter);
-// app.use("/api/students", studentRoutes);
-// app.use("/api/teachers", teacherRoutes);
-// app.use("/api/classroom", classroomRoutes);
-// app.use("/api/Assignment", assignmentRoutes);
-// app.use("/api/AssignmentSubmmission", assignmentSubmissionRoutes);
-// app.use("/api/auth", authenticationRoutes);
+app.use("/api/courseActivity", courseActivity);
+app.use("/api/courseMaterial", courseMaterial);
 
 module.exports = app;
