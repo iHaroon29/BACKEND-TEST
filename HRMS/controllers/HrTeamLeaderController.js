@@ -6,12 +6,12 @@ const createNewRoomValidation = require('../routes/DataValidators').createNewRoo
 
 
 class HrTeamLeaderController extends HrAdvisorController{
-     createNewRoomForHr(req,res){
-            // Hr Applicant id, hr room members, comments(optional) 
-            //get all room members, get room name, room description
+    createNewRoomForHr(req,res){
+        // Hr Applicant id, hr room members, comments(optional)
+        //get all room members, get room name, room description
 
-            const roomDetails = req.body;
-            createNewRoomValidation(roomDetails)
+        const roomDetails = req.body;
+        createNewRoomValidation(roomDetails)
             .then((validData) => {
                 const newHrApplicats = validData.members.new_hr_applicant;
                 const teamLeader = validData.members.team_leader;
@@ -30,53 +30,36 @@ class HrTeamLeaderController extends HrAdvisorController{
                 }).catch(()=>{
                     return res.status(400).send('unable to create')
                 })
-            })
-            
-
-
-            roomDetails.hr_room_members = {
-                hr_id: roomDetails.hr_id,
-                hr_type: 'teamLeader',
-
-            }
-            roomDetails.new_hr_applicants = {
-                new_hr_applicant_id: roomDetails.new_hr_applicant_id,
-                
-            }
-            new HrRoom(roomDetails).save()
-
-            
-
+            });
+    }
+    assignRoleToNewHrApplicant(){
 
     }
-     assignRoleToNewHrApplicant(){
+    incrementNewHrApplicantRound(){
 
     }
-     incrementNewHrApplicantRound(){
+    rejectNewHrApplicant(){
 
     }
-     rejectNewHrApplicant(){
+    acceptNewHrApplicant(){
 
     }
-     acceptNewHrApplicant(){
+    addNewHrToHrRoom(){
 
     }
-     addNewHrToHrRoom(){
+    addNewHrApplicantToHrRoom(){
 
     }
-     addNewHrApplicantToHrRoom(){
+    addRoomName(){
 
     }
-     addRoomName(){
+    addRoomDescription(){
 
     }
-     addRoomDescription(){
+    deleteHrRoom(){
 
     }
-     deleteHrRoom(){
-
-    }
-     removeFromHrRoom(){
+    removeFromHrRoom(){
 
     }
 
