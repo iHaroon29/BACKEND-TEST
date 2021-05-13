@@ -1,12 +1,29 @@
 const express = require("express");
 const router = express.Router();
 const Lectures = require("../models/mongodb/lectures");
+const CourseSection = require("../models/mongodb/courseSections");
+const Course = require("../models/mongodb/courses");
 
 router.post("/", async function (req, res) {
   let lectures = await Lectures.findOne({
     course_id: req.body.course_id,
+    classroom_id: req.body.classroom_id,
+    course_section: req.body.course_section,
   });
   if (lectures) return res.status(400).send("lectures already present");
+
+  let classroom = await Course.findOne({
+    _id: req.body.course_id,
+    classroom_id: req.body.classroom_id,
+  });
+  if (!classroom)
+    return res.status(400).send("classroom not present for this course");
+
+  let course = await CourseSection.findOne({
+    course_id: req.body.course_id,
+  });
+  if (!course)
+    return res.status(400).send("Course Sec not present in this course");
 
   lectures = await Lectures.create({
     classroom_id: req.body.classroom_id,
