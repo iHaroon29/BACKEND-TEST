@@ -45,9 +45,7 @@ router.get("/ass/classroom/:id", async (req, res) => {
   let allCourses = Object.keys(classroom.courses);
 
   if (allCourses.length === 0)
-    return res
-      .status(404)
-      .send("There is no couse available in this classroom");
+    return res.status(404).send("There is no couse available in this classroom");
 
   let arr = [];
   for (let i = 0; i < allCourses.length; i++) {
@@ -56,9 +54,7 @@ router.get("/ass/classroom/:id", async (req, res) => {
   }
 
   if (arr.length === 0)
-    return res
-      .status(404)
-      .send("There is no assignment alloted in any course of this classroom");
+    return res.status(404).send("There is no assignment alloted in any course of this classroom");
   res.status(202).send(arr);
 });
 
@@ -86,6 +82,7 @@ router.post("/", async (req, res) => {
     active: req.body.active,
     password: req.body.password,
   });
+  
   const salt = await bcrypt.genSalt(10);
   student.password = await bcrypt.hash(student.password, salt);
   await student.save();
@@ -98,6 +95,21 @@ router.delete("/delete/:id", async (req, res) => {
   if (!student) return res.status(404).send("Given ID was not found"); //404 is error not found
 
   res.send(student);
+});
+
+//Lecture freedback by student
+router.post("/lectureFeedback/:id", async (req, res) => {
+  let lectureFeedback = await LectureFeedback.find({lecture_id: req.params.id});
+  if(!lectureFeedback) {
+    lectureFeedback = new LectureFeedback({
+      lecture_id: req.params.id,
+    });
+  }
+  lectureFeedback.students_feedback = req.body.students_feedback;
+
+  await lectureFeedback.save();
+  console.log(lectureFeedback);
+  res.send(lectureFeedback);
 });
 
 //student route

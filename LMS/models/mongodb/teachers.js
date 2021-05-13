@@ -50,7 +50,6 @@ const TeacherSchema=new Schema({
         type:Boolean,
         default:true,
     }
-
 },{
     timestamps:true
 });

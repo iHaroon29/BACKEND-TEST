@@ -1,6 +1,5 @@
 const mongoose=require("../../db/mongoDB");
 
-
 const Lecture=new mongoose.Schema( {
         'classroom_id':{
             type: mongoose.ObjectId,
@@ -10,9 +9,13 @@ const Lecture=new mongoose.Schema( {
             type:mongoose.ObjectId,
             required:true,
         },
+        "course_section": {
+            type: mongoose.ObjectId,
+            required: true
+        },
         'date_and_time':{
             type:Date,
-            required:true,
+            // required:true,
         },
         'is_attendance_marked':{
             type: Boolean,
@@ -37,7 +40,6 @@ const Lecture=new mongoose.Schema( {
     {
         timestamps:true
     });
-
 
 module.exports=mongoose.model("lecture",Lecture);
 

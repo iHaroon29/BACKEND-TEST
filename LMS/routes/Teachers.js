@@ -4,7 +4,6 @@ const AssignmentSubmission = require("../models/mongodb/assignmentSubmissions");
 const LectureFeedback = require("../models/mongodb/lectureFeedback");
 const Teacher = require("../models/mongodb/teachers");
 const { NewAssignment } = require("./DataValidators");
-
 const bcrypt = require("bcrypt");
 const assignmentSubmissions = require("../models/mongodb/assignmentSubmissions");
 
@@ -63,26 +62,25 @@ router.get("/assignmentSubmission", async (req, res) => {
   res.send(submitted);
 });
 
-//GET assignment submitted given by a Student with ID
+//GET submitted ass given by a courseID 
 router.get("/assignmentSubmission/:id", async (req, res) => {
   let assignments = await Assignment.find({
     course_id: req.params.id,
   });
-  if (!assignments) return res.status(400).send("Invalid course ID");
-  //start a loop for each assignment
 
-  let result = await AssignmentSubmission.find();
+  if (!assignments) return res.status(400).send("Invalid course ID");
+  if(assignments.length === 0) return res.status(404).send("NO Assignments in the given course Id");
+  console.log(assignments);
 
   let submitted = [];
 
   for (let i = 0; i < assignments.length; i++) {
-    for (let j = 0; j < result.length; j++) {
-      if (assignments[i]._id.equals(result[j].assignment_id)) {
-        submitted.push(result[j]);
-      }
-    }
+    let submitass = await AssignmentSubmission.findOne({assignment_id: assignments[i]._id});
+    if (submitass) submitted.push(submitass);
   }
-  console.log(submitted);
+  
+  if(submitted.length === 0) return res.status(404).send("NO Submitted Assignment in the given course Id");
+  console.log(submitted.length);
   res.send(submitted);
   //use _id and student id to find one submitted assignment and repeat it for each assignment
 });
@@ -117,29 +115,29 @@ router.post("/assignment/new", async (req, res) => {
 });
 
 //PUT Update a assignment given by a teacher
-
 router.put("/assignment/update/:id", async (req, res) => {
   const assignment = await Assignment.findOne({ _id: req.params.id });
   if (!assignment) return res.status(400).send("Invalid Assignment");
 
-  {
-    (assignment.course_id = req.body.course_id),
-      (assignment.teacher_id = req.body.teacher_id),
-      (assignment.instructions = req.body.instructions),
-      (assignment.description = req.body.description),
-      (assignment.last_submission_date = req.body.last_submission_date);
-  }
+  assignment.course_id = req.body.course_id ,
+  assignment.teacher_id = req.body.teacher_id,
+  assignment.instructions = req.body.instructions,
+  assignment.description = req.body.description,
+  assignment.last_submission_date = req.body.last_submission_date;
 
   await assignment.save();
   console.log(assignment);
   res.send(assignment);
 });
 
-router.post("/lectureFeedback", async (req, res) => {
-  const lectureFeedback = new LectureFeedback({
-    lecture_id: req.body.lecture_id,
-    teachers_feedback: req.body.teachers_feedback,
-  });
+router.post("/lectureFeedback/:id", async (req, res) => {
+  let lectureFeedback = await LectureFeedback.find({lecture_id: req.params.id});
+  if(!lectureFeedback) {
+    lectureFeedback = new LectureFeedback({
+      lecture_id: req.params.id,
+    });
+  }
+  lectureFeedback.teachers_feedback = req.body.teachers_feedback;
 
   await lectureFeedback.save();
   console.log(lectureFeedback);

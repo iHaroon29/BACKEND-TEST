@@ -5,6 +5,7 @@ const authTokenManager = require("../modules/authTokens");
 const CourseSections = require("../models/SQL/courseMaterials").CourseMaterials;
 const Courses = require("../models/SQL/courses");
 const models = require("../models/mongodb/lectureAttendances");
+
 models
   .findById("507f1f77bcf86cd799439011")
   .then((result) => {

@@ -6,7 +6,7 @@ const CourseMaterialsSchema=new mongoose.Schema({
         },
         'name':{
             type:String,
-            default:"new course material"
+            required: true
         },
         'content':{
             type:String,
