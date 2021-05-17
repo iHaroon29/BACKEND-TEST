@@ -22,7 +22,6 @@ models
   .catch((err) => {
     console.log(err);
   });
-const multer = require("../modules/fileUpload");
 
 /* GET home page. */
 router.get("/validate", function (req, res) {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const CourseActivity = require("../models/mongodb/courseActivities");
+const CourseActivity = require("../../models/mongodb/courseActivities");
 
 router.post("/", async function (req, res) {
   let courseActivity = await CourseActivity.findOne({

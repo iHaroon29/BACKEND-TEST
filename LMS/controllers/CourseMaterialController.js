@@ -1,5 +1,5 @@
-const CourseMaterial = require("../models/mongodb/courseMaterials");
-const CourseSections = require("../models/mongodb/courseSections");
+const CourseMaterial = require("../../models/mongodb/courseMaterials");
+const CourseSections = require("../../models/mongodb/courseSections");
 
 exports.createCourseMaterial = async function (req, res) {
   let courseMaterial = await CourseMaterial.findOne({

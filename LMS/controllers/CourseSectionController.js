@@ -1,5 +1,5 @@
-const CourseSection = require("../models/mongodb/courseSections");
-const Course = require("../models/mongodb/courses");
+const CourseSection = require("../../models/mongodb/courseSections");
+const Course = require("../../models/mongodb/courses");
 
 exports.createCourseSection = async function (req, res) {
   let courseid = await Course.findOne({ _id: req.body.course_id });
