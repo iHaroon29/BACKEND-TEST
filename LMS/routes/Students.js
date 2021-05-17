@@ -1,13 +1,9 @@
 const router=require('express').Router();
-const CourseSections = require('../models/mongodb/courseSections')
-require("./RouteMiddlewares");
-const op = require('sequelize')
 const bcrypt = require('bcrypt');
-const Student  = require('../models/mongodb/students');
-const Classroom  = require('../models/mongodb/classrooms');
-const Course  = require('../models/mongodb/courses');
-const Assignment  = require('../models/mongodb/assignments');
-const AssignmentSubmission = require('../models/mongodb/assignmentSubmissions');
+const Student  = require('../../models/mongodb/students');
+const Classroom  = require('../../models/mongodb/classrooms');
+const Assignment  = require('../../models/mongodb/assignments');
+const AssignmentSubmission = require('../../models/mongodb/assignmentSubmissions');
 // router.get('/', (req, res) => {
 //      CourseSections.findAll().then((data) => {
 //       return  res.send(data).status(202)

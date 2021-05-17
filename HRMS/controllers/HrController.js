@@ -1,8 +1,8 @@
-const Hr=require("../models/mongodb/employees");
+const Hr=require("../../models/mongodb/employees");
 const NewHrValidation=require("../routes/DataValidators").NewHr;
-const bcrypt=require("../modules/bcrypt");
+const bcrypt=require("../../modules/bcrypt");
 const {Login}=require("../routes/DataValidators");
-const tokenGenerate=require("../modules/authTokens");
+const tokenGenerate=require("../../modules/authTokens");
 
 
 

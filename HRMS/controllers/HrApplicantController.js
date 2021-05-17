@@ -1,6 +1,6 @@
-const HrApplicant=require("../models/mongodb/newHrApplicants");
+const HrApplicant=require("../../models/mongodb/newHrApplicants");
 const newHrApplicantValidation=require("../routes/DataValidators").NewHrApplicant;
-const bcrypt=require("../modules/bcrypt");
+const bcrypt=require("../../modules/bcrypt");
 
 const responseErrorFormat={
     status:"",

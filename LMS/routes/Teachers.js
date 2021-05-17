@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const Assignment = require("../models/mongodb/assignments");
-const AssignmentSubmission = require("../models/mongodb/assignmentSubmissions");
-const LectureFeedback = require("../models/mongodb/lectureFeedback");
-const Teacher = require("../models/mongodb/teachers");
+const Assignment = require("../../models/mongodb/assignments");
+const AssignmentSubmission = require("../../models/mongodb/assignmentSubmissions");
+const LectureFeedback = require("../../models/mongodb/lectureFeedback");
+const Teacher = require("../../models/mongodb/teachers");
 const { NewAssignment } = require("./DataValidators");
 
 const bcrypt = require("bcrypt");

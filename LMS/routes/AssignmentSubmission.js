@@ -1,6 +1,6 @@
 const router=require('express').Router();
 
-const AssignmentSubmission  = require('../models/mongodb/assignmentSubmissions');
+const AssignmentSubmission  = require('../../models/mongodb/assignmentSubmissions');
 
 router.get('/',async (req,res) => {
     const submitted = await AssignmentSubmission.find() ;
