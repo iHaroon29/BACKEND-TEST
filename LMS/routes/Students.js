@@ -1,7 +1,4 @@
 const router = require("express").Router();
-require("./RouteMiddlewares");
-const op = require("sequelize");
-const CourseSections = require("../models/mongodb/courseSections");
 
 const {
   getEnrolledStudents,

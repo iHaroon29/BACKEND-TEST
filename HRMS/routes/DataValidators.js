@@ -147,3 +147,15 @@ module.exports.MakeLogin=(loginDetails)=>{
 //   return Schema.validateAsync(loginDetails);
 // };
 
+module.exports.createNewRoom=(details)=>{
+  const Schema = Joi.object({
+      members: Joi.object({
+        new_hr_applicant:Joi.object(),
+        team_leader:Joi.object(),
+        hr_adivisor:Joi.object()
+       }).required().options({stripUnknown:true}),
+      room_name: Joi.string().optional().default('newRoom'),
+      description: Joi.string().optional().default('')
+  }).options({stripUnknown:true});
+  return Schema.validateAsync(details)
+}

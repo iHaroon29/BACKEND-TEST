@@ -13,8 +13,13 @@ env.config();
  * Get port from environment and store in Express.
  */
 
+<<<<<<< HEAD
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
+=======
+var port = normalizePort(process.env.PORT_LMS || '3000');
+app.set('port', port);
+>>>>>>> 39e60b5ea775e2ef5425b5c34a972cfc5eb84ee1
 
 /**
  * Create HTTP server.
