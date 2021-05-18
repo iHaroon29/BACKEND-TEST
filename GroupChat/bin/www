@@ -6,7 +6,7 @@
 
 var app = require('../app');
 var debug = require('debug')('group-chat:server');
-var http = require('http');
+var server = require('../modules/httpServer');
 const env=require("dotenv");
 env.config();
 /**
@@ -16,11 +16,7 @@ env.config();
 var port = normalizePort(process.env.PORT_GROUP_CHAT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
 
-var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
