@@ -1,7 +1,6 @@
 const router=require('express').Router();
-const Course  = require('../models/mongodb/courses');
-const bcrypt = require('bcrypt');
-const Classroom  = require('../models/mongodb/classrooms');
+const Course  = require('../../models/mongodb/courses');
+const Classroom  = require('../../models/mongodb/classrooms');
 
 router.get('/',async (req,res) => {
     const classrooms = await Classroom.find() ;

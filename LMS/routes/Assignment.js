@@ -1,5 +1,5 @@
 const router=require('express').Router();
-const Assignment  = require('../models/mongodb/assignments');
+const Assignment  = require('../../models/mongodb/assignments');
 const { AssignmentSubmissionComments } = require('./DataValidators');
 
 router.get('/',async (req,res) => {

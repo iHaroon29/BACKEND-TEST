@@ -1,10 +1,16 @@
 {
   "name": "lms",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "startLMS": "node LMS/bin/www",
+    "devLMS": "nodemon LMS/bin/www",
+    "startCRM": "node CRM/bin/www",
+    "devCRM": "nodemon CRM/bin/www",
+    "startHRMS": "node HRMS/bin/www",
+    "devHRMS": "nodemon HRMS/bin/www",
+    "startGROUPCHAT": "node GroupChat/bin/www",
+    "devGROUPCHAT": "nodemon GroupChat/bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

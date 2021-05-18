@@ -1,8 +1,8 @@
-const Employee=require("../models/mongodb/employees");
-const AuthToken=require("../modules/authTokens");
-const bcrypt=require("../modules/bcrypt");
+const Employee=require("../../models/mongodb/employees");
+const AuthToken=require("../../modules/authTokens");
+const bcrypt=require("../../modules/bcrypt");
 const LoginSchema=require("../routes/DataValidators").MakeLogin;
-const LoginActivity=require("../models/mongodb/logInActiviity");
+const LoginActivity=require("../../models/mongodb/logInActiviity");
 
 const ROLES={
     EMPLOYEE:"DIGITAL_AIDED_SCHOOL_HRMS_EMPLOYEE",

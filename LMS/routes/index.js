@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const {Users}= require("./DataValidators");
-const authTokenManager=require("../modules/authTokens");
-const CourseSections=require("../models/SQL/courseMaterials").CourseMaterials;
-const Courses=require("../models/SQL/courses");
-const models=require("../models/mongodb/lectureAttendances");
+const authTokenManager=require("../../modules/authTokens");
+const CourseSections=require("../../models/mongodb/courseMaterials");
+const models=require("../../models/mongodb/lectureAttendances");
 models.findById("507f1f77bcf86cd799439011").then(result=>{
     // console.log(result)
 })
     .catch(err=>{
         console.log(err)
     });
-const multer=require("../modules/fileUpload");
+const multer=require("../../modules/fileUploads");
 
 
 
@@ -71,9 +70,7 @@ router.post("/upload/file",multer.single("file"),(req,res)=>{
     return res.send(req.file.filename).status(200);
 });
 router.get("/test",(req,res)=>{
-    CourseSections.findAll({
-        include:Courses
-    })
+    CourseSections.find()
         .then((result)=>{
             return res.send(result).status(200);
         })
