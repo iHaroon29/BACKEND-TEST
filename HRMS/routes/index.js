@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const HrApplicantController=require("../controllers/HrApplicantController");
 const HrAdvisorController=require("../controllers/HrAdvisorController").Controller;
-const fileUpload=require("../modules/fileUploads");
+const fileUpload=require("../../modules/fileUploads");
 const HrController=require("../controllers/HrController");
 
 //======================================================================

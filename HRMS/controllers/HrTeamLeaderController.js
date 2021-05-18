@@ -1,5 +1,5 @@
 const HrAdvisorController=require("./HrAdvisorController").ControllerClass;
-const HrRoom=require("../models/mongodb/HrRooms");
+const HrRoom=require("../../models/mongodb/HrRooms");
 const HrActivityController=require("./HrActivityController");
 const createNewRoomValidation = require('../routes/DataValidators').createNewRoom
 const Employee=require("../models/mongodb/employees");

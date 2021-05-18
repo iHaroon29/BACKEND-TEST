@@ -5,16 +5,15 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('hrms:server');
+var debug = require('debug')('group-chat:server');
 var http = require('http');
 const env=require("dotenv");
 env.config();
-
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT_HRMS || '3000');
+var port = normalizePort(process.env.PORT_GROUP_CHAT || '3000');
 app.set('port', port);
 
 /**
@@ -89,4 +88,4 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-}
+} 
