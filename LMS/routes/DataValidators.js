@@ -5,6 +5,7 @@
  */
 
 const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
 /*
  *
@@ -89,7 +90,6 @@ module.exports.NewHrRoundQuestions = (hr_rounds_questions) => {
   });
 };
 
-
 module.exports.NewTeacher = (teachers) => {
   const JoiSchema = Joi.object({
     id: Joi.number().optional(),
@@ -105,38 +105,40 @@ module.exports.NewTeacher = (teachers) => {
   });
 };
 
-module.exports.NewCourseEnrollmentDetails=(data)=>{
-//  course original price, course id, discount percentage, enrollment date and time (optional and default of current time)
-
+module.exports.NewCourseEnrollmentDetails = (data) => {
+  //  course original price, course id, discount percentage, enrollment date and time (optional and default of current time)
 };
 
-module.exports.StudentEnrollmentDetails=(data)=>{
-//  student id, date and time of enrollment, status of enrollment (optional and default of waiting)
-
+module.exports.StudentEnrollmentDetails = (data) => {
+  //  student id, date and time of enrollment, status of enrollment (optional and default of waiting)
 };
-module.exports.AssignmentSubmissionComments=(data)=>{
-// assignment's id, sender's id, sender's type, date and time of comment(optional and default value of current time)
-
+module.exports.AssignmentSubmissionComments = (data) => {
+  // assignment's id, sender's id, sender's type, date and time of comment(optional and default value of current time)
 };
 
-module.exports.NewAssignmentSubmission=(data)=>{
-//  student's id, assignment id, file or text of submission
-
+module.exports.NewAssignmentSubmission = (data) => {
+  //  student's id, assignment id, file or text of submission
 };
 
-module.exports.NewCourseSectionMaterial=(data)=>{
-// course's id, time stamps and materials (file/text)
-
+module.exports.NewCourseSectionMaterial = (data) => {
+  // course's id, time stamps and materials (file/text)
 };
 
-module.exports.NewTeacherForCourse=(data)=>{
-//  teacher's id, course's ids,
-
+module.exports.NewTeacherForCourse = (data) => {
+  //  teacher's id, course's ids,
 };
 
-
-module.exports.NewCourseSection=()=>{
-//  name, description, course's id, material (file/text), timestamps
-
+module.exports.NewCourseSection = () => {
+  //  name, description, course's id, material (file/text), timestamps
 };
 
+module.exports.NewAssignment = (data) => {
+  const JoiSchema = Joi.object({
+    course_id: Joi.objectId().required(),
+    teacher_id: Joi.objectId().required(),
+    instructions: Joi.string().required(),
+    description: Joi.string().required(),
+    last_submission_date: Joi.date().required(),
+  }).options({ stripUnknown: true });
+  return JoiSchema.validateAsync(data);
+};
