@@ -4,9 +4,9 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app').app;
 var debug = require('debug')('group-chat:server');
-var server = require('../modules/httpServer');
+var server = require('../app').server;
 const env=require("dotenv");
 env.config();
 /**

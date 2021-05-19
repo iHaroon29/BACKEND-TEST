@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// var io = require('./modules/socket.io')
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -38,4 +40,18 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+const http = require('http');
+// const app=require("../app");
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+io.on('connection', ()=>{
+  console.log('new user connected')
+})
+
+// console.log(io)
+
+module.exports = {
+  app, 
+  server
+};
