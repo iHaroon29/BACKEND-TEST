@@ -1,20 +1,30 @@
 var io=io();
 
 const chatForm = document.getElementById("chat-form")
+const { username, room } = Qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+});
 
+io.emit("joinRoom",{username,room});
+io.on("notification",(message)=>{
+    console.log(message)
+    alert(message)
+})
+io.on('group-message', (message)=>{
+    outputMessage(message)
+    console.log(message)
+})
 
 chatForm.addEventListener('submit', (e)=>{
         e.preventDefault()
         
-        var message = e.target.elements.msg.value
+        var message = e.target.elements.msg.value;
         const messages={
             text:message,
             time:new Date(Date.now()).toISOString(),
-            username:"abc"
-            
-
-        }
-        outputMessage(messages)
+            username:username
+        };
+        outputMessage(messages);
         io.emit('message', message)
 })
 /*

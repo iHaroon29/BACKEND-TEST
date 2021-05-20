@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// var io = require('./modules/socket.io')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -41,18 +40,33 @@ app.use(function(err, req, res, next) {
 });
 
 const http = require('http');
-// const app=require("../app");
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
 io.on('connection', (socket)=>{
-  console.log('new user connected')
+  socket.on("joinRoom",({username,room})=>{
+    socket.room=room;
+    socket.username=username;
+    socket.join(room);
+    socket.broadcast.to(socket.room).emit("notification",`${socket.username} has joined the room`);
+  });
   socket.on("message", (message)=>{
-    console.log(message)
-  })
-})
+    const Message={
+      text:message,
+      username:socket.username,
+      time:new Date(Date.now()).toISOString(),
+      id:message.id
+    };
 
-// console.log(io)
+    // TODO: Store in Database before broadcasting the message
+
+    socket.broadcast.to(socket.room).emit("group-message",Message);
+  });
+  socket.on("disconnect",(details)=>{
+    socket.broadcast.to(socket.room).emit("notification",`${socket.username} has left the room`);
+  })
+});
+
 
 module.exports = {
   app, 
