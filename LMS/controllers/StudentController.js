@@ -80,6 +80,7 @@ exports.createStudent = async (req, res) => {
     parent_name: req.body.parent_name,
     parent_relation: req.body.parent_relation,
     active: req.body.active,
+    parent_email: req.body.parent_email,
     password: req.body.password,
   });
 
