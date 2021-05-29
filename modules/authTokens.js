@@ -9,6 +9,8 @@ const ROLES={
     HR_ADVISOR:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_ADVISOR",
     HR_TEAM_LEADER:"DIGITAL_AIDED_SCHOOL_HRMS_TEAM_LEADER",
     NEW_HR_APPLICANT:"DIGITAL_AIDED_SCHOOL_HRMS_NEW_HR_APPLICANT",
+    LMS_TEACHER:"DIGITAL_AIDED_SCHOOL_LMS_TEACHER",
+    LMS_STUDENT:"DIGITAL_AIDED_SCHOOL_LMS_STUDENT",
 };
 // module.exports.ROLES=ROLES;
 const SECRET=process.env.TOKEN_SECRET || "SECRET";
@@ -116,6 +118,14 @@ module.exports.tokenGenerateForHrAdvisor=(data)=> {
 module.exports.tokenGenerateForHrApplicant=(data)=> {
     return generateToken(data,"NEW_HR_APPLICANT")
 };
+
+module.exports.tokenGenerateForTeacher=(data)=> {
+    return generateToken(data,"LMS_TEACHER")
+};
+
+module.exports.tokenGenerateForStudent=(data)=> {
+    return generateToken(data,"LMS_STUDENT")
+};
 //===========================================================================
 
 
@@ -133,6 +143,14 @@ module.exports.verifyTokenForHrAdvisor=(data)=> {
 
 module.exports.verifyTokenForHrApplicant=(data)=> {
     return verifyToken(data,"NEW_HR_APPLICANT")
+};
+
+module.exports.verifyTokenForTeacher=(data)=> {
+    return verifyToken(data,"LMS_TEACHER")
+};
+
+module.exports.verifyTokenForStudent=(data)=> {
+    return verifyToken(data,"LMS_STUDENT")
 };
 
 //===========================================================================
