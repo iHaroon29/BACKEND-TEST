@@ -1,59 +1,66 @@
-const mongoose=require("../../db/mongoDB");
-const {Schema}=require("../../db/mongoDB");
+const mongoose = require("../../db/mongoDB");
+const { Schema } = require("../../db/mongoDB");
 
-
-const StudentSchema=new Schema({
-    'name':{
-        type: String,
-        required:true
+const StudentSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    'email':{
-        type: String,
-        required:true,
-        unique:true
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    'avatar':{
-        type: String,
+    role: {
+      type: String,
+      default: "STUDENT",
     },
-    'address':{
-        type: String
+    avatar: {
+      type: String,
     },
-    'date_of_birth':{
-        type: Number,
+    address: {
+      type: String,
     },
-    'parent_name':{
-        type: String,
-        required:true
+    date_of_birth: {
+      type: Number,
     },
-    'parent_relation':{
-        type:String,
-        required:true
+    parent_name: {
+      type: String,
+      required: true,
     },
-    'parent_email':{
-        type: String,
-        unique:true
+    parent_relation: {
+      type: String,
+      required: true,
     },
-    'parent_mobile_number':{
-        type: String,
+    parent_email: {
+      type: String,
+      unique: true,
+      required: true,
     },
-    'parent_alt_mobile_number':{
-        type: String,
+    parent_mobile_number: {
+      type: String,
     },
-    'active':{
-        type: Boolean,
-        default:true,
+    parent_alt_mobile_number: {
+      type: String,
     },
-    'email_verified_at':{
-        type: Date,
+    active: {
+      type: Boolean,
+      default: true,
     },
-    'password':{
-        type: String,
-        required:true
+    email_verified_at: {
+      type: Date,
     },
-    'last_seen':{
-        type: Date,
+    password: {
+      type: String,
+      required: true,
     },
-},{
-    timestamps: true
-});
-module.exports=mongoose.model("student",StudentSchema);
+    last_seen: {
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+module.exports = mongoose.model("student", StudentSchema);

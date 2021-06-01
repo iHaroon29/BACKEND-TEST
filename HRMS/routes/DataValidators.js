@@ -152,10 +152,10 @@ module.exports.createNewRoom=(details)=>{
       members: Joi.object({
         new_hr_applicant:Joi.object(),
         team_leader:Joi.object(),
-        hr_adivisor:Joi.object()
+        hr_advisor:Joi.object()
        }).required().options({stripUnknown:true}),
-      room_name: Joi.string().optional().default('newRoom'),
-      description: Joi.string().optional().default('')
+      room_name: Joi.string().optional().default('New Room'),
+      description: Joi.string().optional().default('Welcome')
   }).options({stripUnknown:true});
   return Schema.validateAsync(details)
 }

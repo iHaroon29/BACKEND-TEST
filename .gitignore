@@ -1,4 +1,6 @@
-*.idea
+*/.idea
+.idea
 */node_modules
 */uploads
-node_modules/*
+/node_modules/
+*.iml

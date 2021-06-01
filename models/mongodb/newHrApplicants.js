@@ -44,6 +44,10 @@ const NewHrApplicantSchema=new Schema({
         location:{
             type:String,
             required:true,
+        },
+        status:{
+            type:String,
+            default:"Applied"
         }
     },
     {
