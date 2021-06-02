@@ -22,11 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', indexRouter);
-app.use("/api/hr/advisor",HrAdvisorRoutes);
-app.use("/api/hr/team/leader",HrTeamLeadersRoutes);
-app.use("/api/employee",EmployeeRoutes);
-app.use("/api/auth",Auth);
+app.use('/hrms/api', indexRouter);
+app.use("/hrms/api/hr/advisor",HrAdvisorRoutes);
+app.use("/hrms/api/hr/team/leader",HrTeamLeadersRoutes);
+app.use("/hrms/api/employee",EmployeeRoutes);
+app.use("/hrms/api/auth",Auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
