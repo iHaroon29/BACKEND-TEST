@@ -1,8 +1,9 @@
 const route=require("express").Router();
-const AdminController=require("../controllers/Courses");
-
-route.get("/course/all",AdminController.getAllCourse);
-route.post("/course/new",AdminController.addNewCourse);
-route.put("/course/all",AdminController.updateCourseById);
-route.delete("/course/:id",AdminController.deleteCourseById);
-route.post("/course_section/new",AdminController.addNewCourseSection);
+const CourseController=require("../controllers/Courses");
+const CourseSectionController=require("../controllers/CourseSection")
+route.get("/course/all",CourseController.getAllCourse);
+route.post("/course/new",CourseController.addNewCourse);
+route.put("/course/all",CourseController.updateCourseById);
+route.delete("/course/:id",CourseController.deleteCourseById);
+route.post("/course_section/new",CourseSectionController.addNewCourseSection);
+module.exports=route;

@@ -1,8 +1,6 @@
 const Joi=require("joi");
 const CourseSchema=Joi.object({
-    'classroom_id':{
-        type:mongoose.ObjectId,
-    },
+    'classroom_id':Joi.string().alphanum().lowercase().required(),
     'title':Joi.string().required(),
     'image':Joi.string().required(),
     'description':Joi.string().required(),
