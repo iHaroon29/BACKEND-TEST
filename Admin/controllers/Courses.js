@@ -1,6 +1,4 @@
 const CoursesServices=require("../services/Coureses");
-const CourseSectionService=require("../services/CourseSections");
-
 
 module.exports={
     async addNewCourse(req,res){
@@ -40,14 +38,5 @@ module.exports={
             return  res.sendStatus(400);
         }
     },
-    async addNewCourseSection(req,res){
-        try{
-            const addedCourseSection=await CourseSectionService.addNewCourseSection(req.body);
-            return res.status(200).send(addedCourseSection);
-        }
-        catch (e) {
-            return  res.sendStatus(400);
-        }
-    }
 
 };

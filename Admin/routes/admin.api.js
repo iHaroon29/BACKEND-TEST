@@ -1,5 +1,5 @@
 const route=require("express").Router();
-const AdminController=require("../controllers/Admin");
+const AdminController=require("../controllers/Courses");
 
 route.get("/course/all",AdminController.getAllCourse);
 route.post("/course/new",AdminController.addNewCourse);

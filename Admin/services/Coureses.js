@@ -1,10 +1,14 @@
 const Course=require("../../models/mongodb/courses");
 const courseValidator=require("../../utils/Course.validators");
+const CourseActivityLogger=require("../../middlewares/courses.activity.logger");
+
 module.exports={
     addNewCourse(courseDetails){
         return courseValidator.newCourse(courseDetails).then(validData=>{
-            new Course(validData).save()
+            return new Course(validData).save()
                 .then(savedCourse=>{
+                    // TODO: write in activity log tracker
+                    CourseActivityLogger.newCourseAdded({});
                     return savedCourse;
                 })
         })
