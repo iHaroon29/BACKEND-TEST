@@ -10,8 +10,8 @@ route.delete("/course/:id",CourseController.deleteCourseById);
 route.post("/course_section/new",CourseSectionController.addNewCourseSection);
 //============= ADMIN==================
 route.put("/forget/password",AdminController.updatePassword);
-route.put("/forget/password",AdminController.updatePassword);
-route.put("/forget/password",AdminController.updatePassword);
-route.put("/forget/password",AdminController.updatePassword);
+route.delete("/admin/delete/:id",AdminController.deleteAdmin);
+route.put("/admin/update/details",AdminController.updateAdminDetails);
+route.post("/admin/new",AdminController.addNewAdmin);
 //============= ADMIN==================
 module.exports=route;
