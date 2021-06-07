@@ -5,6 +5,8 @@
   "scripts": {
     "startLMS": "node LMS/bin/www",
     "devLMS": "nodemon LMS/bin/www",
+    "startAdmin": "node Admin/bin/www",
+    "devAdmin": "nodemon Admin/bin/www",
     "startCRM": "node CRM/bin/www",
     "devCRM": "nodemon CRM/bin/www",
     "startHRMS": "node HRMS/bin/www",

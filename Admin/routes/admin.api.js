@@ -4,12 +4,6 @@ const CourseSectionController = require("../controllers/CourseSection");
 const TeachersController = require("../controllers/Teachers");
 const StudentsController = require("../controllers/Students");
 
-route.get("/course/all", CourseController.getAllCourse);
-route.post("/course/new", CourseController.addNewCourse);
-route.put("/course/all", CourseController.updateCourseById);
-route.delete("/course/:id", CourseController.deleteCourseById);
-route.post("/course_section/new", CourseSectionController.addNewCourseSection);
-
 // Teachers Route
 route.post("/teachers/new", TeachersController.addNewTeacher);
 route.get("/teachers/all", TeachersController.getAllTeachersAndPersonalDetails);
@@ -23,4 +17,15 @@ route.get(
   StudentsController.getAllStudentsAndTheirCourseDetails
 );
 
+route.get("/course/all", CourseController.getAllCourse);
+route.post("/course/new", CourseController.addNewCourse);
+route.put("/course/all", CourseController.updateCourseById);
+route.delete("/course/:id", CourseController.deleteCourseById);
+route.post("/course_section/new", CourseSectionController.addNewCourseSection);
+//============= ADMIN==================
+route.put("/forget/password", AdminController.updatePassword);
+route.delete("/admin/delete/:id", AdminController.deleteAdmin);
+route.put("/admin/update/details", AdminController.updateAdminDetails);
+route.post("/admin/new", AdminController.addNewAdmin);
+//============= ADMIN==================
 module.exports = route;
