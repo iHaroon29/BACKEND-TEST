@@ -10,7 +10,10 @@
     "startHRMS": "node HRMS/bin/www",
     "devHRMS": "nodemon HRMS/bin/www",
     "startGROUPCHAT": "node GroupChat/bin/www",
-    "devGROUPCHAT": "nodemon GroupChat/bin/www"
+    "devGROUPCHAT": "nodemon GroupChat/bin/www",
+    "startADMIN": "nodemon Admin/bin/www",
+    "devADMIN": "nodemon Admin/bin/www"
+
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
