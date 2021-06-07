@@ -1,4 +1,4 @@
-const Admin=require("../../models/mongodb/");
+const Admin=require("../../models/mongodb/Admin");
 const AdminValidator=require("../../utils/admin.validators");
 module.exports={
     addNewAdminUser(adminDetails){
