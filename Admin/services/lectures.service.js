@@ -1,13 +1,49 @@
-
-// Validate if the lectures are from specified classroom (using classroomID)
+const Lecture=require("../../models/mongodb/lectures");
+const LectureValidators=require("../../utils/lecturesvalidtors");
 module.exports={
-    updateLectureById(){
+    addNewLectureInClassroom(classroomId, lectureDetails){
+        return LectureValidators.addNewLectureToClassroom(lectureDetails)
+            .then(validLectureDetails=>{
+                return new Lecture(validLectureDetails).save()
+                    .then(savedDetails=>{
+                        return savedDetails;
+                    })
+            })
+    },
+    updateLectureById(classroomId,lectureId,lectureDetails){
+        return LectureValidators.updateLecture(lectureDetails)
+            .then(validNewLectureDetails=>{
+                Lecture.findOneAndUpdate({classroom_id:classroomId,_id:lectureId},validNewLectureDetails,{new:true})
+                    .then(updatedDetails=>{
+                        return updatedDetails;
+                    })
+            })
 
     },
-    deleteLectureById(){
+    deleteLectureById(classroomId,lectureId){
+        return Lecture.findOneAndDelete({classroom_id:classroomId,_id:lectureId})
+            .then(deletedDetails=>{
+                return deletedDetails;
+            })
 
     },
-    updateLectureStatusById(){
+    updateLectureStatusById(lectureId,lectureDetails){
+        return Lecture.findByIdAndUpdate(lectureId,lectureDetails,{new:true})
+            .then(updatedDetails=>{
+                return updatedDetails;
+            })
+    },
+    getAllLecturesOfClassroom(classroomId){
+        return Lecture.find({classroom_id:classroomId})
+            .then(allLectures=>{
+                return allLectures;
+            })
 
     },
+    getLectureDetailsById(lectureId){
+        return Lecture.findById(lectureId)
+            .then(lectureDetails=>{
+                return lectureDetails;
+            })
+    }
 };

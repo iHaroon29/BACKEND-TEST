@@ -7,7 +7,8 @@ module.exports={
             return res.status(202).send(course);
         }
         catch (e) {
-            res.sendStatus(400);
+            console.log(e);
+            return  res.sendStatus(400);
 
         }
     },
