@@ -8,14 +8,21 @@ module.exports={
                 const courses={};
                 for (let i of validClassroomDetails.courses){
                     if(!courses[i])
-                        courses[i]={};
+                        courses[i]={
+                            createdAt:new Date(),
+                        };
                 }
+
+                delete validClassroomDetails.courses;
                 validClassroomDetails.enrolled_courses=courses;
                 const students={};
                 for (let i of validClassroomDetails.students){
                     if(!students[i])
-                        students[i]={};
+                        students[i]={
+                            createdAt:new Date(),
+                        };
                 }
+                delete validClassroomDetails.students;
                 validClassroomDetails.enrolled_students=students;
                 console.log(validClassroomDetails);
                 return new Classroom(validClassroomDetails).save()
@@ -27,13 +34,20 @@ module.exports={
 
     },
     deleteClassroomById(classroomId){
+        return Classroom.findByIdAndDelete(classroomId)
+            .then(deletedData=>{
+                return deletedData;
+            })
 
     },
-    updateClassroomById(classroomId){
-
-    },
-    addNewLectureInClassroomByClassroomId(classroomId){
-
+    updateClassroomById(classroomId,updateDetails){
+        return ClassroomValidator.updateClassroomDetails(updateDetails)
+            .then(validDetails=>{
+                return Classroom.findByIdAndUpdate(classroomId,validDetails,{new:true})
+                    .then(updatedDetails=>{
+                        return updatedDetails;
+                    })
+            })
     },
     getClassroomActivitiesByClassroomId(classroomId){
 

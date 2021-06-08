@@ -13,5 +13,18 @@ const ClassroomSchema=Joi.object({
 module.exports={
     newClassroom(classroomDetails){
         return ClassroomSchema.validateAsync(classroomDetails);
-    }
+    },
+    updateClassroomDetails(details){
+        const UpdateSchema=Joi.object({
+            'name':Joi.string().optional(),
+            'timeline':{
+                type:Object,
+                default:{},
+            },
+            'status':Joi.string().optional(),
+            'classroom_type':Joi.string(),
+        }).options({stripUnknown:true});
+        return UpdateSchema.validateAsync(details);
+    },
+
 };

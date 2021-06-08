@@ -37,5 +37,14 @@ module.exports={
             console.log(e);
             return res.sendStatus(400);
         }
+    },
+    async updateClassroomDetails(req,res){
+        try {
+            const updatedDetails=await ClassroomService.updateClassroomById(req.params.classroomId,req.body);
+            return  res.status(202).send(updatedDetails);
+        }catch (e) {
+            console.log(e);
+            return res.sendStatus(400);
+        }
     }
 };
