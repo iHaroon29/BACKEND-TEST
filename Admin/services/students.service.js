@@ -28,17 +28,22 @@ module.exports = {
     let studentCourse = [];
 
     for (let i = 0; i < student.length; i++) {
-      let classroom = await Classroom.findOne({
-        enrolled_students: student[i]._id,
-      });
-      if (!classroom) throw "no classroom found;";
-      console.log(classrooms);
+      const studentID = student[i]._id;
+      const StudentData = {};
+      StudentData["enrolled_students.$oid." + studentID] = {
+        $exists: true,
+      };
+      console.log(StudentData);
+      let classroom = await Classroom.find(StudentData);
+      if (classroom.length === 0) throw "no classroom found;";
+      console.log(classroom);
       let data = {
         name: student[i].name,
         email: student[i].email,
         course_assigned: classroom.courses,
         classrooms: classroom.name,
       };
+      console.log(data);
       if (classroom) studentCourse.push[data];
     }
     console.log(studentCourse);

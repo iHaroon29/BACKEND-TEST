@@ -3,6 +3,7 @@ const CourseController = require("../controllers/Courses");
 const CourseSectionController = require("../controllers/CourseSection");
 const TeachersController = require("../controllers/Teachers");
 const StudentsController = require("../controllers/Students");
+const AdminController = require("../controllers/admin.controller");
 
 // Teachers Route
 route.post("/teachers/new", TeachersController.addNewTeacher);
