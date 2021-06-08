@@ -4,6 +4,8 @@ const CourseSectionController = require("../controllers/CourseSection");
 const TeachersController = require("../controllers/Teachers");
 const StudentsController = require("../controllers/Students");
 const AdminController = require("../controllers/admin.controller");
+const ClassroomController = require("../controllers/classroom.controller");
+const LectureController = require("../controllers/lectures.controller");
 
 // Teachers Route
 route.post("/teachers/new", TeachersController.addNewTeacher);
@@ -23,12 +25,6 @@ route.post("/course/new", CourseController.addNewCourse);
 route.put("/course/all", CourseController.updateCourseById);
 route.delete("/course/:id", CourseController.deleteCourseById);
 route.post("/course_section/new", CourseSectionController.addNewCourseSection);
-const route = require("express").Router();
-const CourseController = require("../controllers/Courses");
-const CourseSectionController = require("../controllers/CourseSection");
-const AdminController = require("../controllers/admin.controller");
-const ClassroomController = require("../controllers/classroom.controller");
-const LectureController = require("../controllers/lectures.controller");
 
 //============= COURSES==================
 route.get("/course/all", CourseController.getAllCourse);
