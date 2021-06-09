@@ -21,4 +21,4 @@ const CourseSectionsSchema=new mongoose.Schema({
         timestamps:true,
     });
 
-module.exports=mongoose.model("courseSection",CourseSectionsSchema);
+module.exports=mongoose.model("course_section",CourseSectionsSchema);

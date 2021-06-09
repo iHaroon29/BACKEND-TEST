@@ -6,10 +6,7 @@ const CourseSchema=Joi.object({
     'description':Joi.string().required(),
     'price':Joi.number().required(),
     'discount':Joi.number().required(),
-    teachers:{
-        type:Object, // Teacher's id as key and details as values
-        default:{},
-    },
+    "teachers":Joi.array().required(),
 }).options({stripUnknown:true});
 Object.freeze(CourseSchema);
 

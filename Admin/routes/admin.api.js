@@ -1,6 +1,6 @@
 const route=require("express").Router();
 const CourseController=require("../controllers/Courses");
-const CourseSectionController=require("../controllers/CourseSection");
+const CourseSectionController=require("../controllers/course.section.controller");
 const AdminController=require("../controllers/admin.controller");
 const ClassroomController=require("../controllers/classroom.controller");
 const LectureController=require("../controllers/lectures.controller");
@@ -9,11 +9,19 @@ const LectureController=require("../controllers/lectures.controller");
 //============= COURSES==================
 route.get("/course/all",CourseController.getAllCourse);
 route.post("/course/new",CourseController.addNewCourse);
-route.put("/course/all",CourseController.updateCourseById);
+route.put("/course/:courseId",CourseController.updateCourseById);
 route.delete("/course/:id",CourseController.deleteCourseById);
-route.post("/course_section/new",CourseSectionController.addNewCourseSection);
-
 //============= COURSES==================
+
+//============= COURSE SECTION==================
+route.get("/course/:courseId/section/:courseSectionId",CourseSectionController.getCourseSectionDetails);
+route.get("/course/:courseId/section/all",CourseSectionController.getAllCourseSectionsOfCourse);
+route.get("/course/section/all",CourseSectionController.getAllCourseSection);
+route.post("/course/:courseId/section/new",CourseSectionController.addNewCourseSection);
+route.put("/course/:courseId/section/:courseSectionId",CourseSectionController.updateCourseSection);
+route.delete("/course/:courseId/section/:courseSectionId",CourseSectionController.deleteCourseSection);
+//============= COURSE SECTION==================
+
 
 //============= ADMIN==================
 route.put("/forget/password",AdminController.updatePassword);
