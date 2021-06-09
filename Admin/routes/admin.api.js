@@ -7,24 +7,24 @@ const AdminController = require("../controllers/admin.controller");
 const ClassroomController = require("../controllers/classroom.controller");
 const LectureController = require("../controllers/lectures.controller");
 
-// Teachers Route
+// ============ Teachers ================
 route.post("/teachers/new", TeachersController.addNewTeacher);
 route.get("/teachers/all", TeachersController.getAllTeachersAndPersonalDetails);
 route.delete("/teachers/:id", TeachersController.deleteTeacherById);
 route.get("/teachers/:id", TeachersController.getTeacherPersonalDetailById);
+// ======================================
 
-//Students Route
+// ============ Students ================
 route.post("/students/new", StudentsController.addNewStudent);
 route.get(
   "/students/studentCourses",
   StudentsController.getAllStudentsAndTheirCourseDetails
 );
-
-route.get("/course/all", CourseController.getAllCourse);
-route.post("/course/new", CourseController.addNewCourse);
-route.put("/course/all", CourseController.updateCourseById);
-route.delete("/course/:id", CourseController.deleteCourseById);
-route.post("/course_section/new", CourseSectionController.addNewCourseSection);
+route.put(
+  "/students/studentCourses",
+  StudentsController.updateStudentCourseDetailsByStudentId
+);
+// ======================================
 
 //============= COURSES==================
 route.get("/course/all", CourseController.getAllCourse);
