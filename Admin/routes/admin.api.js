@@ -9,7 +9,7 @@ const LectureController=require("../controllers/lectures.controller");
 //============= COURSES==================
 route.get("/course/all",CourseController.getAllCourse);
 route.post("/course/new",CourseController.addNewCourse);
-route.put("/course/:courseId",CourseController.updateCourseById);
+route.put("/course/all",CourseController.updateCourseById);
 route.delete("/course/:id",CourseController.deleteCourseById);
 //============= COURSES==================
 
