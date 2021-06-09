@@ -1,4 +1,4 @@
-const CoursesServices=require("../services/Coureses");
+const CoursesServices=require("../services/course.services");
 
 module.exports={
     async addNewCourse(req,res){

@@ -31,9 +31,31 @@ route.get("/course/all", CourseController.getAllCourse);
 route.post("/course/new", CourseController.addNewCourse);
 route.put("/course/all", CourseController.updateCourseById);
 route.delete("/course/:id", CourseController.deleteCourseById);
-route.post("/course_section/new", CourseSectionController.addNewCourseSection);
-
 //============= COURSES==================
+
+//============= COURSE SECTION==================
+route.get(
+  "/course/:courseId/section/:courseSectionId",
+  CourseSectionController.getCourseSectionDetails
+);
+route.get(
+  "/course/:courseId/section/all",
+  CourseSectionController.getAllCourseSectionsOfCourse
+);
+route.get("/course/section/all", CourseSectionController.getAllCourseSection);
+route.post(
+  "/course/:courseId/section/new",
+  CourseSectionController.addNewCourseSection
+);
+route.put(
+  "/course/:courseId/section/:courseSectionId",
+  CourseSectionController.updateCourseSection
+);
+route.delete(
+  "/course/:courseId/section/:courseSectionId",
+  CourseSectionController.deleteCourseSection
+);
+//============= COURSE SECTION==================
 
 //============= ADMIN==================
 route.put("/forget/password", AdminController.updatePassword);
