@@ -35,15 +35,23 @@ module.exports={
     },
     getAllLecturesOfClassroom(classroomId){
         return Lecture.find({classroom_id:classroomId})
-            .then(allLectures=>{
-                return allLectures;
-            })
-
     },
     getLectureDetailsById(lectureId){
         return Lecture.findById(lectureId)
             .then(lectureDetails=>{
                 return lectureDetails;
             })
-    }
+    },
+    getTotalLecturesInClassroom(classroomId){
+        return Lecture.find({classroom_id:classroomId})
+            .then(lectures=>{
+                return lectures.length;
+            })
+    },
+    getTotalLecturesInCourse(lecture_id){
+        return Lecture.find({lecture_id:lecture_id})
+            .then(lectures=>{
+                return lectures.length;
+            })
+    },
 };
