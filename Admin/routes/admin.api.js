@@ -1,11 +1,12 @@
 const route = require("express").Router();
 const CourseController = require("../controllers/Courses");
-const CourseSectionController = require("../controllers/CourseSection");
-const TeachersController = require("../controllers/Teachers");
-const StudentsController = require("../controllers/Students");
+const CourseSectionController = require("../controllers/course.section.controller");
+const TeachersController = require("../controllers/teachers.controller");
+const StudentsController = require("../controllers/students.controller");
 const AdminController = require("../controllers/admin.controller");
 const ClassroomController = require("../controllers/classroom.controller");
 const LectureController = require("../controllers/lectures.controller");
+const DashboardController = require("../controllers/dashboard.controller");
 
 // ============ Teachers ================
 route.post("/teachers/new", TeachersController.addNewTeacher);
@@ -104,6 +105,10 @@ route.delete(
 );
 
 //======================= LECTURE=====================
+
+//=======================DASHBOARD====================
+route.get("/dashboard", DashboardController.getDashboardData);
+//====================================================
 
 // const Classroom=require("../../models/mongodb/classrooms");
 //
