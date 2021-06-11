@@ -5,6 +5,7 @@ module.exports={
             const newTrainingDetail=await TeacherTrainingService.addNewTeacherForTraining(req.body);
             return res.send(newTrainingDetail);
         }catch (e) {
+            console.log(e);
             return res.sendStatus(400);
         }
     },

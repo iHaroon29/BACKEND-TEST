@@ -1,4 +1,4 @@
-const TeacherTraining =require("../../models/teacher.training.model");
+const TeacherTraining =require("../../models/mongodb/teacher.training.model");
 const TeacherTrainingDataValidator=require("../../utils/teacher.training.validators");
 module.exports={
     addNewTeacherForTraining(teacherDetails){
