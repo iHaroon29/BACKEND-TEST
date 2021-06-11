@@ -4,7 +4,7 @@ const CourseSectionController=require("../controllers/course.section.controller"
 const AdminController=require("../controllers/admin.controller");
 const ClassroomController=require("../controllers/classroom.controller");
 const LectureController=require("../controllers/lectures.controller");
-
+const TeacherTrainingRoutes=require("./teachers.training.api");
 
 //============= COURSES==================
 route.get("/course/all",CourseController.getAllCourse);
@@ -48,6 +48,7 @@ route.delete("/classroom/:classroomId/lecture/:lectureId",LectureController.dele
 
 //======================= LECTURE=====================
 
+route.use(TeacherTrainingRoutes);
 
 
 
