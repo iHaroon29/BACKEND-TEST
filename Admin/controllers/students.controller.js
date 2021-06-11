@@ -18,4 +18,16 @@ module.exports = {
       res.status(400).send(e);
     }
   },
+  async updateStudentCourseDetailsByStudentId(req, res) {
+    try {
+      const studentUpdatedCourse =
+        await StudentsServices.updateStudentCourseDetailsByStudentId(
+          req.params.id,
+          req.body
+        );
+      return res.status(202).send(studentUpdatedCourse);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  },
 };

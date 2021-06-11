@@ -30,23 +30,25 @@ module.exports = {
     for (let i = 0; i < student.length; i++) {
       const studentID = student[i]._id;
       const StudentData = {};
-      StudentData["enrolled_students.$oid." + studentID] = {
+      StudentData["enrolled_students." + studentID] = {
         $exists: true,
       };
-      console.log(StudentData);
       let classroom = await Classroom.find(StudentData);
       if (classroom.length === 0) throw "no classroom found;";
-      console.log(classroom);
+      let classrooms = [];
+      for (let j = 0; j < classroom.length; j++)
+        classrooms.push(classroom[j].name);
       let data = {
         name: student[i].name,
         email: student[i].email,
-        course_assigned: classroom.courses,
-        classrooms: classroom.name,
+        course_assigned: Object.keys(classroom[0].enrolled_courses).length,
+        classrooms: classrooms,
       };
-      console.log(data);
-      if (classroom) studentCourse.push[data];
+      if (classroom) studentCourse.push(data);
     }
-    console.log(studentCourse);
+    return studentCourse;
   },
-  updateStudentCourseDetailsByStudentId() {},
+  async updateStudentCourseDetailsByStudentId(studentId, newDetails) {
+    console.log(studentId, newDetails);
+  },
 };
