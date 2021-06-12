@@ -22,7 +22,7 @@ module.exports = {
   addNewStudentsUsingExcelSheet() {},
   async getAllStudentsAndTheirCourseDetails() {
     let student = await Student.find();
-    if (student.length === 0) throw "No Student Found";
+    if (student.length === 0) return student;
 
     let studentCourse = [];
 
@@ -37,8 +37,8 @@ module.exports = {
         let data = {
           name: student[i].name,
           email: student[i].email,
-          course_assigned: 0,
-          classrooms: 0,
+          course_assigned: [],
+          classrooms: [],
         };
         studentCourse.push(data);
         continue;
@@ -64,7 +64,7 @@ module.exports = {
 
   async getAllStudents() {
     let student = await Student.find();
-    if (student.length === 0) throw "No Student Found";
+    if (student.length === 0) return student;
 
     return student;
   },
