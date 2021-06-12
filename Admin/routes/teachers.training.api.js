@@ -6,6 +6,6 @@ router.get("/training/teacher/:teacherId/details/",TeacherController.getAllTrain
 router.get("/training/teacher/details/trainer/:trainerId",TeacherController.getAllTrainingDetailsByTrainerId);
 router.post("/training/teacher/new",TeacherController.addNewTeacherForTraining);
 router.put("/training/teacher/update/:trainingId",TeacherController.updateTrainingDetails);
-router.delete("/training/teacher/update/:trainingId",TeacherController.deleteTrainingDetails);
+router.delete("/training/teacher/delete/:trainingId",TeacherController.deleteTrainingDetails);
 
 module.exports=router;

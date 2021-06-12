@@ -1,6 +1,6 @@
 const mongoose=require("../../db/mongoDB");
 const TeacherTrainingSchema=new mongoose.Schema({
-    classroomDetails:{
+    classroom_details:{
         type:Object,
         required:true,
     },
@@ -16,7 +16,7 @@ const TeacherTrainingSchema=new mongoose.Schema({
         type:Object,
         required:true,
     },
-    meeting_id:{
+    meeting_link:{
         type:Object,
         required:true,
     }

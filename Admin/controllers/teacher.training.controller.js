@@ -14,6 +14,7 @@ module.exports={
             const trainingDetail=await TeacherTrainingService.updateTeacherInTrainingUsingId(req.params.trainingId,req.body);
             return res.send(trainingDetail);
         }catch (e) {
+            console.log(e)
             return res.sendStatus(400);
         }
     },
@@ -25,7 +26,7 @@ module.exports={
             return res.sendStatus(400);
         }
     },
-    async getAllTrainingDetails(){
+    async getAllTrainingDetails(req,res){
         try{
             const trainingDetail=await TeacherTrainingService.getAllTrainingDetails();
             return res.send(trainingDetail);

@@ -14,6 +14,7 @@ module.exports={
                     .then(trainingDetails=>{
                         if(!trainingDetails)
                             throw new Error("No data found with specified id");
+                        return trainingDetails;
                     })
             })
 
@@ -23,6 +24,7 @@ module.exports={
             .then(deletedDetails=>{
                 if(!deletedDetails)
                     throw new Error("No data found with specified id");
+                return deletedDetails;
             })
     },
     getAllTrainingDetails(){
