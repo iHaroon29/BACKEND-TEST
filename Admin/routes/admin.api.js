@@ -1,113 +1,44 @@
 const route = require("express").Router();
-const CourseController = require("../controllers/Courses");
-const CourseSectionController = require("../controllers/course.section.controller");
-const TeachersController = require("../controllers/teachers.controller");
-const StudentsController = require("../controllers/students.controller");
-const AdminController = require("../controllers/admin.controller");
-const ClassroomController = require("../controllers/classroom.controller");
-const LectureController = require("../controllers/lectures.controller");
+const AdminUserRoutes = require("./admin.users.api");
+const ClassroomRoutes = require("./classrooms.api");
+const CourseSectionRoutes = require("./course.sections.api");
+const CoursesRoutes = require("./courses.api");
+const LectureRoutes = require("./lectures.api");
+const StudentsRoutes = require("./students.api");
+const TeacherRoutes = require("./teachers.api");
+const TeacherTrainingRoutes = require("./teachers.training.api");
 const DashboardController = require("../controllers/dashboard.controller");
 
 // ============ Teachers ================
-route.post("/teachers/new", TeachersController.addNewTeacher);
-route.get("/teachers/all", TeachersController.getAllTeachersAndPersonalDetails);
-route.delete("/teachers/:id", TeachersController.deleteTeacherById);
-route.get("/teachers/:id", TeachersController.getTeacherPersonalDetailById);
+route.use(TeacherRoutes);
 // ======================================
 
 // ============ Students ================
-route.post("/students/new", StudentsController.addNewStudent);
-route.get(
-  "/students/courses",
-  StudentsController.getAllStudentsAndTheirCourseDetails
-);
-route.get("/students/all", StudentsController.getAllStudents);
-route.put(
-  "/students/courses",
-  StudentsController.updateStudentCourseDetailsByStudentId
-);
+route.use(StudentsRoutes);
 // ======================================
 
 //============= COURSES==================
-route.get("/course/all", CourseController.getAllCourse);
-route.post("/course/new", CourseController.addNewCourse);
-route.put("/course/all", CourseController.updateCourseById);
-route.delete("/course/:id", CourseController.deleteCourseById);
+route.use(CoursesRoutes);
 //============= COURSES==================
 
 //============= COURSE SECTION==================
-route.get(
-  "/course/:courseId/section/:courseSectionId",
-  CourseSectionController.getCourseSectionDetails
-);
-route.get(
-  "/course/:courseId/section/all",
-  CourseSectionController.getAllCourseSectionsOfCourse
-);
-route.get("/course/section/all", CourseSectionController.getAllCourseSection);
-route.post(
-  "/course/:courseId/section/new",
-  CourseSectionController.addNewCourseSection
-);
-route.put(
-  "/course/:courseId/section/:courseSectionId",
-  CourseSectionController.updateCourseSection
-);
-route.delete(
-  "/course/:courseId/section/:courseSectionId",
-  CourseSectionController.deleteCourseSection
-);
+route.use(CourseSectionRoutes);
 //============= COURSE SECTION==================
 
 //============= ADMIN==================
-route.put("/forget/password", AdminController.updatePassword);
-route.delete("/admin/delete/:id", AdminController.deleteAdmin);
-route.put("/admin/update/details", AdminController.updateAdminDetails);
-route.post("/admin/new", AdminController.addNewAdmin);
+route.use(AdminUserRoutes);
 //============= ADMIN==================
 
 //==================== CLASSROOM================
-route.post("/classroom/new", ClassroomController.createNewClassroom);
-route.delete(
-  "/classroom/:classroomId",
-  ClassroomController.deleteClassroomWithGivenId
-);
-route.get("/classroom/all", ClassroomController.getAllClassroom);
-route.post(
-  "/classroom/demo/teacher/new/:classroomId",
-  ClassroomController.teacherForDemoClass
-);
-route.put(
-  "/classroom/update/:classroomId",
-  ClassroomController.updateClassroomDetails
-);
+route.use(ClassroomRoutes);
 //==================== CLASSROOM================
 
 //======================= LECTURE=====================
-route.get(
-  "/classroom/:classroomId/lecture/all",
-  LectureController.getAllLecturesOfClassroom
-);
-
-route.get("/lecture/all", LectureController.getAllLectures);
-route.get(
-  "/classroom/:classroomId/lecture/:lectureId",
-  LectureController.getLectureDetails
-);
-route.post(
-  "/classroom/:classroomId/lecture/new",
-  LectureController.addNewLecture
-);
-route.put(
-  "/classroom/:classroomId/lecture/:lectureId",
-  LectureController.updateLecture
-);
-route.delete(
-  "/classroom/:classroomId/lecture/:lectureId",
-  LectureController.deleteLecture
-);
-
-//======================= LECTURE=====================
+route.use(LectureRoutes);
+//======================= LECTURE====================
+//======================= TEACHER TRAINING=====================
+route.use(TeacherTrainingRoutes);
+//======================= TEACHER TRAINING====================
 
 //=======================DASHBOARD====================
 route.get("/dashboard", DashboardController.getDashboardData);

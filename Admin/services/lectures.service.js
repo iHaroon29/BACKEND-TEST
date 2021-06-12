@@ -39,9 +39,7 @@ module.exports = {
     });
   },
   getAllLecturesOfClassroom(classroomId) {
-    return Lecture.find({ classroom_id: classroomId }).then((allLectures) => {
-      return allLectures;
-    });
+    return Lecture.find({ classroom_id: classroomId });
   },
   getLectureDetailsById(lectureId) {
     return Lecture.findById(lectureId).then((lectureDetails) => {
@@ -54,5 +52,16 @@ module.exports = {
     if (lecture.length === 0) throw "No Lecture Found";
 
     return lecture;
+  },
+
+  getTotalLecturesInClassroom(classroomId) {
+    return Lecture.find({ classroom_id: classroomId }).then((lectures) => {
+      return lectures.length;
+    });
+  },
+  getTotalLecturesInCourse(lecture_id) {
+    return Lecture.find({ lecture_id: lecture_id }).then((lectures) => {
+      return lectures.length;
+    });
   },
 };
