@@ -30,4 +30,13 @@ module.exports = {
       res.status(400).send(e);
     }
   },
+
+  async getAllStudents(req, res) {
+    try {
+      const students = await StudentsServices.getAllStudents();
+      return res.status(202).send(students);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  },
 };

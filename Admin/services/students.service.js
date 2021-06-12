@@ -23,7 +23,6 @@ module.exports = {
   async getAllStudentsAndTheirCourseDetails() {
     let student = await Student.find();
     if (student.length === 0) throw "No Student Found";
-    console.log(student.length);
 
     let studentCourse = [];
 
@@ -34,10 +33,20 @@ module.exports = {
         $exists: true,
       };
       let classroom = await Classroom.find(StudentData);
-      if (classroom.length === 0) throw "no classroom found;";
+      if (classroom.length === 0) {
+        let data = {
+          name: student[i].name,
+          email: student[i].email,
+          course_assigned: 0,
+          classrooms: 0,
+        };
+        studentCourse.push(data);
+        continue;
+      }
       let classrooms = [];
-      for (let j = 0; j < classroom.length; j++)
+      for (let j = 0; j < classroom.length; j++) {
         classrooms.push(classroom[j].name);
+      }
       let data = {
         name: student[i].name,
         email: student[i].email,
@@ -46,9 +55,17 @@ module.exports = {
       };
       if (classroom) studentCourse.push(data);
     }
+
     return studentCourse;
   },
   async updateStudentCourseDetailsByStudentId(studentId, newDetails) {
     console.log(studentId, newDetails);
+  },
+
+  async getAllStudents() {
+    let student = await Student.find();
+    if (student.length === 0) throw "No Student Found";
+
+    return student;
   },
 };

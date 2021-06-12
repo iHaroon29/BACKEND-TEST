@@ -18,11 +18,12 @@ route.get("/teachers/:id", TeachersController.getTeacherPersonalDetailById);
 // ============ Students ================
 route.post("/students/new", StudentsController.addNewStudent);
 route.get(
-  "/students/studentCourses",
+  "/students/courses",
   StudentsController.getAllStudentsAndTheirCourseDetails
 );
+route.get("/students/all", StudentsController.getAllStudents);
 route.put(
-  "/students/studentCourses",
+  "/students/courses",
   StudentsController.updateStudentCourseDetailsByStudentId
 );
 // ======================================
@@ -87,6 +88,8 @@ route.get(
   "/classroom/:classroomId/lecture/all",
   LectureController.getAllLecturesOfClassroom
 );
+
+route.get("/lecture/all", LectureController.getAllLectures);
 route.get(
   "/classroom/:classroomId/lecture/:lectureId",
   LectureController.getLectureDetails
