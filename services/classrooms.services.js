@@ -1,5 +1,5 @@
-const Classroom=require("../../models/mongodb/classrooms");
-const ClassroomValidator=require("../../utils/classroom.validators");
+const Classroom=require("../models/mongodb/classrooms");
+const ClassroomValidator=require("../utils/classroom.validators");
 
 module.exports={
     addNewClassroom(classroomDetails){

@@ -1,5 +1,5 @@
-const CourseSection=require("../../models/mongodb/courseSections");
-const CourseSectionValidator=require("../../utils/CourseSection.validators");
+const CourseSection=require("../models/mongodb/courseSections");
+const CourseSectionValidator=require("../utils/CourseSection.validators");
 module.exports={
     addNewCourseSection(courseId,courseSectionDetails){
         courseSectionDetails.course_id=courseId;

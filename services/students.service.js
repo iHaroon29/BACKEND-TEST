@@ -1,6 +1,6 @@
-const Student = require("../../models/mongodb/students");
-const Classroom = require("../../models/mongodb/classrooms");
-const StudentValidator = require("../../utils/Students.validators");
+const Student = require("../models/mongodb/students");
+const Classroom = require("../models/mongodb/classrooms");
+const StudentValidator = require("../utils/Students.validators");
 const bcrypt = require("bcrypt");
 
 module.exports = {

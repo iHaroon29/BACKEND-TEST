@@ -1,6 +1,6 @@
-const Course = require("../../models/mongodb/courses");
-const courseValidator = require("../../utils/Course.validators");
-const CourseActivityLogger = require("../../middlewares/courses.activity.logger");
+const Course = require("../models/mongodb/courses");
+const courseValidator = require("../utils/Course.validators");
+const CourseActivityLogger = require("../middlewares/courses.activity.logger");
 
 module.exports = {
   addNewCourse(courseDetails) {

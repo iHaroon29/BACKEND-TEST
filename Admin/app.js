@@ -8,7 +8,7 @@ const cors = require("cors");
 // var usersRouter = require('./routes/users');
 
 var app = express();
-const AdminRoutes = require("./routes/admin.api");
+const AdminRoutes = require("./admin.api");
 
 app.use(cors());
 // view engine setup

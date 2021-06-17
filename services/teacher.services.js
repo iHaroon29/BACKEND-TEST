@@ -1,5 +1,5 @@
-const Teacher = require("../../models/mongodb/teachers");
-const teacherValidator = require("../../utils/Teacher.validators");
+const Teacher = require("../models/mongodb/teachers");
+const teacherValidator = require("../utils/Teacher.validators");
 const bcrypt = require("bcrypt");
 
 module.exports = {

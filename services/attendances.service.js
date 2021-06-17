@@ -1,4 +1,4 @@
-const Attendance =require("../../models/mongodb/lectureAttendances");
+const Attendance =require("../models/mongodb/lectureAttendances");
 const LectureService=require("./lectures.service");
 module.exports={
     markStudentAsPresentUsingClassroomIdAndLectureId(classroomId,studentId,lectureId,courseId){
