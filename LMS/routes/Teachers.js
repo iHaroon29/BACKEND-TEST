@@ -14,7 +14,7 @@ const {
   getAllClassroom,
   classroomWithGivenId,
   createNewClassroom,
-  addCouseInClassroom,
+  addCourseInClassroom,
   deleteClassroomWithGivenId
 } = require("../controllers/ClassroomController");
 
@@ -67,7 +67,7 @@ router.get("/classroomId/:id",classroomWithGivenId);
 
 router.post("/addClassroom",createNewClassroom);
 
-router.put("/addCourse/inClassroomId/:id",addCouseInClassroom);
+router.put("/addCourse/inClassroomId/:id",addCourseInClassroom);
 
 router.delete("/deleteClassroomId/:id",deleteClassroomWithGivenId);
 

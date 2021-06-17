@@ -33,13 +33,9 @@ exports.addCourseInClassroom = async (req, res) => {
 
     let course = await Course.findOne({ _id: req.body.course_id });
     if (!course) return res.status(400).send("This course id is not found in db");
-    // console.log(course);
-    // console.log(classroom);
     classroom.courses[req.body.course_id] = course;
-    // console.log(classroom);
     classroom.markModified("courses");
     await classroom.save();
-    // console.log(classroom);
     res.send(classroom);
 };
 exports.deleteClassroomWithGivenId = async (req, res) => {
@@ -48,4 +44,3 @@ exports.deleteClassroomWithGivenId = async (req, res) => {
     res.send(classroom);
 };
 
-module.exports = router;

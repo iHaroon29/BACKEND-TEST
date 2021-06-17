@@ -1,10 +1,8 @@
 const Assignment = require("../../models/mongodb/assignments");
-const NewAssignmentValidator = require("../routes/DataValidators");
 const Student = require("../../models/mongodb/students");
 const CourseSections = require("../../models/mongodb/courseSections");
 const bcrypt = require("bcrypt");
 const Classroom = require("../../models/mongodb/classrooms");
-const Course = require("../../models/mongodb/courses");
 const AssignmentSubmission = require("../../models/mongodb/assignmentSubmissions");
 
 exports.getCourseSection = async (req, res) => {
