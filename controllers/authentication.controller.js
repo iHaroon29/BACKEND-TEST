@@ -1,15 +1,29 @@
-const StudentAuthenticationService=require("../services/students.authentication.service");
-const TeacherAuthenticationService=require("../services/teachers.authentication.service");
-const AdminAuthenticationService=require("../services/admins.authentication.service");
+const StudentAuthenticationService = require("../services/students.authentication.service");
+const TeacherAuthenticationService = require("../services/teachers.authentication.service");
+const AdminAuthenticationService = require("../services/admins.authentication.service");
 
-module.exports={
-    studentLogin(){
-
-    },
-    adminLogin(){
-
-    },
-    teacherLogin(){
-
+module.exports = {
+  async studentLogin(req, res) {
+    try {
+      const studentToken = await StudentAuthenticationService.studentLogin(
+        req.body
+      );
+      return res.status(200).send(studentToken);
+    } catch (e) {
+      console.log(e);
+      return res.sendStatus(400);
     }
+  },
+  adminLogin() {},
+  async teacherLogin(req, res) {
+    try {
+      const teacherToken = await TeacherAuthenticationService.teacherLogin(
+        req.body
+      );
+      return res.status(200).send(teacherToken);
+    } catch (e) {
+      console.log(e);
+      return res.sendStatus(400);
+    }
+  },
 };
