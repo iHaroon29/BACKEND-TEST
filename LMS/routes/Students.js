@@ -19,30 +19,30 @@ const {
   deleteCourse,
 } = require("../controllers/CourseController");
 
-router.get("/courseSections", getCourseSection);
+router.get("/course/section/all", getCourseSection);
 
-router.get("/allStudents", getEnrolledStudents);
+router.get("/student/all", getEnrolledStudents);
 
-router.post("/assSubmit", assignmentSubmit);
+router.post("/assignment/submitted", assignmentSubmit);
 
-router.get("/ass/classroom/:id", getAllAssignmentClassID);
+router.get("/classroom/:id/assignment/all", getAllAssignmentClassID);
 
-router.get("/subass/stu/:id", getAllAssignmentStudentID);
+router.get("/student/:id/assignment/submitted/all", getAllAssignmentStudentID);
 
-router.post("/", createStudent);
+router.post("/student/new", createStudent);
 
-router.delete("/delete/:id", deleteStudent);
+router.delete("/student/delete/:id", deleteStudent);
 
-router.post("/lectureFeedback/:id", lectureFeedbackByStudent);
+router.post("/feedback/lecture/:id", lectureFeedbackByStudent);
 
-router.get("/getAllCourse", getAllCourse);
+router.get("/course/all", getAllCourse);
 
-router.get("/getCourse/:id", getCourseWithId);
+router.get("/course/:id", getCourseWithId);
 
-router.post("/newCourse", createCourse);
+router.post("/course/new", createCourse);
 
-router.put("/update/course/:id", updateCourse);
+router.put("/course/update/:id", updateCourse);
 
-router.delete("/delete/course/:id", deleteCourse);
+router.delete("/course/delete/:id", deleteCourse);
 
 module.exports = router;
