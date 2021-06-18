@@ -6,7 +6,7 @@ const AuthToken = require("../../modules/authTokens");
 const LoginActivity = require("../../models/login.activity.model");
 const bcrypt = require("../../modules/bcrypt");
 
-router.post("/login/student", async (req, res) => {
+router.post("/student/login", async (req, res) => {
   //    return auth token on correct details of the student
   const student = await Student.findOne({ email: req.body.email });
   //if employee not found
@@ -48,7 +48,7 @@ router.post("/login/student", async (req, res) => {
     });
 });
 
-router.post("/login/teacher", async (req, res) => {
+router.post("/teacher/login", async (req, res) => {
   //    return auth token on correct details of the student
   const teacher = await Teacher.findOne({ email: req.body.email });
   //if employee not found
