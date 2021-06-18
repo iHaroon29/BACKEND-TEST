@@ -23,7 +23,14 @@ module.exports={
                         };
                 }
                 delete validClassroomDetails.students;
-                validClassroomDetails.enrolled_students=students;
+                const teachers={};
+                for (let i of validClassroomDetails.teachers){
+                    if(!teachers[i])
+                        teachers[i]={
+                            createdAt:new Date(),
+                        };
+                }
+                validClassroomDetails.teachers=teachers;
                 console.log(validClassroomDetails);
                 return new Classroom(validClassroomDetails).save()
                     .then((savedDetails)=>{
