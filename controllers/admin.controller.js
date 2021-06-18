@@ -31,6 +31,22 @@ module.exports={
         }catch (e) {
             return res.sendStatus(400);
         }
+    },
+    async getAllAdmins(req,res){
+        try{
+            const allAdmins=await AdminService.allAdmins();
+            return  res.send(allAdmins);
+        }catch (e) {
+            return res.sendStatus(400);
+        }
+    },
+    async getAdminDetails(req,res){
+        try{
+            const details=await AdminService.getAdminDetailsById(req.params.adminId);
+            return  res.send(details);
+        }catch (e) {
+            return res.sendStatus(400);
+        }
     }
 
 };

@@ -37,4 +37,15 @@ module.exports = {
       return newDetails;
     });
   },
+  allAdmins(){
+    return Admin.find()
+  },
+  getAdminDetailsById(adminId){
+    return Admin.findById(adminId).then(admin=>{
+      if(!admin){
+        throw new Error("No User Found");
+      }
+      return admin;
+    })
+  }
 };
