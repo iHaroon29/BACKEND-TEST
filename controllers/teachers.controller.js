@@ -37,4 +37,16 @@ module.exports = {
       res.status(400).send(e);
     }
   },
+  async updateTeacherPersonalDetailsById(req, res) {
+    try {
+      const updatedTeacher =
+        await TeachersServices.updateTeacherPersonalDetailsById(
+          req.params.id,
+          req.body
+        );
+      return res.status(202).send(updatedTeacher);
+    } catch (e) {
+      return res.sendStatus(400);
+    }
+  },
 };

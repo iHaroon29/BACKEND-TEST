@@ -7,8 +7,8 @@ const LectureRoutes = require("../routes/lectures.api");
 const StudentsRoutes = require("../routes/students.api");
 const TeacherRoutes = require("../routes/teachers.api");
 const TeacherTrainingRoutes = require("../routes/teachers.training.api");
+const AttendanceRoutes = require("../routes/attendance.api");
 const DashboardController = require("../controllers/dashboard.controller");
-const AuthenticationConroller = require("../controllers/authentication.controller");
 
 // ============ Teachers ================
 route.use(TeacherRoutes);
@@ -45,10 +45,9 @@ route.use(TeacherTrainingRoutes);
 route.get("/dashboard", DashboardController.getDashboardData);
 //====================================================
 
-//======================LOGIN=========================
-route.post("/login/student", AuthenticationConroller.studentLogin);
-route.post("/login/teacher", AuthenticationConroller.teacherLogin);
-//======================LOGIN=========================
+//======================ATTENDANCE=========================
+route.use(AttendanceRoutes);
+//======================ATTENDANCE=========================
 
 // const Classroom=require("../../models/mongodb/classrooms");
 //
