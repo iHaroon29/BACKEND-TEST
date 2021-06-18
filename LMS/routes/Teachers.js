@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const {
   createNewTeacher,
   editTeacher,
@@ -15,20 +16,31 @@ const {
   classroomWithGivenId,
   createNewClassroom,
   addCourseInClassroom,
-  deleteClassroomWithGivenId
+  deleteClassroomWithGivenId,
 } = require("../controllers/ClassroomController");
 
-const { getAllSubmittedAssignment , AssignmentSubmissionWithId } = require("../controllers/AssignmentSubmissionController");
+const {
+  getAllSubmittedAssignment,
+  AssignmentSubmissionWithId,
+} = require("../controllers/AssignmentSubmissionController");
 
 const { createLecture } = require("../controllers/LectureController");
 
-const { createCourseSection } = require("../controllers/CourseSectionController");
+const {
+  createCourseSection,
+} = require("../controllers/CourseSectionController");
 
-const { createLecAttendance } = require("../controllers/LectureAttendanceController");
+const {
+  createLecAttendance,
+} = require("../controllers/LectureAttendanceController");
 
-const { createCourseMaterial } = require("../controllers/CourseMaterialController");
+const {
+  createCourseMaterial,
+} = require("../controllers/CourseMaterialController");
 
-const { newCourseActivity } = require("../controllers/CourseActivityController");
+const {
+  newCourseActivity,
+} = require("../controllers/CourseActivityController");
 
 router.post("/register", createNewTeacher);
 
@@ -54,21 +66,20 @@ router.post("/createLecture", createLecture);
 
 router.post("/createCourseMaterial", createCourseMaterial);
 
-router.post("/newCourseActivity",newCourseActivity);
+router.post("/newCourseActivity", newCourseActivity);
 
-router.get("/allAssignmentSubmissions",getAllSubmittedAssignment);
+router.get("/allAssignmentSubmissions", getAllSubmittedAssignment);
 
-router.get("/AssignmentSubmitted/:id",AssignmentSubmissionWithId);
-
+router.get("/AssignmentSubmitted/:id", AssignmentSubmissionWithId);
 
 router.get("/allClassroom", getAllClassroom);
 
-router.get("/classroomId/:id",classroomWithGivenId);
+router.get("/classroomId/:id", classroomWithGivenId);
 
-router.post("/addClassroom",createNewClassroom);
+router.post("/addClassroom", createNewClassroom);
 
-router.put("/addCourse/inClassroomId/:id",addCourseInClassroom);
+router.put("/addCourse/inClassroomId/:id", addCourseInClassroom);
 
-router.delete("/deleteClassroomId/:id",deleteClassroomWithGivenId);
+router.delete("/deleteClassroomId/:id", deleteClassroomWithGivenId);
 
 module.exports = router;
