@@ -1,10 +1,10 @@
 const HrAdvisorController=require("./HrAdvisorController").ControllerClass;
-const HrRoom=require("../../models/mongodb/HrRooms");
+const HrRoom=require("../../models/hr.rooms.model");
 const HrActivityController=require("./HrActivityController");
 const createNewRoomValidation = require('../routes/DataValidators').createNewRoom;
-const Employee=require("../../models/mongodb/employees");
+const Employee=require("../../models/employees.model");
 const Roles = require('./AuthenticationAndAuthorizationController').ALLOWED_ROLES;
-const HrApplicant = require('../../models/mongodb/newHrApplicants');
+const HrApplicant = require('../../models/hr.applicants.model');
 //==================================================================================
 
 

@@ -1,4 +1,4 @@
-const AssignmentSubmission = require("../../models/mongodb/assignmentSubmissions");
+const AssignmentSubmission = require("../../models/assignment.submissions.model");
 
 exports.getAllSubmittedAssignment = async (req, res) => {
     const submitted = await AssignmentSubmission.find();

@@ -1,4 +1,4 @@
-const Course = require("../models/mongodb/courses");
+const Course = require("../models/courses.model");
 const courseValidator = require("../utils/Course.validators");
 const CourseActivityLogger = require("../middlewares/courses.activity.logger");
 

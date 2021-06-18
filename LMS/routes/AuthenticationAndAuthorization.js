@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Student = require("../../models/mongodb/students");
-const Teacher = require("../../models/mongodb/teachers");
+const Student = require("../../models/students.model");
+const Teacher = require("../../models/teachers.model");
 const AuthToken = require("../../modules/authTokens");
-const LoginActivity = require("../../models/mongodb/logInActiviity");
+const LoginActivity = require("../../models/login.activity.model");
 const bcrypt = require("../../modules/bcrypt");
 
 router.post("/login/student", async (req, res) => {

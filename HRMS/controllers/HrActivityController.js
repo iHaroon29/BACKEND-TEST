@@ -1,4 +1,4 @@
-const HrActivity=require("../../models/mongodb/HrActivity");
+const HrActivity=require("../../models/hr.actvity.model");
 
 class ControllerClass{
     addNewHrActivity(activity){

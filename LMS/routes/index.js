@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { Users } = require("./DataValidators");
 const authTokenManager = require("../../modules/authTokens");
-const CourseSections = require("../../models/mongodb/courseMaterials");
-const models = require("../../models/mongodb/lectureAttendances");
+const CourseSections = require("../../models/course.materials.model");
+const models = require("../../models/lecture.attendances.model");
 models
   .findById("507f1f77bcf86cd799439011")
   .then((result) => {

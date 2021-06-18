@@ -1,10 +1,7 @@
 const Joi = require("joi");
 const ClassroomSchema = Joi.object({
   name: Joi.string().required(),
-  timeline: {
-    type: Object,
-    default: {},
-  },
+  timeline: Joi.object().optional().default({}),
   status: Joi.string().optional().default("verified"),
   classroom_type: Joi.string().optional().default("demo"),
   students: Joi.array().optional().items(Joi.string()).default([]),
@@ -17,10 +14,7 @@ module.exports = {
   updateClassroomDetails(details) {
     const UpdateSchema = Joi.object({
       name: Joi.string().optional(),
-      timeline: {
-        type: Object,
-        default: {},
-      },
+      timeline: Joi.object().optional().default({}),
       status: Joi.string().optional(),
       classroom_type: Joi.string(),
     }).options({ stripUnknown: true });

@@ -1,4 +1,4 @@
-const Lecture = require("../models/mongodb/lectures");
+const Lecture = require("../models/lectures.model");
 const LectureValidators = require("../utils/lecturesvalidtors");
 module.exports = {
   addNewLectureInClassroom(classroomId, lectureDetails) {

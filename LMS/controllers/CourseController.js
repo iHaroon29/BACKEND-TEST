@@ -1,6 +1,6 @@
-const Teacher = require("../../models/mongodb/teachers");
+const Teacher = require("../../models/teachers.model");
 const bcrypt = require("bcrypt");
-const Course = require("../../models/mongodb/courses");
+const Course = require("../../models/courses.model");
 
 exports.getAllCourse = async (req, res) => {
   const courses = await Course.find();

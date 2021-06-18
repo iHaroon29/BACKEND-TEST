@@ -1,9 +1,9 @@
-const Assignment = require("../../models/mongodb/assignments");
-const Student = require("../../models/mongodb/students");
-const CourseSections = require("../../models/mongodb/courseSections");
+const Assignment = require("../../models/assignments.model");
+const Student = require("../../models/students.model");
+const CourseSections = require("../../models/course.sections.model");
 const bcrypt = require("bcrypt");
-const Classroom = require("../../models/mongodb/classrooms");
-const AssignmentSubmission = require("../../models/mongodb/assignmentSubmissions");
+const Classroom = require("../../models/classrooms.model");
+const AssignmentSubmission = require("../../models/assignment.submissions.model");
 
 exports.getCourseSection = async (req, res) => {
   let courseSections = await CourseSections.find();

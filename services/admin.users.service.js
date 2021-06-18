@@ -1,4 +1,4 @@
-const Admin = require("../models/mongodb/Admin");
+const Admin = require("../models/admin.model");
 const AdminValidator = require("../utils/admin.validators");
 module.exports = {
   addNewAdminUser(adminDetails) {
