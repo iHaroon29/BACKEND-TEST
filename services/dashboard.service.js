@@ -1,7 +1,7 @@
-const Student = require("../models/mongodb/students");
-const Classroom = require("../models/mongodb/classrooms");
-const Teacher = require("../models/mongodb/teachers");
-const Lecture = require("../models/mongodb/lectures");
+const Student = require("../models/students.model");
+const Classroom = require("../models/classrooms.model");
+const Teacher = require("../models/teachers.model");
+const Lecture = require("../models/lectures.model");
 
 module.exports = {
   async getDashboardData() {

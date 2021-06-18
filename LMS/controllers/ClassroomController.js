@@ -1,5 +1,5 @@
-const Course = require("../../models/mongodb/courses");
-const Classroom = require("../../models/mongodb/classrooms");
+const Course = require("../../models/courses.model");
+const Classroom = require("../../models/classrooms.model");
 
 exports.getAllClassroom = async (req, res) => {
   const submitted = await AssignmentSubmission.find();

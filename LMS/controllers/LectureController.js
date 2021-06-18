@@ -1,6 +1,6 @@
-const Lectures = require("../../models/mongodb/lectures");
-const CourseSection = require("../../models/mongodb/courseSections");
-const Course = require("../../models/mongodb/courses");
+const Lectures = require("../../models/lectures.model");
+const CourseSection = require("../../models/course.sections.model");
+const Course = require("../../models/courses.model");
 
 exports.createLecture = async function (req, res) {
   let lectures = await Lectures.findOne({

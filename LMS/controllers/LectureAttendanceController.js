@@ -1,6 +1,6 @@
-const LectureAttendance = require("../../models/mongodb/lectureAttendances");
-const Lecture = require("../../models/mongodb/lectures");
-const Student = require("../../models/mongodb/students");
+const LectureAttendance = require("../../models/lecture.attendances.model");
+const Lecture = require("../../models/lectures.model");
+const Student = require("../../models/students.model");
 
 exports.createLecAttendance = async function (req, res) {
   let lectureAttendance = await LectureAttendance.findOne({

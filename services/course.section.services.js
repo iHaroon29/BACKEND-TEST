@@ -1,4 +1,4 @@
-const CourseSection=require("../models/mongodb/courseSections");
+const CourseSection=require("../models/course.sections.model");
 const CourseSectionValidator=require("../utils/CourseSection.validators");
 module.exports={
     addNewCourseSection(courseId,courseSectionDetails){

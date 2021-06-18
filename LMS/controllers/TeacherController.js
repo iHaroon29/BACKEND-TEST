@@ -1,8 +1,8 @@
-const AssignmentSubmission = require("../../models/mongodb/assignmentSubmissions");
-const Assignment = require("../../models/mongodb/assignments");
-const LectureFeedback = require("../../models/mongodb/lectureFeedback");
-const Teacher = require("../../models/mongodb/teachers");
-const Course = require("../../models/mongodb/courses");
+const AssignmentSubmission = require("../../models/assignment.submissions.model");
+const Assignment = require("../../models/assignments.model");
+const LectureFeedback = require("../../models/lecture.feedbacks.model");
+const Teacher = require("../../models/teachers.model");
+const Course = require("../../models/courses.model");
 const bcrypt = require("bcrypt");
 
 exports.createNewTeacher = async (req, res) => {

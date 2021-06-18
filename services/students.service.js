@@ -1,5 +1,5 @@
-const Student = require("../models/mongodb/students");
-const Classroom = require("../models/mongodb/classrooms");
+const Student = require("../models/students.model");
+const Classroom = require("../models/classrooms.model");
 const StudentValidator = require("../utils/Students.validators");
 const bcrypt = require("bcrypt");
 

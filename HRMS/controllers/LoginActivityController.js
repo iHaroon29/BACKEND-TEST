@@ -1,4 +1,4 @@
-const LoginActivity=require("../../models/mongodb/logInActiviity");
+const LoginActivity=require("../../models/login.activity.model");
 const LoginActivityValidator=require("../routes/DataValidators").NewLoginActivity;
 
 const rejectResponse={

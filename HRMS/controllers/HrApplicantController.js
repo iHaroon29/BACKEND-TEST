@@ -1,4 +1,4 @@
-const HrApplicant=require("../../models/mongodb/newHrApplicants");
+const HrApplicant=require("../../models/hr.applicants.model");
 const newHrApplicantValidation=require("../routes/DataValidators").NewHrApplicant;
 const bcrypt=require("../../modules/bcrypt");
 

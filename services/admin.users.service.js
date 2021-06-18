@@ -1,4 +1,4 @@
-const Admin = require("../models/mongodb/Admin");
+const Admin = require("../models/admin.model");
 const AdminValidator = require("../utils/admin.validators");
 module.exports = {
   addNewAdminUser(adminDetails) {
@@ -37,4 +37,15 @@ module.exports = {
       return newDetails;
     });
   },
+  allAdmins(){
+    return Admin.find()
+  },
+  getAdminDetailsById(adminId){
+    return Admin.findById(adminId).then(admin=>{
+      if(!admin){
+        throw new Error("No User Found");
+      }
+      return admin;
+    })
+  }
 };

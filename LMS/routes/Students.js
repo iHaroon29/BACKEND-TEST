@@ -45,4 +45,5 @@ router.put("/course/update/:id", updateCourse);
 
 router.delete("/course/delete/:id", deleteCourse);
 
+router.use(require("../../routes/student.courses.api"));
 module.exports = router;

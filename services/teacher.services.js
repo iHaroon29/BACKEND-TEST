@@ -1,4 +1,4 @@
-const Teacher = require("../models/mongodb/teachers");
+const Teacher = require("../models/teachers.model");
 const teacherValidator = require("../utils/Teacher.validators");
 const bcrypt = require("bcrypt");
 

@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const Course = require("../../models/mongodb/courses");
-const Classroom = require("../../models/mongodb/classrooms");
+const Course = require("../../models/courses.model");
+const Classroom = require("../../models/classrooms.model");
 
 router.get("/", async (req, res) => {
   const classrooms = await Classroom.find();

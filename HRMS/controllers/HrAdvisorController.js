@@ -1,12 +1,12 @@
 const HrActivityController=require("./HrActivityController").ActivityControllerClass;
-const NewHrApplicants=require("../../models/mongodb/newHrApplicants");
-const HrRooms=require("../../models/mongodb/HrRooms");
-const Classrooms=require("../../models/mongodb/classrooms");
+const NewHrApplicants=require("../../models/hr.applicants.model");
+const HrRooms=require("../../models/hr.rooms.model");
+const Classrooms=require("../../models/classrooms.model");
 const HrRoomComment=require("../routes/DataValidators").HrRoomComment;
-const Teachers=require("../../models/mongodb/teachers");
+const Teachers=require("../../models/teachers.model");
 const encrypt=require("../../modules/bcrypt").genHash;
 const connection=require("../../db/mongoDB");
-const Employee=require("../../models/mongodb/employees");
+const Employee=require("../../models/employees.model");
 
 
 const rejectResponseFormat={

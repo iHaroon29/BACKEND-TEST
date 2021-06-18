@@ -6,9 +6,10 @@ const teacherRoutes = require("./routes/Teachers");
 const studentRoutes = require("./routes/Students");
 const authenticationRoutes = require("./routes/AuthenticationAndAuthorization");
 const classroomRoutes = require("./routes/Classrooms");
-
+const Cors=require("cors");
 const app = express();
 
+app.use(Cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

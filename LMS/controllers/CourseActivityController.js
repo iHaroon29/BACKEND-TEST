@@ -1,4 +1,4 @@
-const CourseActivity = require("../../models/mongodb/courses");
+const CourseActivity = require("../../models/courses.model");
 
 exports.newCourseActivity = async (req, res) => {
     let courseActivity = await CourseActivity.findOne({
