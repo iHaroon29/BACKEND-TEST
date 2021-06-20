@@ -1,9 +1,9 @@
-const Students = require("../models/mongodb/students");
+const Students = require("../models/students.model");
 const AuthToken = require("../modules/authTokens");
 const bcrypt = require("../modules/bcrypt");
 const LoginSchema =
   require("../utils/AuthenticationAndAuthorization").MakeLogin;
-const LoginActivity = require("../models/mongodb/logInActiviity");
+const LoginActivity = require("../models/login.activity.model");
 
 module.exports = {
   studentLogin(loginDetails) {

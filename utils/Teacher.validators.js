@@ -12,8 +12,6 @@ module.exports = {
     }).options({ stripUnknown: true });
     return Schema.validateAsync(TeacherDetails);
   },
-};
-module.exports = {
   updateTeacherDetails(details) {
     const Schema = Joi.object({
       name: Joi.string().optional(),
