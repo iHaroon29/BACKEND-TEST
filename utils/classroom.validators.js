@@ -6,7 +6,7 @@ const ClassroomSchema = Joi.object({
   classroom_type: Joi.string().optional().default("demo"),
   students: Joi.array().optional().items(Joi.string()).default([]),
   courses: Joi.array().optional().items(Joi.string()).default([]),
-  teacher: Joi.array().optional().items(Joi.string()).default([]),
+  teachers: Joi.array().optional().items(Joi.string()).default([]),
 }).options({ stripUnknown: true });
 module.exports = {
   newClassroom(classroomDetails) {
@@ -19,6 +19,7 @@ module.exports = {
       status: Joi.string().optional(),
       classroom_type: Joi.string(),
       course: Joi.array().optional().items(Joi.string()),
+      teachers: Joi.array().optional().items(Joi.string()).default([]),
     }).options({ stripUnknown: true });
     return UpdateSchema.validateAsync(details);
   },
