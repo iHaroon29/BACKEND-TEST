@@ -52,4 +52,15 @@ module.exports = {
       return res.sendStatus(400);
     }
   },
+
+  async deleteStudentById(req, res) {
+    try {
+      const deletedStudent = await StudentsServices.deleteStudentById(
+        req.params.id
+      );
+      return res.status(202).send(deletedStudent);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  },
 };

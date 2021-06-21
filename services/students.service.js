@@ -83,4 +83,13 @@ module.exports = {
 
     return student;
   },
+
+  async deleteStudentById(studentId) {
+    console.log(studentId);
+    let student = await Student.findOne({ _id: studentId });
+    if (!student) throw "Given Id not found";
+
+    const deletedStudent = await Student.findByIdAndDelete(studentId);
+    return deletedStudent;
+  },
 };

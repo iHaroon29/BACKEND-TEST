@@ -19,4 +19,6 @@ route.put(
   StudentsController.updateStudentPersonalDetailsById
 );
 
+route.delete("/students/:id", StudentsController.deleteStudentById);
+
 module.exports = route;
