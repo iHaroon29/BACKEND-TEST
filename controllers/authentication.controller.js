@@ -11,7 +11,7 @@ module.exports = {
       return res.status(200).send(studentToken);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   adminLogin() {},
@@ -23,7 +23,7 @@ module.exports = {
       return res.status(200).send(teacherToken);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 };

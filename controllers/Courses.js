@@ -8,7 +8,7 @@ module.exports={
         }
         catch (e) {
             console.log(e);
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
 
         }
     },
@@ -18,7 +18,7 @@ module.exports={
             return res.status(200).send(allCourses);
         }
         catch (e) {
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
     },
     async updateCourseById(req,res){
@@ -27,7 +27,7 @@ module.exports={
             return res.status(200).send(updatedCourse);
         }
         catch (e) {
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
     },
     async deleteCourseById(req,res){
@@ -36,7 +36,7 @@ module.exports={
             return res.status(200).send(deletedCourse);
         }
         catch (e) {
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
     },
 

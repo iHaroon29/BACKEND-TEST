@@ -10,7 +10,7 @@ module.exports = {
       return res.status(202).send(LectureDetails);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   async updateLecture(req, res) {
@@ -23,7 +23,7 @@ module.exports = {
       return res.status(202).send(LectureDetails);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   async deleteLecture(req, res) {
@@ -35,7 +35,7 @@ module.exports = {
       return res.status(202).send(deletedLecture);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   async getAllLecturesOfClassroom(req, res) {
@@ -46,7 +46,7 @@ module.exports = {
       return res.status(202).send(allLectures);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   async getLectureDetails(req, res) {
@@ -57,7 +57,7 @@ module.exports = {
       return res.status(202).send(lectureDetails);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   async getAllLectures(req, res) {

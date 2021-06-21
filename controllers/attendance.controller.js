@@ -22,7 +22,7 @@ module.exports = {
         );
       return res.status(202).send(attendanceStatus);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 
@@ -33,7 +33,7 @@ module.exports = {
       );
       return res.status(202).send(attendance);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 
@@ -44,7 +44,7 @@ module.exports = {
       );
       return res.status(202).send(attendanceStatus);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 
@@ -55,7 +55,7 @@ module.exports = {
       );
       return res.status(202).send(attendanceStatus);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 
@@ -67,7 +67,7 @@ module.exports = {
         );
       return res.status(202).send(deletedAttendance);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 
@@ -80,7 +80,7 @@ module.exports = {
         );
       return res.status(202).send(updatedAttendance);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 };

@@ -49,7 +49,7 @@ module.exports = {
         );
       return res.status(202).send(updatedStudent);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
 };
