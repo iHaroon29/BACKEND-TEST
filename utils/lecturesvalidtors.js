@@ -7,8 +7,8 @@ module.exports={
             "course_id":Joi.string().required(),
             'date_and_time':Joi.date().required(),
             'is_attendance_marked':Joi.boolean().optional().default(false),
-            'crm_meeting_link':Joi.string().required(),
-            'status':Joi.string().required(),
+            'crm_meeting_link':Joi.string().optional(),
+            'status':Joi.string().optional().default("new"),
             'is_active':Joi.boolean().optional().default(true)
         }).options({stripUnknown:true}).validateAsync(lectureDetails);
 
