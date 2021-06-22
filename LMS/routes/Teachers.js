@@ -11,6 +11,7 @@ const {
   updateAssignment,
   createNewNotes,
   deleteNote,
+  getAllNotes,
 } = require("../controllers/TeacherController");
 
 const {
@@ -88,6 +89,6 @@ router.post("/addNote", createNewNotes);
 
 router.delete("/deleteNote/:id", deleteNote);
 
-router.get("/note/all");
+router.get("/note/all", getAllNotes);
 
 module.exports = router;

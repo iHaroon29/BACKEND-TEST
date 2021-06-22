@@ -153,3 +153,10 @@ exports.deleteNote = async (req, res) => {
   if (!note) return res.status(404).send("Given ID was not found"); //404 is error not found
   res.send(note);
 };
+
+exports.getAllNotes = async (req, res) => {
+  const notes = await Notes.find();
+  if (!notes) return res.status(400).send("No Note Found");
+
+  res.send(notes);
+};
