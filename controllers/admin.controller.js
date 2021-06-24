@@ -18,7 +18,7 @@ module.exports={
     },
     async deleteAdmin(req,res){
         try{
-            const deletedAdmin=await AdminService.deleteAdmin(req.body.id);
+            const deletedAdmin=await AdminService.deleteAdmin(req.params.adminId);
             return res.status(202).send(deletedAdmin);
         }catch (e) {
             return res.status(400).send(e);
