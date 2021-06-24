@@ -13,12 +13,11 @@ module.exports = {
       });
     });
   },
-  updateCourseById(courseDetails) {
+  updateCourseById(courseId,courseDetails) {
     return courseValidator.updateCourse(courseDetails).then((validData) => {
-      const id = validData._id;
-      delete validData._id;
-      return Course.findByIdAndUpdate(id, validData, { new: true }).then(
+      return Course.findByIdAndUpdate(courseId, validData, { new: true }).then(
         (updatedCourse) => {
+          delete updatedCourse.quiz;
           return updatedCourse;
         }
       );
@@ -31,7 +30,10 @@ module.exports = {
   },
   getAllCourses() {
     return Course.find().then((courses) => {
-      return courses;
+      return courses.filter(course=>{
+        delete course.quiz;
+        return course;
+      });
     });
   },
 };

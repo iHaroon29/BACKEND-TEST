@@ -23,7 +23,7 @@ module.exports={
     },
     async updateCourseById(req,res){
         try{
-            const updatedCourse=await CoursesServices.updateCourseById(req.body);
+            const updatedCourse=await CoursesServices.updateCourseById(req.params.courseId,req.body);
             return res.status(200).send(updatedCourse);
         }
         catch (e) {
