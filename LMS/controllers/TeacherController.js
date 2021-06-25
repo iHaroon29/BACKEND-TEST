@@ -120,6 +120,12 @@ exports.updateAssignment = async (req, res) => {
   res.send(assignment);
 };
 
+exports.deleteAssignment = async (req, res) => {
+  const assignment = await Assignment.deleteOne({ _id: req.params.id });
+  if (!assignment) return res.status(404).send("Given ID was not found"); //404 is error not found
+  res.send(assignment);
+};
+
 exports.lectureFeedbackyTeachers = async (req, res) => {
   let lectureFeedback = await LectureFeedback.find({
     lecture_id: req.params.id,
