@@ -142,3 +142,12 @@ module.exports.NewAssignment = (data) => {
   }).options({ stripUnknown: true });
   return JoiSchema.validateAsync(data);
 };
+
+module.exports.NewNotes = (data) => {
+  const JoiSchema = Joi.object({
+    title: Joi.string().required(),
+    teacher_id: Joi.objectId().required(),
+    description: Joi.string().required(),
+  }).options({ stripUnknown: true });
+  return JoiSchema.validateAsync(data);
+};
