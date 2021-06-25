@@ -26,6 +26,10 @@ const CoursesSchema=new mongoose.Schema({
         },
         'is_active':{
             type:Boolean,
+        },
+        quiz:{
+            type:Array(Object),
+            default:[{}],
         }
     },
     {

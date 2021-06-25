@@ -31,11 +31,19 @@ module.exports={
             })
     },
 
-    getAllCourseSectionByCourseId(classroomId){
-        return CourseSection.find({"classroom_id":classroomId})
-            .then(courses=>{
-                return courses;
+    getAllCourseSectionByCourseId(courseId){
+        return new Promise((resolve,reject)=>{
+            CourseSection.find({"course_id":courseId})
+                .then(coursesSection=>{
+                    return resolve(coursesSection);
+                }).catch(e=>{
+                    reject({
+                        message:"unable to get course",
+                        status:503,
+                        trace:e,
+                    })
             })
+        })
     },
 
     getCourseSectionDetails(courseSectionId){
