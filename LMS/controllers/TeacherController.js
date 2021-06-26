@@ -109,7 +109,7 @@ exports.createAssignment = (req, res) => {
 };
 
 exports.updateAssignment = async (req, res) => {
-  const assignment = await Assignment.findOne({ _id: req.params.id });
+  let assignment = await Assignment.findOne({ _id: req.params.id });
   if (!assignment) return res.status(400).send("Invalid Assignment");
 
   assignment = await Assignment.findByIdAndUpdate(req.params.id, req.body, {
