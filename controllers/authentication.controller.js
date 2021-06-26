@@ -1,6 +1,7 @@
 const StudentAuthenticationService = require("../services/students.authentication.service");
 const TeacherAuthenticationService = require("../services/teachers.authentication.service");
 const AdminAuthenticationService = require("../services/admins.authentication.service");
+const AuthenticationService=require("../services/authentication.service");
 
 module.exports = {
   async studentLogin(req, res) {
@@ -17,13 +18,11 @@ module.exports = {
   adminLogin() {},
   async teacherLogin(req, res) {
     try {
-      const teacherToken = await TeacherAuthenticationService.teacherLogin(
-        req.body
-      );
+      const teacherToken = await AuthenticationService.getTeacherAuthToken(req.body.email,req.body.password);
       return res.status(200).send(teacherToken);
     } catch (e) {
       console.log(e);
-      return res.status(400).send(e);
+      return res.status(e.statusCode).send(e.message);
     }
   },
 };
