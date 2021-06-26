@@ -39,4 +39,28 @@ module.exports = {
       res.status(400).send(e);
     }
   },
+
+  async updateStudentPersonalDetailsById(req, res) {
+    try {
+      const updatedStudent =
+        await StudentsServices.updateStudentPersonalDetailsById(
+          req.params.id,
+          req.body
+        );
+      return res.status(202).send(updatedStudent);
+    } catch (e) {
+      return res.status(400).send(e);
+    }
+  },
+
+  async deleteStudentById(req, res) {
+    try {
+      const deletedStudent = await StudentsServices.deleteStudentById(
+        req.params.id
+      );
+      return res.status(202).send(deletedStudent);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  },
 };

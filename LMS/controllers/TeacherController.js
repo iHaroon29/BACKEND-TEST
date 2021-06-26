@@ -1,9 +1,11 @@
 const AssignmentSubmission = require("../../models/assignment.submissions.model");
 const Assignment = require("../../models/assignments.model");
+const Notes = require("../../models/notes.model");
 const LectureFeedback = require("../../models/lecture.feedbacks.model");
 const Teacher = require("../../models/teachers.model");
 const Course = require("../../models/courses.model");
 const bcrypt = require("bcrypt");
+const Validator = require("../routes/DataValidators");
 
 exports.createNewTeacher = async (req, res) => {
   let teacher = await Teacher.findOne({ email: req.body.email });
@@ -82,37 +84,32 @@ exports.getAssignmentOfACourse = async (req, res) => {
   //use _id and student id to find one submitted assignment and repeat it for each assignment
 };
 
-exports.createAssignment = async (req, res) => {
-  let assignment = await Assignment.findOne({
-    course_id: req.body.course_id,
-    teacher_id: req.body.teacher_id,
-    description: req.body.description,
-  });
-  if (assignment) return res.status(400).send("Assignment already present");
+exports.createAssignment = (req, res) => {
+  Validator.NewAssignment(req.body)
+    .then(async (validData) => {
+      let assignment = await Assignment.findOne({
+        course_id: validData.course_id,
+        teacher_id: validData.teacher_id,
+      });
+      if (assignment) return res.status(400).send("Assignment already present");
 
-  console.log(assignment);
+      let course = await Course.findOne({
+        _id: validData.course_id,
+      });
+      if (!course) return res.status(400).send("This Course Doesnot Exist");
+      console.log(course);
 
-  let course = await Course.findOne({
-    _id: req.body.course_id,
-  });
-  if (!course) return res.status(400).send("This Course Doesnot Exist");
-  console.log(course);
+      assignment = await Assignment.create(validData);
 
-  assignment = await Assignment.create({
-    course_id: req.body.course_id,
-    teacher_id: req.body.teacher_id,
-    instructions: req.body.instructions,
-    description: req.body.description,
-    last_submission_date: req.body.last_submission_date,
-  });
-
-  await assignment.save();
-  console.log(assignment);
-  res.send(assignment);
+      await assignment.save();
+      console.log(assignment);
+      res.send(assignment);
+    })
+    .catch((e) => res.status(400).send(e));
 };
 
 exports.updateAssignment = async (req, res) => {
-  const assignment = await Assignment.findOne({ _id: req.params.id });
+  let assignment = await Assignment.findOne({ _id: req.params.id });
   if (!assignment) return res.status(400).send("Invalid Assignment");
 
   assignment = await Assignment.findByIdAndUpdate(req.params.id, req.body, {
@@ -120,6 +117,12 @@ exports.updateAssignment = async (req, res) => {
   });
   await assignment.save();
   console.log(assignment);
+  res.send(assignment);
+};
+
+exports.deleteAssignment = async (req, res) => {
+  const assignment = await Assignment.deleteOne({ _id: req.params.id });
+  if (!assignment) return res.status(404).send("Given ID was not found"); //404 is error not found
   res.send(assignment);
 };
 
@@ -137,4 +140,29 @@ exports.lectureFeedbackyTeachers = async (req, res) => {
   await lectureFeedback.save();
   console.log(lectureFeedback);
   res.send(lectureFeedback);
+};
+
+exports.createNewNotes = (req, res) => {
+  Validator.NewNotes(req.body)
+    .then(async (validData) => {
+      const newNote = await Notes.create(validData);
+
+      await newNote.save();
+      console.log(newNote);
+      res.send(newNote);
+    })
+    .catch((e) => res.status(400).send(e));
+};
+
+exports.deleteNote = async (req, res) => {
+  const note = await Notes.deleteOne({ _id: req.params.id });
+  if (!note) return res.status(404).send("Given ID was not found"); //404 is error not found
+  res.send(note);
+};
+
+exports.getAllNotes = async (req, res) => {
+  const notes = await Notes.find();
+  if (!notes) return res.status(400).send("No Note Found");
+
+  res.send(notes);
 };

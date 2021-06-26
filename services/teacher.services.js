@@ -24,7 +24,18 @@ module.exports = {
       return teachers;
     });
   },
-  updateTeacherPersonalDetailsById() {},
+  updateTeacherPersonalDetailsById(teacherId, updateDetails) {
+    return teacherValidator
+      .updateTeacherDetails(updateDetails)
+      .then((validDetails) => {
+        return Teacher.findByIdAndUpdate(teacherId, validDetails, {
+          new: true,
+        }).then((updatedDetails) => {
+          return updatedDetails;
+        });
+      });
+  },
+
   async deleteTeacherById(teacherId) {
     let teacher = await Teacher.findOne({ _id: teacherId });
     if (!teacher) throw "Given Id not found";

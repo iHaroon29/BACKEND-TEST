@@ -62,10 +62,34 @@ module.exports = {
     console.log(studentId, newDetails);
   },
 
+  updateStudentPersonalDetailsById(studentId, updateDetails) {
+    console.log(studentId);
+    console.log(updateDetails);
+
+    return StudentValidator.updateStudentDetails(updateDetails).then(
+      (validDetails) => {
+        return Student.findByIdAndUpdate(studentId, validDetails, {
+          new: true,
+        }).then((updatedDetails) => {
+          return updatedDetails;
+        });
+      }
+    );
+  },
+
   async getAllStudents() {
     let student = await Student.find();
     if (student.length === 0) return student;
 
     return student;
+  },
+
+  async deleteStudentById(studentId) {
+    console.log(studentId);
+    let student = await Student.findOne({ _id: studentId });
+    if (!student) throw "Given Id not found";
+
+    const deletedStudent = await Student.findByIdAndDelete(studentId);
+    return deletedStudent;
   },
 };

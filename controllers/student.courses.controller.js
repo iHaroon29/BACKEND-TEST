@@ -7,7 +7,7 @@ module.exports={
             return  res.status(202).send(classroomDetails);
         }catch (e) {
             console.log(e)
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async removeCourseFromStudentClassroom(req,res){
@@ -15,7 +15,7 @@ module.exports={
             const classroomDetails=await StudentCourseService.removeCourseFromStudentClassroom(req.params.studentId,req.params.courseId);
             return  res.status(202).send(classroomDetails);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
 };

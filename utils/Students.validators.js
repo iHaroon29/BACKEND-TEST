@@ -11,4 +11,15 @@ module.exports = {
     }).options({ stripUnknown: true });
     return Schema.validateAsync(StudentDetails);
   },
+  updateStudentDetails(details) {
+    const Schema = Joi.object({
+      name: Joi.string().optional(),
+      email: Joi.string().optional(),
+      parent_name: Joi.string().optional(),
+      parent_relation: Joi.string().optional(),
+      parent_email: Joi.string().optional(),
+      password: Joi.string().optional(),
+    }).options({ stripUnknown: true });
+    return Schema.validateAsync(details);
+  },
 };

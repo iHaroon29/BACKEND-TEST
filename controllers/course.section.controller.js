@@ -3,12 +3,13 @@ const CourseSectionService=require("../services/course.section.services");
 module.exports={
     async getAllCourseSectionsOfCourse(req,res){
         try{
-            const allCourseSections=await CourseSectionService.getAllCourseSectionByCourseId(req.params.courseSectionId);
+
+            const allCourseSections=await CourseSectionService.getAllCourseSectionByCourseId(req.params.courseId);
             return res.status(200).send(allCourseSections);
         }
         catch (e) {
-            console.log(e);
-            return  res.sendStatus(400);
+            // console.log(e);
+            return  res.status(400).send(e);
         }
     },
     async addNewCourseSection(req,res){
@@ -18,7 +19,7 @@ module.exports={
         }
         catch (e) {
             console.log(e);
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
     },
     async updateCourseSection(req,res){
@@ -28,7 +29,7 @@ module.exports={
         }
         catch (e) {
             console.log(e);
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
 
     },
@@ -39,7 +40,7 @@ module.exports={
         }
         catch (e) {
             console.log(e);
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
     },
     async getCourseSectionDetails(req,res){
@@ -49,7 +50,7 @@ module.exports={
         }
         catch (e) {
             console.log(e);
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
     },
     async getAllCourseSection(req, res){
@@ -59,7 +60,7 @@ module.exports={
         }
         catch (e) {
             console.log(e);
-            return  res.sendStatus(400);
+            return  res.status(400).send(e);
         }
     }
 

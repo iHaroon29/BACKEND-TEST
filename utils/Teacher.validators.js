@@ -12,4 +12,16 @@ module.exports = {
     }).options({ stripUnknown: true });
     return Schema.validateAsync(TeacherDetails);
   },
+  updateTeacherDetails(details) {
+    const Schema = Joi.object({
+      name: Joi.string().optional(),
+      primary_phone_number: Joi.number().optional(),
+      email: Joi.string().optional(),
+      password: Joi.string().optional(),
+      country: Joi.string().optional(),
+      zip_code: Joi.number().optional(),
+      address: Joi.string().optional(),
+    }).options({ stripUnknown: true });
+    return Schema.validateAsync(details);
+  },
 };

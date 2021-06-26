@@ -1,8 +1,20 @@
 const Course = require("../models/courses.model");
 const courseValidator = require("../utils/Course.validators");
+const CourseSectionService=require("../services/course.section.services");
 const CourseActivityLogger = require("../middlewares/courses.activity.logger");
 
 module.exports = {
+  getCourseByCourseId(courseId){
+    return Course.findById(courseId).then(course=>{
+      course=JSON.parse(JSON.stringify(course));
+      return CourseSectionService.getAllCourseSectionByCourseId(course._id)
+          .then((courseSections)=>{
+            course.course_section=courseSections;
+            delete course.quiz;
+            return course;
+          });
+    })
+  },
   addNewCourse(courseDetails) {
     console.log(courseDetails);
     return courseValidator.newCourse(courseDetails).then((validData) => {
@@ -13,14 +25,13 @@ module.exports = {
       });
     });
   },
-  updateCourseById(courseDetails) {
+  updateCourseById(courseId,courseDetails) {
     return courseValidator.updateCourse(courseDetails).then((validData) => {
-      const id = validData._id;
-      delete validData._id;
-      return Course.findByIdAndUpdate(id, validData, { new: true }).then(
-        (updatedCourse) => {
-          return updatedCourse;
-        }
+      return Course.findByIdAndUpdate(courseId, validData, { new: true }).then(
+          (updatedCourse) => {
+            delete updatedCourse.quiz;
+            return updatedCourse;
+          }
       );
     });
   },
@@ -31,7 +42,17 @@ module.exports = {
   },
   getAllCourses() {
     return Course.find().then((courses) => {
-      return courses;
+      return (async()=>{
+        let coursesWithCourseSections=[];
+        for(let course of courses){
+          const temp=JSON.parse(JSON.stringify(course));
+          delete temp.quiz;
+          temp.course_section=await CourseSectionService.getAllCourseSectionByCourseId(temp._id)||[];
+          coursesWithCourseSections.push(temp);
+        }
+        return coursesWithCourseSections;
+      })();
+
     });
   },
 };

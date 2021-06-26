@@ -6,7 +6,7 @@ module.exports={
             return res.send(newTrainingDetail);
         }catch (e) {
             console.log(e);
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async updateTrainingDetails(req,res){
@@ -15,7 +15,7 @@ module.exports={
             return res.send(trainingDetail);
         }catch (e) {
             console.log(e)
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async deleteTrainingDetails(req,res){
@@ -23,7 +23,7 @@ module.exports={
             const trainingDetail=await TeacherTrainingService.deleteTeacherInTrainingUsingId(req.params.trainingId);
             return res.send(trainingDetail);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async getAllTrainingDetails(req,res){
@@ -31,7 +31,7 @@ module.exports={
             const trainingDetail=await TeacherTrainingService.getAllTrainingDetails();
             return res.send(trainingDetail);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async getAllTrainingDetailsByTrainerId(req,res){
@@ -39,7 +39,7 @@ module.exports={
             const trainingDetail=await TeacherTrainingService.getAllTrainingDetailsByTrainerId(req.params.trainerId);
             return res.send(trainingDetail);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async getAllTrainingDetailsByTeacherId(req,res){
@@ -47,7 +47,7 @@ module.exports={
             const trainingDetail=await TeacherTrainingService.getAllTrainingDetailsByTrainerId(req.params.teacherId);
             return res.send(trainingDetail);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     }
 };

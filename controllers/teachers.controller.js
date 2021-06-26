@@ -15,7 +15,7 @@ module.exports = {
         await TeachersServices.getAllTeachersAndPersonalDetails();
       return res.status(200).send(allTeachers);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   async deleteTeacherById(req, res) {
@@ -35,6 +35,18 @@ module.exports = {
       return res.status(202).send(teacherDetails);
     } catch (e) {
       res.status(400).send(e);
+    }
+  },
+  async updateTeacherPersonalDetailsById(req, res) {
+    try {
+      const updatedTeacher =
+        await TeachersServices.updateTeacherPersonalDetailsById(
+          req.params.id,
+          req.body
+        );
+      return res.status(202).send(updatedTeacher);
+    } catch (e) {
+      return res.status(400).send(e);
     }
   },
 };

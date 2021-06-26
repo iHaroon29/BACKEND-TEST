@@ -18,6 +18,6 @@ app.use(cookieParser());
 app.use("/lms/api/", studentRoutes);
 app.use("/lms/api/", teacherRoutes);
 app.use("/lms/api/", classroomRoutes);
-app.use("/lms/auth/api/", authenticationRoutes);
+app.use("/lms/api/auth", authenticationRoutes);
 
 module.exports = app;

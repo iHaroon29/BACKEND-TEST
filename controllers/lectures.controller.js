@@ -1,20 +1,21 @@
 const LectureService = require("../services/lectures.service");
 module.exports = {
-  addNewLecture(req, res) {
+  async addNewLecture(req, res) {
     try {
-      const LectureDetails = LectureService.addNewLectureInClassroom(
+      const LectureDetails =await LectureService.addNewLectureInClassroom(
         req.params.classroomId,
         req.body
       );
+      console.log("lectureDetails="+lectureDetails);
       return res.status(202).send(LectureDetails);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
-  updateLecture(req, res) {
+  async updateLecture(req, res) {
     try {
-      const LectureDetails = LectureService.updateLectureById(
+      const LectureDetails =await LectureService.updateLectureById(
         req.params.classroomId,
         req.params.lectureId,
         req.body
@@ -22,41 +23,41 @@ module.exports = {
       return res.status(202).send(LectureDetails);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
-  deleteLecture(req, res) {
+  async deleteLecture(req, res) {
     try {
-      const deletedLecture = LectureService.deleteLectureById(
+      const deletedLecture = await LectureService.deleteLectureById(
         req.params.classroomId,
         req.params.lectureId
       );
       return res.status(202).send(deletedLecture);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
-  getAllLecturesOfClassroom(req, res) {
+  async getAllLecturesOfClassroom(req, res) {
     try {
-      const allLectures = LectureService.getAllLecturesOfClassroom(
+      const allLectures = await LectureService.getAllLecturesOfClassroom(
         req.params.classroomId
       );
       return res.status(202).send(allLectures);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
-  getLectureDetails(req, res) {
+  async getLectureDetails(req, res) {
     try {
-      const lectureDetails = LectureService.getLectureDetailsById(
+      const lectureDetails =await  LectureService.getLectureDetailsById(
         req.params.classroomId
       );
       return res.status(202).send(lectureDetails);
     } catch (e) {
       console.log(e);
-      return res.sendStatus(400);
+      return res.status(400).send(e);
     }
   },
   async getAllLectures(req, res) {

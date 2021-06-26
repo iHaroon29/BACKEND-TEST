@@ -39,7 +39,9 @@ module.exports = {
     });
   },
   getAllLecturesOfClassroom(classroomId) {
-    return Lecture.find({ classroom_id: classroomId });
+    return Lecture.find({ classroom_id: classroomId }).then(allLectures=>{
+      return allLectures;
+    });
   },
   getLectureDetailsById(lectureId) {
     return Lecture.findById(lectureId).then((lectureDetails) => {

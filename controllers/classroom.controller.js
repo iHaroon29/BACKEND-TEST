@@ -6,7 +6,7 @@ module.exports={
             return  res.status(202).send(savedClassDetails);
         }catch (e) {
             console.log(e);
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async deleteClassroomWithGivenId(req,res){
@@ -15,7 +15,7 @@ module.exports={
             return res.status(200).send(deletedClassroom);
         }catch (e) {
             console.log(e);
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async getAllClassroom(req,res){
@@ -24,7 +24,7 @@ module.exports={
             return res.status(200).send(allClassrooms);
         }catch (e) {
             console.log(e);
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async teacherForDemoClass(req,res){
@@ -35,7 +35,7 @@ module.exports={
             return res.status(200).send(allClassrooms);
         }catch (e) {
             console.log(e);
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async updateClassroomDetails(req,res){
@@ -44,7 +44,7 @@ module.exports={
             return  res.status(202).send(updatedDetails);
         }catch (e) {
             console.log(e);
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     }
 };

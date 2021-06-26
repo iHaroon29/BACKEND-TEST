@@ -5,7 +5,7 @@ module.exports={
             const adminDetails=await AdminService.addNewAdminUser(req.body);
             return res.status(202).send(adminDetails);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async updateAdminDetails(req,res){
@@ -13,15 +13,15 @@ module.exports={
             const updatedAdmin=await AdminService.updateAdminDetails(req.body.id,req.body);
             return res.status(202).send(updatedAdmin);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async deleteAdmin(req,res){
         try{
-            const deletedAdmin=await AdminService.deleteAdmin(req.body.id);
+            const deletedAdmin=await AdminService.deleteAdmin(req.params.adminId);
             return res.status(202).send(deletedAdmin);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async updatePassword(req,res){
@@ -29,7 +29,7 @@ module.exports={
             const updatedAdminDetails=await AdminService.updatePassword(req.body.id,req.body);
             return res.status(202).send(updatedAdminDetails);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async getAllAdmins(req,res){
@@ -37,7 +37,7 @@ module.exports={
             const allAdmins=await AdminService.allAdmins();
             return  res.send(allAdmins);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     },
     async getAdminDetails(req,res){
@@ -45,7 +45,7 @@ module.exports={
             const details=await AdminService.getAdminDetailsById(req.params.adminId);
             return  res.send(details);
         }catch (e) {
-            return res.sendStatus(400);
+            return res.status(400).send(e);
         }
     }
 
