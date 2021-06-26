@@ -12,6 +12,7 @@ const {
   createNewNotes,
   deleteNote,
   getAllNotes,
+  deleteAssignment,
 } = require("../controllers/TeacherController");
 
 const {
@@ -58,6 +59,8 @@ router.get("/assignment/submission/:id", getAssignmentOfACourse);
 router.post("/assignment/new", createAssignment);
 
 router.put("/assignment/update/:id", updateAssignment);
+
+router.delete("/assignment/delete/:id", deleteAssignment);
 
 router.post("/lectureFeedback/:id", lectureFeedbackyTeachers);
 
