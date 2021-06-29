@@ -1,5 +1,6 @@
 const Classroom=require("../models/classrooms.model");
 const ClassroomService=require("./classrooms.services");
+const ClassroomCourseService=require("./classroom.course.services");
 module.exports={
     addCourseToStudentClassroom(studentId,courseId){
         const filter={};
@@ -39,9 +40,8 @@ module.exports={
             .then(classrooms=>{
                 return (async()=>{
                     try{
-                        for (let i=0;i<classrooms.length;i++)
-                        {
-                            classrooms[i]=await ClassroomService.deleteCourseFromClassroom(classrooms[i]._id,courseId);
+                        for (let i=0;i<classrooms.length;i++){
+                            classrooms[i]=await ClassroomCourseService.removeCourseFromClassroom(classrooms[i]._id,courseId);
                         }
                         return classrooms;
                     }catch (e) {

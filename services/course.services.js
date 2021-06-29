@@ -5,22 +5,34 @@ const CourseActivityLogger = require("../middlewares/courses.activity.logger");
 
 module.exports = {
   getCourseByCourseId(courseId){
-    return Course.findById(courseId).then(course=>{
-      course=JSON.parse(JSON.stringify(course));
-      return CourseSectionService.getAllCourseSectionByCourseId(course._id)
-          .then((courseSections)=>{
-            course.course_section=courseSections;
-            delete course.quiz;
-            return course;
-          });
+    return new Promise((resolve,reject)=>{
+      Course.findById(courseId).then(course=>{
+        course=JSON.parse(JSON.stringify(course));
+        return CourseSectionService.getAllCourseSectionByCourseId(course._id)
+            .then((courseSections)=>{
+              course.course_section=courseSections;
+              delete course.quiz;
+              resolve(course);
+              return course;
+            }).catch(err=>{
+              reject({
+                message:"unable to find course sections",
+                trace:err,
+                statusCode:503
+              })
+            })
+      }).catch(err=>{
+        reject({
+          message:"unable to find course",
+          trace:err,
+          statusCode:503
+        })
+      })
     })
   },
   addNewCourse(courseDetails) {
-    console.log(courseDetails);
     return courseValidator.newCourse(courseDetails).then((validData) => {
       return new Course(validData).save().then((savedCourse) => {
-        // TODO: write in activity log tracker
-        CourseActivityLogger.newCourseAdded({});
         return savedCourse;
       });
     });
@@ -41,18 +53,50 @@ module.exports = {
     });
   },
   getAllCourses() {
-    return Course.find().then((courses) => {
-      return (async()=>{
-        let coursesWithCourseSections=[];
-        for(let course of courses){
-          const temp=JSON.parse(JSON.stringify(course));
-          delete temp.quiz;
-          temp.course_section=await CourseSectionService.getAllCourseSectionByCourseId(temp._id)||[];
-          coursesWithCourseSections.push(temp);
-        }
-        return coursesWithCourseSections;
-      })();
+    return new Promise((resolve,reject)=>{
+      Course.find().then((courses) => {
+        return (async()=>{
+          let coursesWithCourseSections=[];
+          for(let course of courses){
+            const temp=JSON.parse(JSON.stringify(course));
+            delete temp.quiz;
+            temp.course_section=await CourseSectionService.getAllCourseSectionByCourseId(temp._id)||[];
+            coursesWithCourseSections.push(temp);
+          }
+          resolve(coursesWithCourseSections);
+          return coursesWithCourseSections;
+        })();
 
-    });
+      }).catch(e=>{
+        reject({
+          message:"unable to find course",
+          trace:e,
+          code:503
+        })
+      })
+    })
   },
+  getAllCourseByTeacherId(teacherId){
+    return new Promise((resolve,reject)=>{
+      const filter={};
+      filter['teachers.'+teacherId]={$exists:true};
+      Course.find(filter).then(allCourses=>{
+        if(!allCourses){
+          reject({
+            message:"No Course found with specified teacher id",
+            statusCode:204,
+            trace:"No trace found"
+          })
+        }
+        resolve(allCourses);
+      })
+          .catch(err=>{
+            reject({
+              message:"error in finding courses",
+              statusCode:503,
+              trace:"No trace found"
+            })
+          })
+    })
+  }
 };

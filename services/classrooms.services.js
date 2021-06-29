@@ -94,17 +94,4 @@ module.exports = {
       );
     });
   },
-  deleteCourseFromClassroom(classroomId, courseId) {
-    return Classroom.findById(classroomId).then((classroom) => {
-      if (!classroom.enrolled_courses[courseId]) {
-        throw new Error("Not enrolled in course");
-      }
-      delete classroom.enrolled_courses[courseId];
-      return Classroom.findByIdAndUpdate(
-        classroomId,
-        { enrolled_courses: classroom.enrolled_courses },
-        { new: true }
-      );
-    });
-  },
 };

@@ -9,9 +9,19 @@ const TeacherRoutes = require("../routes/teachers.api");
 const TeacherTrainingRoutes = require("../routes/teachers.training.api");
 const AttendanceRoutes = require("../routes/attendance.api");
 const DashboardController = require("../controllers/dashboard.controller");
+const QuizRoutes=require("../routes/quiz.api");
+const ClassroomCourseRoutes=require("../routes/classroom.course.api");
+
+
+// ============ Classroom Course ================
+route.use(ClassroomCourseRoutes);
+
 
 // ============ Teachers ================
 route.use(TeacherRoutes);
+
+// ============ QUIZ ================
+route.use(QuizRoutes);
 // ======================================
 
 // ============ Students ================

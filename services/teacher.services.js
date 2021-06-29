@@ -1,5 +1,7 @@
 const Teacher = require("../models/teachers.model");
 const teacherValidator = require("../utils/Teacher.validators");
+const CourseService=require("./course.services");
+const ClassroomCourseService=require("./classroom.course.services");
 const bcrypt = require("bcrypt");
 
 module.exports = {
@@ -20,9 +22,22 @@ module.exports = {
     },
     addNewTeacherUsingExcelSheet() {},
     getAllTeachersAndPersonalDetails() {
-        return Teacher.find().then((teachers) => {
-            return teachers;
-        });
+        return new Promise((resolve,reject)=>{
+            Teacher.find().then(async (teachers) => {
+                const teacherFullDetails=[];
+                for(let teacher of teachers){
+                    teacherFullDetails.push(await this.getTeacherPersonalDetailById(teacher._id)
+                        .then(teacherDetails=>teacherDetails).catch());
+                }
+                resolve(teacherFullDetails)
+            }).catch(err=>{
+                reject({
+                    message:"Unable to find Teacher",
+                    statusCode:503,
+                    trace:err
+                })
+            })
+        })
     },
     updateTeacherPersonalDetailsById(teacherId, updateDetails) {
         return teacherValidator
@@ -40,14 +55,48 @@ module.exports = {
         let teacher = await Teacher.findOne({ _id: teacherId });
         if (!teacher) throw "Given Id not found";
 
-        const deletedTeacher = await Teacher.findByIdAndDelete(teacherId);
-        return deletedTeacher;
+        return Teacher.findByIdAndDelete(teacherId);
     },
-    async getTeacherPersonalDetailById(teacherId) {
-        let teacher = await Teacher.findOne({ _id: teacherId });
-        if (!teacher) throw "Given Id not found";
+    getTeacherPersonalDetailById(teacherId) {
+        return new Promise((resolve,reject)=>{
+            Teacher.findOne({ _id: teacherId })
+                .then(teacherDetails=>{
+                    teacherDetails=JSON.parse(JSON.stringify(teacherDetails));
+                    teacherDetails.classrooms=[];
+                    teacherDetails.courses=[];
+                    CourseService.getAllCourseByTeacherId(teacherId)
+                        .then(courseDetails=>{
+                            teacherDetails.courses=courseDetails;
+                            const alreadyAddedClassrooms={};
+                            (async ()=>{
+                                for(let i of courseDetails){
+                                    if(!alreadyAddedClassrooms[i._id]){
+                                        teacherDetails.classrooms.push(
+                                            await ClassroomCourseService.getAllClassroomByCourseId(i._id)
+                                                .then((classroom)=>classroom).catch()
+                                        );
+                                    }
+                                    alreadyAddedClassrooms[i._id]="ADDED";
+                                }
+                                resolve(teacherDetails);
+                            })()
 
-        return teacher;
+                        })
+                        .catch((err)=>{
+                            reject({
+                                message:"Unable to find courses",
+                                statusCode:503,
+                                trace:err
+                            })
+                        })
+                }).catch(err=>{
+                reject({
+                    message:"Unable to find Teacher",
+                    statusCode:503,
+                    trace:err
+                })
+            })
+        })
     },
     getTeacherActivityById() {},
     getAllAvailableTeachers(){
