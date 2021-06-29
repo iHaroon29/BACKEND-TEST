@@ -6,6 +6,7 @@ module.exports={
             'name':Joi.string().required(),
             "description":Joi.string().required(),
             'is_active':Joi.boolean().optional().default(true),
+            "image":Joi.string().optional().default("nil")
         }).options({stripUnknown:true});
         return Schema.validateAsync(courseSectionDetails);
     },
@@ -15,6 +16,7 @@ module.exports={
             'name':Joi.string().optional(),
             "description":Joi.string().optional(),
             'is_active':Joi.boolean().optional(),
+            "image":Joi.string().optional()
         }).options({stripUnknown:true});
         return Schema.validateAsync(courseSectionDetails);
     },
