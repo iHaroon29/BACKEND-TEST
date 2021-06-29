@@ -61,6 +61,12 @@ module.exports = {
   getAllClassroom() {
     return Classroom.find();
   },
+
+  getAllCoursesInClassroom(classroomId) {
+    return Classroom.findById(classroomId).then((classroomData) => {
+      return classroomData.enrolled_courses;
+    });
+  },
   addNewDemoClassTeacherToClass(classroomId, teacherId) {
     return Classroom.findById(classroomId).then((classroomDetails) => {
       if (classroomDetails.demo_class[teacherId]) {

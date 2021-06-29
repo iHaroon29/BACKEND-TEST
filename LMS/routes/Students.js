@@ -1,49 +1,48 @@
 const router = require("express").Router();
+const CourseSectionController = require("../../controllers/course.section.controller");
+const StudentsController = require("../../controllers/students.controller");
+const AssignmentController = require("../../controllers/assignment.controller");
+const AssignmentSubmissionController = require("../../controllers/assignment.submission.controller");
+const LectureFeedbackController = require("../../controllers/lecture.feedback.controller");
+const CourseController = require("../../controllers/course.controllers");
 
-const {
-  getEnrolledStudents,
-  assignmentSubmit,
-  getAllAssignmentClassID,
-  getAllAssignmentStudentID,
-  createStudent,
-  deleteStudent,
-  lectureFeedbackByStudent,
-  getCourseSection,
-} = require("../controllers/StudentController");
+router.get("/course/section/all", CourseSectionController.getAllCourseSections);
 
-const {
-  getAllCourse,
-  getCourseWithId,
-  createCourse,
-  updateCourse,
-  deleteCourse,
-} = require("../controllers/CourseController");
+router.get("/student/all", StudentsController.getAllStudents);
 
-router.get("/course/section/all", getCourseSection);
+router.post(
+  "/assignment/submit",
+  AssignmentSubmissionController.assignmentSubmit
+);
 
-router.get("/student/all", getEnrolledStudents);
+router.get(
+  "/classroom/:id/assignment/all",
+  AssignmentController.getAllAssignmentOfAClassroom
+);
 
-router.post("/assignment/submitted", assignmentSubmit);
+router.get(
+  "/student/:id/assignment/submitted/all",
+  AssignmentSubmissionController.getAllSubmittedAssignmentsOfClass
+);
 
-router.get("/classroom/:id/assignment/all", getAllAssignmentClassID);
+router.post("/student/new", StudentsController.addNewStudent);
 
-router.get("/student/:id/assignment/submitted/all", getAllAssignmentStudentID);
+router.delete("/student/delete/:id", StudentsController.deleteStudentById);
 
-router.post("/student/new", createStudent);
+router.post(
+  "/feedback/lecture/:id",
+  LectureFeedbackController.lectureFeedbackByStudent
+);
 
-router.delete("/student/delete/:id", deleteStudent);
+router.get("/course/all", CourseController.getAllCourse);
 
-router.post("/feedback/lecture/:id", lectureFeedbackByStudent);
+//router.get("/course/:id", getCourseWithId);
 
-router.get("/course/all", getAllCourse);
+router.post("/course/new", CourseController.addNewCourse);
 
-router.get("/course/:id", getCourseWithId);
+//router.put("/course/update/:id", updateCourse);
 
-router.post("/course/new", createCourse);
-
-router.put("/course/update/:id", updateCourse);
-
-router.delete("/course/delete/:id", deleteCourse);
+//router.delete("/course/delete/:id", deleteCourse);
 
 router.use(require("../../routes/student.courses.api"));
 module.exports = router;
