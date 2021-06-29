@@ -81,13 +81,6 @@ module.exports = {
       const filter={};
       filter['teachers.'+teacherId]={$exists:true};
       Course.find(filter).then(allCourses=>{
-        if(!allCourses){
-          reject({
-            message:"No Course found with specified teacher id",
-            statusCode:204,
-            trace:"No trace found"
-          })
-        }
         resolve(allCourses);
       })
           .catch(err=>{
