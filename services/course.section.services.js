@@ -21,14 +21,28 @@ module.exports={
     },
 
     updateCourseSection(courseSectionId,courseSectionDetails){
-        return CourseSectionValidator.updateCourseSection(courseSectionDetails)
-            .then((validData)=>{
-                return CourseSection.findByIdAndUpdate(courseSectionId,validData).then(savedCourseSection=>{
-                    if(!savedCourseSection)
-                        throw new Error("No course Section found with specified course id ");
-                    return savedCourseSection;
+        return new Promise((resolve,reject)=>{
+            CourseSectionValidator.updateCourseSection(courseSectionDetails)
+                .then((validData)=>{
+                    return CourseSection.findByIdAndUpdate(courseSectionId,validData).then(savedCourseSection=>{
+                        if(!savedCourseSection)
+                            throw new Error("No course Section found with specified course id ");
+                        return savedCourseSection;
+                    }).catch(e=>{
+                        reject({
+                            message:"unable to get course",
+                            statusCode:503,
+                            trace:e,
+                        })
+                    })
+                }).catch(err=>{
+                reject({
+                    message:"unable to get course",
+                    statusCode:503,
+                    trace:err,
                 })
             })
+        })
     },
 
     getAllCourseSectionByCourseId(courseId){
@@ -37,11 +51,11 @@ module.exports={
                 .then(coursesSection=>{
                     return resolve(coursesSection);
                 }).catch(e=>{
-                    reject({
-                        message:"unable to get course",
-                        status:503,
-                        trace:e,
-                    })
+                reject({
+                    message:"unable to get course",
+                    statusCode:503,
+                    trace:e,
+                })
             })
         })
     },
