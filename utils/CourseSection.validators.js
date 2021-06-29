@@ -14,7 +14,7 @@ module.exports={
             "course_id":Joi.string().optional(),
             'name':Joi.string().optional(),
             "description":Joi.string().optional(),
-            'is_active':Joi.string().optional(),
+            'is_active':Joi.boolean().optional(),
         }).options({stripUnknown:true});
         return Schema.validateAsync(courseSectionDetails);
     },
