@@ -11,7 +11,11 @@ const AttendanceRoutes = require("../routes/attendance.api");
 const DashboardController = require("../controllers/dashboard.controller");
 const QuizRoutes=require("../routes/quiz.api");
 const ClassroomCourseRoutes=require("../routes/classroom.course.api");
+const StudentCourseRoutes = require("../routes/student.courses.api")
 
+
+// ============Student Course Routes================
+route.use(StudentCourseRoutes);
 
 // ============ Classroom Course ================
 route.use(ClassroomCourseRoutes);

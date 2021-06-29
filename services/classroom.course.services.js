@@ -96,6 +96,22 @@ module.exports={
                 })
             })
         })
+    },
+    getAllClassroomByStudentId(studentID){
+        const filter= {};
+        filter["enrolled_students." + studentID] = {$exists:true}
+        return new Promise((resolve, reject)=>{
+            Classroom.find().then((allClassrooms)=>{
+                resolve(allClassrooms)
+
+            }).catch((error)=>{
+                reject({
+                    message:"unable to find all classroom ",
+                    statusCode:503,
+                    trace:error
+                })
+            })
+        })
     }
 
 };
