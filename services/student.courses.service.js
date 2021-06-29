@@ -49,6 +49,8 @@ module.exports={
                     }
                 })()
             })
+    },
+    getStudentsDetailsWithCourseDetails(){
     }
 
 };
