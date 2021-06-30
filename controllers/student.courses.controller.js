@@ -18,4 +18,12 @@ module.exports={
             return res.status(400).send(e);
         }
     },
+    async getAllStudentWithTheirCourseDetails(req,res){
+        try{
+            const classroomDetails=await StudentCourseService.getStudentsDetailsWithCourseDetails();
+            return  res.status(202).send(classroomDetails);
+        }catch (e) {
+            return res.status(400).send(e);
+        }
+    },
 };

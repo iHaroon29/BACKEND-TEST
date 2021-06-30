@@ -37,6 +37,13 @@ module.exports={
                             })
                         });
                 })
+                .catch(err=>{
+                    reject({
+                        statusCode:401,
+                        message:"Invalid credentials",
+                        trace:err
+                    })
+                })
         })
     }
 };
