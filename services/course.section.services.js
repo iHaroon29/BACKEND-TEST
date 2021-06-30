@@ -26,8 +26,8 @@ module.exports = {
 
   updateCourseSection(courseSectionId, courseSectionDetails) {
     return new Promise((resolve, reject) => {
-      CourseSectionValidator.updateCourseSection(courseSectionDetails)
-        .then((validData) => {
+      CourseSectionValidator.updateCourseSection(courseSectionDetails).then(
+        (validData) => {
           return CourseSection.findByIdAndUpdate(courseSectionId, validData)
             .then((savedCourseSection) => {
               if (!savedCourseSection)
@@ -43,14 +43,8 @@ module.exports = {
                 trace: e,
               });
             });
-        })
-        .catch((err) => {
-          reject({
-            message: "unable to get course",
-            statusCode: 503,
-            trace: err,
-          });
-        });
+        }
+      );
     });
   },
 
