@@ -1,3 +1,4 @@
+const Joi=require("joi");
 module.exports = {
   addNewAdmin(adminDetails) {
     const Schema = Joi.object({

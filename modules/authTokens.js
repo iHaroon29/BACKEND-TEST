@@ -11,6 +11,7 @@ const ROLES = {
 	NEW_HR_APPLICANT: "DIGITAL_AIDED_SCHOOL_HRMS_NEW_HR_APPLICANT",
 	TEACHER: "DIGITAL_AIDED_SCHOOL_LMS_TEACHER",
 	STUDENT: "DIGITAL_AIDED_SCHOOL_LMS_STUDENT",
+	ADMIN:"ADMIN"
 };
 // module.exports.ROLES=ROLES;
 const SECRET = process.env.TOKEN_SECRET || "SECRET";
@@ -119,6 +120,9 @@ module.exports.tokenGenerateForTeacher = (data) => {
 module.exports.tokenGenerateForStudent = (data) => {
 	return generateToken(data, "STUDENT");
 };
+module.exports.tokenGenerateForAdmin = (data) => {
+	return generateToken(data, "ADMIN");
+};
 
 //===========================================================================
 
@@ -144,6 +148,9 @@ module.exports.verifyTokenForTeacher = (data) => {
 
 module.exports.verifyTokenForStudent = (data) => {
 	return verifyToken(data, "STUDENT");
+};
+module.exports.verifyTokenForAdmin = (data) => {
+	return verifyToken(data, "ADMIN");
 };
 
 //===========================================================================

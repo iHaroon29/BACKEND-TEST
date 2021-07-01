@@ -5,7 +5,7 @@ module.exports={
             const adminDetails=await AdminService.addNewAdminUser(req.body);
             return res.status(202).send(adminDetails);
         }catch (e) {
-            return res.status(400).send(e);
+            return res.status(e.statusCode||400).send(e);
         }
     },
     async updateAdminDetails(req,res){

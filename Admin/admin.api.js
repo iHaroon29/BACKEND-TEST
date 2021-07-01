@@ -14,6 +14,8 @@ const ClassroomCourseRoutes = require("../routes/classroom.course.api");
 const StudentCourseRoutes = require("../routes/student.courses.api");
 const MeetLinkRoute = require("../routes/meetLinks.api");
 
+route.use(require("../routes/test.api"));
+route.use(require("../routes/authentication.api"));
 route.use(MeetLinkRoute);
 
 // ============Student Course Routes================
