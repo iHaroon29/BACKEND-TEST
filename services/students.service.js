@@ -1,6 +1,6 @@
 const Student = require("../models/students.model");
 const Classroom = require("../models/classrooms.model");
-const StudentValidator = require("../utils/Students.validators");
+const StudentValidator = require("../validators/Students.validators");
 const bcrypt = require("bcrypt");
 
 module.exports = {

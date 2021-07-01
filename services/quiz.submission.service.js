@@ -1,6 +1,6 @@
 const QuizSubmission=require("../models/quiz.submitted.model");
 const Course=require("../models/courses.model");
-const QuizSubmissionValidator=require("../utils/quiz.validators");
+const QuizSubmissionValidator=require("../validators/quiz.validators");
 module.exports={
     getAllSubmittedQuizOfQuiz(courseId){
         const filters={};

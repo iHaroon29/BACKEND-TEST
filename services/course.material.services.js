@@ -1,5 +1,5 @@
 const CourseMaterial = require("../models/course.materials.model");
-const materialValidator = require("../utils/course.material.validators");
+const materialValidator = require("../validators/course.material.validators");
 
 module.exports = {
   async createCourseMaterial(materialDetails) {

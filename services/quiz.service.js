@@ -1,4 +1,4 @@
-const QuizValidator=require("../utils/quiz.validators");
+const QuizValidator=require("../validators/quiz.validators");
 const Course=require("../models/courses.model");
 
 module.exports={

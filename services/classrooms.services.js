@@ -1,5 +1,5 @@
 const Classroom = require("../models/classrooms.model");
-const ClassroomValidator = require("../utils/classroom.validators");
+const ClassroomValidator = require("../validators/classroom.validators");
 const CourseService=require("../services/course.services");
 
 module.exports = {

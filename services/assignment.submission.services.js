@@ -1,6 +1,6 @@
 const AssignmentSubmission = require("../models/assignment.submissions.model");
 const Assignment = require("../models/assignments.model");
-const submittedAssignmentValidator = require("../utils/assignment.submission.validators");
+const submittedAssignmentValidator = require("../validators/assignment.submission.validators");
 
 module.exports = {
   async assignmentSubmit(assignmentDetails) {

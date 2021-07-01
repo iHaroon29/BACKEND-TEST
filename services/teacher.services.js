@@ -1,5 +1,5 @@
 const Teacher = require("../models/teachers.model");
-const teacherValidator = require("../utils/Teacher.validators");
+const teacherValidator = require("../validators/Teacher.validators");
 const CourseService=require("./course.services");
 const ClassroomCourseService=require("./classroom.course.services");
 const bcrypt = require("bcrypt");

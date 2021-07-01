@@ -1,5 +1,5 @@
 const MeetLink = require("../models/meetlinks.model");
-const MeetLinkValidator = require("../utils/meetLinks.validators");
+const MeetLinkValidator = require("../validators/meetLinks.validators");
 
 module.exports = {
   addNewMeetLink(newMeetLinkData) {
