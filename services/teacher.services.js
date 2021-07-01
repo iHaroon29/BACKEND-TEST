@@ -69,15 +69,15 @@ module.exports = {
                             teacherDetails.courses=courseDetails;
                             const alreadyAddedClassrooms={};
                             (async ()=>{
-                                for(let i of courseDetails){
-                                    if(!alreadyAddedClassrooms[i._id]){
-                                        teacherDetails.classrooms.push(
-                                            await ClassroomCourseService.getAllClassroomByCourseId(i._id)
-                                                .then((classroom)=>classroom).catch()
-                                        );
+                                    for(let i of courseDetails){
+                                        if(!alreadyAddedClassrooms[i._id]){
+                                            teacherDetails.classrooms.push(
+                                                await ClassroomCourseService.getAllClassroomByCourseId(i._id)
+                                                    .then((classroom)=>classroom).catch()
+                                            );
+                                        }
+                                        alreadyAddedClassrooms[i._id]="ADDED";
                                     }
-                                    alreadyAddedClassrooms[i._id]="ADDED";
-                                }
                                 resolve(teacherDetails);
                             })()
 
