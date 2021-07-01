@@ -1,5 +1,7 @@
 const Lecture = require("../models/lectures.model");
-const LectureValidators = require("../utils/lecturesvalidtors");
+const LectureValidators = require("../validators/lecturesvalidtors");
+const ClassroomService=require("../services/classrooms.services");
+
 module.exports = {
   addNewLectureInClassroom(classroomId, lectureDetails) {
     return LectureValidators.addNewLectureToClassroom(lectureDetails).then(
@@ -40,7 +42,12 @@ module.exports = {
   },
   getAllLecturesOfClassroom(classroomId) {
     return Lecture.find({ classroom_id: classroomId }).then(allLectures=>{
-      return allLectures;
+      allLectures=JSON.parse(JSON.stringify(allLectures));
+      return allLectures.filter(async lecture=>{
+        lecture.classroom_details=await ClassroomService.getClassroomDetailsByClassroomId(lecture.classroom_id);
+        delete lecture.classroom_id;
+        return  lecture;
+      });
     });
   },
   getLectureDetailsById(lectureId) {

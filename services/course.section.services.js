@@ -1,24 +1,28 @@
-const CourseSection=require("../models/course.sections.model");
-const CourseSectionValidator=require("../utils/CourseSection.validators");
-module.exports={
-    addNewCourseSection(courseId,courseSectionDetails){
-        courseSectionDetails.course_id=courseId;
-        return CourseSectionValidator.addNewCourseSection(courseSectionDetails)
-            .then((validData)=>{
-                return new CourseSection(validData).save().then(savedCourseSection=>{
-                    return savedCourseSection;
-                })
-            })
-    },
+const CourseSection = require("../models/course.sections.model");
+const CourseSectionValidator = require("../validators/CourseSection.validators");
+module.exports = {
+  addNewCourseSection(courseId, courseSectionDetails) {
+    courseSectionDetails.course_id = courseId;
+    return CourseSectionValidator.addNewCourseSection(
+      courseSectionDetails
+    ).then((validData) => {
+      return new CourseSection(validData).save().then((savedCourseSection) => {
+        return savedCourseSection;
+      });
+    });
+  },
 
-    deleteCourseSection(courseSectionId,courseSectionDetails){
-        return CourseSectionValidator.deleteCourseSection(courseSectionDetails)
-            .then((validData)=>{
-                return CourseSection.findByIdAndDelete(courseSectionId,validData).then(savedCourseSection=>{
-                    return savedCourseSection;
-                })
-            })
-    },
+  deleteCourseSection(courseSectionId, courseSectionDetails) {
+    return CourseSectionValidator.deleteCourseSection(
+      courseSectionDetails
+    ).then((validData) => {
+      return CourseSection.findByIdAndDelete(courseSectionId, validData).then(
+        (savedCourseSection) => {
+          return savedCourseSection;
+        }
+      );
+    });
+  },
 
     updateCourseSection(courseSectionId,courseSectionDetails){
         return new Promise((resolve,reject)=>{
@@ -58,18 +62,16 @@ module.exports={
                 })
             })
         })
-    },
+  },
 
-    getCourseSectionDetails(courseSectionId){
-        return CourseSection.findById(courseSectionId)
-            .then(courseDetails=>{
-                return courseDetails;
-            })
-    },
-    getAllCourseSections(){
-        return CourseSection.find()
-            .then(courses=>{
-                return courses;
-            })
-    }
+  getCourseSectionDetails(courseSectionId) {
+    return CourseSection.findById(courseSectionId).then((courseDetails) => {
+      return courseDetails;
+    });
+  },
+  getAllCourseSections() {
+    return CourseSection.find().then((courses) => {
+      return courses;
+    });
+  },
 };

@@ -6,7 +6,7 @@ const teacherRoutes = require("./routes/Teachers");
 const studentRoutes = require("./routes/Students");
 const authenticationRoutes = require("./routes/AuthenticationAndAuthorization");
 const classroomRoutes = require("./routes/Classrooms");
-const Cors=require("cors");
+const Cors = require("cors");
 const app = express();
 
 app.use(Cors());

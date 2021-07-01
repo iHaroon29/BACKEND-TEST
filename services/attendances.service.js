@@ -36,7 +36,7 @@ module.exports = {
           );
         }
         attendances["total_lectures_in_classroom"] = totalLecturesInClassroom;
-        return attendances;
+        return allLectures;
       }
     );
   },

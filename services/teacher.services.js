@@ -1,18 +1,18 @@
 const Teacher = require("../models/teachers.model");
-const teacherValidator = require("../utils/Teacher.validators");
+const teacherValidator = require("../validators/Teacher.validators");
 const CourseService=require("./course.services");
 const ClassroomCourseService=require("./classroom.course.services");
 const bcrypt = require("bcrypt");
 
 module.exports = {
-    addNewTeacher(teacherDetails) {
-        return teacherValidator
-            .newTeacher(teacherDetails)
-            .then(async (validData) => {
-                let teacher = await Teacher.findOne({ email: validData.email });
-                if (teacher) throw "Teacher already Registered";
+  addNewTeacher(teacherDetails) {
+    return teacherValidator
+      .newTeacher(teacherDetails)
+      .then(async (validData) => {
+        let teacher = await Teacher.findOne({ email: validData.email });
+        if (teacher) throw "Teacher already Registered";
 
-                teacher = new Teacher(validData);
+        teacher = new Teacher(validData);
 
                 const salt = await bcrypt.genSalt(10);
                 teacher.password = await bcrypt.hash(teacher.password, salt);
@@ -51,9 +51,9 @@ module.exports = {
             });
     },
 
-    async deleteTeacherById(teacherId) {
-        let teacher = await Teacher.findOne({ _id: teacherId });
-        if (!teacher) throw "Given Id not found";
+  async deleteTeacherById(teacherId) {
+    let teacher = await Teacher.findOne({ _id: teacherId });
+    if (!teacher) throw "Given Id not found";
 
         return Teacher.findByIdAndDelete(teacherId);
     },
@@ -69,15 +69,15 @@ module.exports = {
                             teacherDetails.courses=courseDetails;
                             const alreadyAddedClassrooms={};
                             (async ()=>{
-                                for(let i of courseDetails){
-                                    if(!alreadyAddedClassrooms[i._id]){
-                                        teacherDetails.classrooms.push(
-                                            await ClassroomCourseService.getAllClassroomByCourseId(i._id)
-                                                .then((classroom)=>classroom).catch()
-                                        );
+                                    for(let i of courseDetails){
+                                        if(!alreadyAddedClassrooms[i._id]){
+                                            teacherDetails.classrooms.push(
+                                                await ClassroomCourseService.getAllClassroomByCourseId(i._id)
+                                                    .then((classroom)=>classroom).catch()
+                                            );
+                                        }
+                                        alreadyAddedClassrooms[i._id]="ADDED";
                                     }
-                                    alreadyAddedClassrooms[i._id]="ADDED";
-                                }
                                 resolve(teacherDetails);
                             })()
 
@@ -111,26 +111,27 @@ module.exports = {
                 })
             })
         })
-
-    },
-    findTeacherByEmail(emailId){
-        return new Promise((resolve,reject)=>{
-            Teacher.findOne({email:emailId}).then(teacher=>{
-                if(!teacher){
-                    reject({
-                        message:"No teacher found with this email id",
-                        statusCode:400,
-                        trace:"No trace available"
-                    })
-                }
-                resolve(teacher);
-            }).catch(err=>{
-                reject({
-                    statusCode:503,
-                    message:"Unable to find teacher",
-                    trace:err
-                })
-            })
+  },
+  findTeacherByEmail(emailId) {
+    return new Promise((resolve, reject) => {
+      Teacher.findOne({ email: emailId })
+        .then((teacher) => {
+          if (!teacher) {
+            reject({
+              message: "No teacher found with this email id",
+              statusCode: 400,
+              trace: "No trace available",
+            });
+          }
+          resolve(teacher);
         })
-    }
+        .catch((err) => {
+          reject({
+            statusCode: 503,
+            message: "Unable to find teacher",
+            trace: err,
+          });
+        });
+    });
+  },
 };

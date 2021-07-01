@@ -1,5 +1,6 @@
 const Classroom = require("../models/classrooms.model");
-const ClassroomValidator = require("../utils/classroom.validators");
+const ClassroomValidator = require("../validators/classroom.validators");
+const CourseService=require("../services/course.services");
 
 module.exports = {
   addNewClassroom(classroomDetails) {
@@ -61,6 +62,12 @@ module.exports = {
   getAllClassroom() {
     return Classroom.find();
   },
+
+  getAllCoursesInClassroom(classroomId) {
+    return Classroom.findById(classroomId).then((classroomData) => {
+      return classroomData.enrolled_courses;
+    });
+  },
   addNewDemoClassTeacherToClass(classroomId, teacherId) {
     return Classroom.findById(classroomId).then((classroomDetails) => {
       if (classroomDetails.demo_class[teacherId]) {
@@ -94,4 +101,24 @@ module.exports = {
       );
     });
   },
+    getClassroomDetailsByClassroomId(classroomId){
+      return new Promise((resolve,reject)=>{
+          Classroom.findById(classroomId)
+              .then(classroomDetails=>{
+                  classroomDetails=JSON.parse(JSON.stringify(classroomDetails));
+                  (async ()=>{
+                      for(let courseId of classroomDetails.enrolled_courses){
+                          classroomDetails.enrolled_courses_details=await CourseService.getCourseByCourseId(courseId);
+                      }
+                  })();
+                  resolve(classroomDetails);
+              }).catch(err=>{
+                  reject({
+                      message:"unable to find classroom",
+                      trace:err,
+                      statusCode:503,
+                  })
+          })
+      })
+    }
 };

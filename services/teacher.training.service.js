@@ -1,5 +1,5 @@
 const TeacherTraining =require("../models/teacher.training.model");
-const TeacherTrainingDataValidator=require("../utils/teacher.training.validators");
+const TeacherTrainingDataValidator=require("../validators/teacher.training.validators");
 module.exports={
     addNewTeacherForTraining(teacherDetails){
         return TeacherTrainingDataValidator.addNewTeacherForTraining(teacherDetails)
