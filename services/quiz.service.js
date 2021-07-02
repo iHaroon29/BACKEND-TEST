@@ -11,7 +11,7 @@ module.exports={
         return new Promise((resolve,reject)=>{
             QuizValidator.newQuiz(QuizDetails)
                 .then(validQuizData=>{
-                    return Course.findByIdAndUpdate(courseId,{quiz:validQuizData},{new:true})
+                    return Course.findByIdAndUpdate(courseId,{quiz:validQuizData.quiz_details},{new:true})
                         .then(updatedCourseDetails=> resolve(updatedCourseDetails.quiz))
                         .catch(err=>{
                             reject({
