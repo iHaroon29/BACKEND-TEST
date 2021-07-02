@@ -5,7 +5,7 @@ module.exports={
             const AddedQuiz=await QuizService.addNewQuiz(req.params.courseId,req.body);
             return res.status(200).send(AddedQuiz);
         }catch (e) {
-            return res.status(e.statusCode||500).send(e.message||"");
+            return res.status(e.statusCode||500).send(e||"");
         }
     },
     getQuestions(req,res){

@@ -9,7 +9,7 @@ module.exports={
                 question_type:Joi.string().required()
             })).required()
         }).options({
-            stripUnknown:trueq
+            stripUnknown:true
         }).validateAsync(data);
     },
     quizSubmission(data){
