@@ -14,11 +14,29 @@ const ClassroomCourseRoutes = require("../routes/classroom.course.api");
 const StudentCourseRoutes = require("../routes/student.courses.api");
 const MeetLinkRoute = require("../routes/meetLinks.api");
 const AdminAuthTokenVerfication=require("../middlewares/authTokenVerifyForAdmin");
+const TrainerRoutes=require("../routes/trainers.api");
+const AuthenticationRoutes=require("../routes/authentication.api");
 // route.use(AdminAuthTokenVerfication);
 
+// ============Testing Routes================
 route.use(require("../routes/test.api"));
-route.use(require("../routes/authentication.api"));
+// ============Testing Routes================
+
+
+// ============Trainer Routes================
+route.use(TrainerRoutes);
+// ============Trainer Routes================
+
+
+// ============Authentication Routes================
+route.use(AuthenticationRoutes);
+// ============Authentication Routes================
+
+
+// ============Meet Link Routes================
 route.use(MeetLinkRoute);
+// ============Meet Link Routes================
+
 
 // ============Student Course Routes================
 route.use(StudentCourseRoutes);
