@@ -5,6 +5,8 @@ module.exports={
             quiz_details:Joi.array().items(Joi.object({
                 question:Joi.string(),
                 answer:Joi.string(),
+                options:Joi.array().items(Joi.string).optional(),
+                question_type:Joi.string().required()
             })).required()
         }).options({
             stripUnknown:true

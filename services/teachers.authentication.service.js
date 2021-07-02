@@ -2,7 +2,7 @@ const Teachers = require("../models/teachers.model");
 const AuthToken = require("../modules/authTokens");
 const bcrypt = require("../modules/bcrypt");
 const LoginSchema =
-  require("../utils/AuthenticationAndAuthorization").MakeLogin;
+  require("../validators/AuthenticationAndAuthorization").MakeLogin;
 const LoginActivity = require("../models/login.activity.model");
 
 module.exports = {

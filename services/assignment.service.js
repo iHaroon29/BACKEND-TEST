@@ -3,7 +3,7 @@ const Classroom = require("../models/classrooms.model");
 const Course = require("../models/courses.model");
 const ClassroomService = require("../services/classrooms.services");
 
-const assignmentValidator = require("../utils/assignment.validators");
+const assignmentValidator = require("../validators/assignment.validators");
 
 module.exports = {
   createAssignment(assignmentDetails) {

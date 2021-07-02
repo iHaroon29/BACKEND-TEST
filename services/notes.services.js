@@ -1,5 +1,5 @@
 const Note = require("../models/notes.model");
-const noteValidator = require("../utils/note.validators");
+const noteValidator = require("../validators/note.validators");
 
 module.exports = {
   async createNewNotes(noteDetails) {

@@ -1,5 +1,5 @@
 const CourseSection = require("../models/course.sections.model");
-const CourseSectionValidator = require("../utils/CourseSection.validators");
+const CourseSectionValidator = require("../validators/CourseSection.validators");
 module.exports = {
   addNewCourseSection(courseId, courseSectionDetails) {
     courseSectionDetails.course_id = courseId;

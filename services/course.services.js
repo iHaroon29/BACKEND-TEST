@@ -1,5 +1,5 @@
 const Course = require("../models/courses.model");
-const courseValidator = require("../utils/Course.validators");
+const courseValidator = require("../validators/Course.validators");
 const CourseSectionService=require("../services/course.section.services");
 const CourseActivityLogger = require("../middlewares/courses.activity.logger");
 
