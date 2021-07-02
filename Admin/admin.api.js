@@ -13,6 +13,8 @@ const QuizRoutes = require("../routes/quiz.api");
 const ClassroomCourseRoutes = require("../routes/classroom.course.api");
 const StudentCourseRoutes = require("../routes/student.courses.api");
 const MeetLinkRoute = require("../routes/meetLinks.api");
+const AdminAuthTokenVerfication=require("../middlewares/authTokenVerifyForAdmin");
+// route.use(AdminAuthTokenVerfication);
 
 route.use(require("../routes/test.api"));
 route.use(require("../routes/authentication.api"));
@@ -20,20 +22,27 @@ route.use(MeetLinkRoute);
 
 // ============Student Course Routes================
 route.use(StudentCourseRoutes);
+// ============Student Course Routes================
+
 
 // ============ Classroom Course ================
 route.use(ClassroomCourseRoutes);
+// ============ Classroom Course ================
+
 
 // ============ Teachers ================
 route.use(TeacherRoutes);
 
+
 // ============ QUIZ ================
 route.use(QuizRoutes);
-// ======================================
+// ============ QUIZ ================
+
 
 // ============ Students ================
 route.use(StudentsRoutes);
-// ======================================
+// ============ Students ================
+
 
 //============= COURSES==================
 route.use(CoursesRoutes);
@@ -43,40 +52,34 @@ route.use(CoursesRoutes);
 route.use(CourseSectionRoutes);
 //============= COURSE SECTION==================
 
+
 //============= ADMIN==================
 route.use(AdminUserRoutes);
 //============= ADMIN==================
+
 
 //==================== CLASSROOM================
 route.use(ClassroomRoutes);
 //==================== CLASSROOM================
 
+
 //======================= LECTURE=====================
 route.use(LectureRoutes);
 //======================= LECTURE====================
+
+
 //======================= TEACHER TRAINING=====================
 route.use(TeacherTrainingRoutes);
 //======================= TEACHER TRAINING====================
+
 
 //=======================DASHBOARD====================
 route.get("/dashboard", DashboardController.getDashboardData);
 //====================================================
 
+
 //======================ATTENDANCE=========================
 route.use(AttendanceRoutes);
 //======================ATTENDANCE=========================
-
-// const Classroom=require("../../models/mongodb/classrooms");
-//
-// route.get("/test",(req,res)=>{
-//     const studentID=1;
-//     const dN={};
-//     dN["enrolled_students."+studentID]={$exists:true};
-//     console.log(dN);
-//     Classroom.find(dN)
-//         .then(data=>{
-//             return res.status(200).send(data);
-//         })
-// });
 
 module.exports = route;

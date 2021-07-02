@@ -4,6 +4,14 @@ const ALGORITHM = "HS256";
 const env = require("dotenv");
 env.config();
 
+const TokenErrorMessages={
+	TOKEN_EXPIRED:"Token expired",
+	INVALID_TOKEN_PROVIDED:"Provide a valid token",
+	NOT_REQUIRED_ROLE:"not required role",
+	TOKEN_VERIFICATION_MODULE_ERROR:"unable to verify tokens"
+};
+module.exports.TokenErrorMessages=TokenErrorMessages;
+
 const ROLES = {
 	EMPLOYEE: "DIGITAL_AIDED_SCHOOL_HRMS_TEAM_MEMBER",
 	HR_ADVISOR: "DIGITAL_AIDED_SCHOOL_HRMS_TEAM_ADVISOR",
@@ -29,10 +37,8 @@ const generateToken = (data, role) => {
 		}
 		jwt.sign(
 			{
-				data: {
-					token_details: data,
-					role: role,
-				},
+				token_details: data,
+				role:role
 			},
 			SECRET,
 			{
@@ -57,22 +63,22 @@ const verifyToken = (token, requiredRole) => {
 	return new Promise((resolve, reject) => {
 		if (!token)
 			reject({
-				message: "Provide a valid token.",
+				message: TokenErrorMessages.INVALID_TOKEN_PROVIDED,
 			});
 		jwt.verify(token, SECRET, {}, (err, decoded) => {
 			if (decoded) {
 				if (decoded.role === requiredRole) resolve(decoded);
 				reject({
-					message: "not required role",
+					message: TokenErrorMessages.NOT_REQUIRED_ROLE,
 				});
 			} else {
 				if (err.name === "TokenExpiredError") {
 					reject({
-						message: "Token expired",
+						message:TokenErrorMessages.TOKEN_EXPIRED ,
 					});
 				}
 				reject({
-					message: "unable to verify tokens",
+					message: TokenErrorMessages.TOKEN_VERIFICATION_MODULE_ERROR,
 					stack: err,
 				});
 			}
@@ -88,11 +94,11 @@ module.exports.getTokenDetails = (token) => {
 			} else {
 				if (err.name === "TokenExpiredError") {
 					reject({
-						message: "Token expired",
+						message: TokenErrorMessages.TOKEN_EXPIRED,
 					});
 				}
 				reject({
-					message: "unable to verify tokens",
+					message: TokenErrorMessages.TOKEN_VERIFICATION_MODULE_ERROR,
 					stack: err,
 				});
 			}
