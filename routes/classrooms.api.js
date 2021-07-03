@@ -7,5 +7,7 @@ route.delete("/classroom/:classroomId",ClassroomController.deleteClassroomWithGi
 route.get("/classroom/details/:classroomId",ClassroomController.getClassroomByClassroomId);
 route.post("/classroom/:classroomId/demo/teacher/new",ClassroomController.teacherForDemoClass);
 route.put("/classroom/update/:classroomId",ClassroomController.updateClassroomDetails);
+route.put("/classroom/make/live/:classroomId",ClassroomController.makeClassroomLive);
+route.get("/classrooms/demo/all",ClassroomController.getAllDemoClasses);
 
 module.exports = route;
