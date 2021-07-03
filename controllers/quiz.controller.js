@@ -43,7 +43,7 @@ module.exports={
     },
     async addQuestion(req,res){
         try {
-            const deletedQuiz=await QuizService.addQuestionByCourseId(req.params.courseId);
+            const deletedQuiz=await QuizService.addQuestionByCourseId(req.params.courseId,req.body);
             return res.status(202).send(deletedQuiz);
         }catch (e) {
             return res.status(e.statusCode||503).send(e);
