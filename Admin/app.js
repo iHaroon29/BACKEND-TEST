@@ -9,6 +9,8 @@ const cors = require("cors");
 
 var app = express();
 const AdminRoutes = require("./admin.api");
+const LMSTeacherRoutes = require("../LMS/lms.teacher.api");
+const AuthRoutes=require("../routes/authentication.api");
 
 app.use(cors());
 // view engine setup
@@ -22,6 +24,8 @@ app.use(cookieParser());
 app.use("uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/admin/api", AdminRoutes);
+app.use("/lms/api/teacher", LMSTeacherRoutes);
+app.use("/auth/api", AuthRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

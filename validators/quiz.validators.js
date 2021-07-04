@@ -27,21 +27,5 @@ module.exports={
             course_id:Joi.string().required(),
             quiz_questions_and_answers:Joi.string().required()
         }).validateAsync(data);
-    },
-    newQuestion(questionDetails){
-        return QuestionSchema.validateAsync(questionDetails);
-    },
-    deleteQuestion(deleteQuestionDetails){
-        return Joi.object({
-            courseId:Joi.objectId().required(),
-            questionNumber:Joi.number().greater(0)
-        }).options({stripUnknown:true}).validateAsync(deleteQuestionDetails);
-    },
-    updateQuestion(updateQuestion){
-        return Joi.object({
-            courseId:Joi.objectId().required(),
-            questionNumber:Joi.number().greater(0),
-            newQuestionDetails:QuestionSchema.required()
-        }).options({stripUnknown:true}).validateAsync(updateQuestion);
     }
 };

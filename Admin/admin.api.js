@@ -10,6 +10,7 @@ const TeacherTrainingRoutes = require("../routes/teachers.training.api");
 const AttendanceRoutes = require("../routes/attendance.api");
 const DashboardController = require("../controllers/dashboard.controller");
 const QuizRoutes = require("../routes/quiz.api");
+const QuizQuestionRoutes = require("../routes/quiz.question.api");
 const ClassroomCourseRoutes = require("../routes/classroom.course.api");
 const StudentCourseRoutes = require("../routes/student.courses.api");
 const MeetLinkRoute = require("../routes/meetLinks.api");
@@ -21,6 +22,10 @@ const AuthenticationRoutes=require("../routes/authentication.api");
 // ============Testing Routes================
 route.use(require("../routes/test.api"));
 // ============Testing Routes================
+
+// ============Quiz Question Routes================
+route.use(QuizQuestionRoutes);
+// ============Quiz Question Routes================
 
 
 // ============Trainer Routes================
