@@ -1,6 +1,8 @@
 const Admin = require("../models/admin.model");
 const AdminValidator = require("../validators/admin.validators");
 const bcrypt=require("../modules/bcrypt");
+const AdminDAO=require("../dao/admin.user.dao");
+const RejectErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
 
 module.exports = {
   addNewAdminUser(adminDetails) {
@@ -9,13 +11,12 @@ module.exports = {
         bcrypt.genHash(validAdminDetails.password)
             .then(hashedPassword=>{
               validAdminDetails.password=hashedPassword;
-              new Admin(validAdminDetails).save().then(savedAdminDetails => {
+              AdminDAO.addNewAdmin(validAdminDetails).then(savedAdminDetails => {
                 resolve(savedAdminDetails);
               }).catch(err=>{
                 reject({
-                  message:"unable to add add Admin",
-                  statusCode:503,
-                  trace:err
+                  message:err.message||"unable to add Admin",
+                  statusCode:err.statusCode||503
                 })
               })
             })
@@ -30,64 +31,51 @@ module.exports = {
     })
   },
   updateAdminDetails(adminId, newDetails) {
-    return AdminValidator.updateAdminDetails(newDetails).then(
-        (validNewDetails) => {
-          return Admin.findByIdAndUpdate(adminId, validNewDetails, {
-            new: true,
-          }).then((updatedDetails) => {
-            return updatedDetails;
-          });
-        }
-    );
+    return new Promise((resolve,reject)=>{
+      AdminValidator.updateAdminDetails(newDetails)
+          .then((validNewDetails) => {
+                AdminDAO.updateAdminDetails(adminId, validNewDetails,{new: true})
+                    .then((updatedDetails) => {
+                      resolve(updatedDetails);
+                    }).catch(err=>{
+                  reject(RejectErrorMessage(err.message||"unable to update admin details"))
+                })
+              }
+          ).catch(err=>reject(RejectErrorMessage("invalid data",400,err)))
+    })
   },
-  updatePassword(adminId, newPassword) {
-    return AdminValidator.updatePassword(newPassword).then((validPassword) => {
-      return Admin.findByIdAndUpdate(
-          adminId,
-          { password: validPassword },
-          { new: true }
-      ).then((newDetails) => {
-        return newDetails;
-      });
-    });
-  },
+  // updatePassword(adminId, newPassword) {
+  //   return AdminValidator.updatePassword(newPassword).then((validPassword) => {
+  //     return Admin.findByIdAndUpdate(
+  //         adminId,
+  //         { password: validPassword },
+  //         { new: true }
+  //     ).then((newDetails) => {
+  //       return newDetails;
+  //     });
+  //   });
+  // },
   deleteAdmin(adminId) {
-    return Admin.findByIdAndDelete(adminId).then((newDetails) => {
-      return newDetails;
+    return new Promise((resolve,reject)=>{
+      AdminDAO.deleteAdmin(adminId)
+          .then((deletedDetails) => {
+            resolve(deletedDetails);
+          }).catch(err=>reject(err.message||"",err.statusCode||503,(err.statusCode)?"":err))
     });
   },
   allAdmins(){
-    return Admin.find()
+    return AdminDAO.getAllAdmins();
   },
   getAdminDetailsById(adminId){
-    return Admin.findById(adminId).then(admin=>{
-      if(!admin){
-        throw new Error("No User Found");
-      }
-      return admin;
-    })
-  },
-  getAdminUsingEmail(email){
     return new Promise((resolve,reject)=>{
-      const filter={};
-      filter["email"]=email;
-      Admin.find(filter)
-          .then(admin=>{
-            if(!admin || !admin[0]){
-              reject({
-                message:"no admin found",
-                trace:"no trace",
-                statusCode:204
-              })
-            }
-            resolve(admin[0]);
-          }).catch(err=>{
-        reject({
-          message:"unable to find admin",
-          trace:err,
-          statusCode:503
-        })
+      AdminDAO.getAdminById(adminId).then(admin=>{
+        resolve(admin);
+      }).catch(err=>{
+        reject(RejectErrorMessage("unable to get Admin",503,err));
       })
     })
+  },
+  getAdminUsingEmail(email) {
+    return AdminDAO.getAdminByEmail(email);
   }
 };
