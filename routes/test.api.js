@@ -1,20 +1,21 @@
-const route=require("express").Router();
-const Excel=require("../middlewares/checkIfUploadedFileIsExcel");
-const multer=require("multer");
-const excelFileUploadFiled=Excel.single("excel");
-const xlsx=require("xlsx");
-const path=require("path")
+const route = require("express").Router();
+const Excel = require("../middlewares/checkIfUploadedFileIsExcel");
+const multer = require("multer");
+const excelFileUploadFiled = Excel.single("excel");
 
-route.post("/test/excel",(req,res)=>{
-    excelFileUploadFiled(req,res,(err)=>{
-        if(err instanceof multer.MulterError || (err && err.message && err.message==="only excel file is allowed")){
-            return res.status(400).send(err);
-        }
-        else{
-            console.log(xlsx.readFile(req.file.path));
-            return res.send(req.file)
-        }
-    });
+const ExcelConvertor = require("../modules/excel.converter")
+
+route.post("/test/excel", (req, res) => {
+  excelFileUploadFiled(req, res, (err) => {
+    if (
+      err instanceof multer.MulterError ||
+      (err && err.message && err.message === "only excel file is allowed")
+    ) {
+      return res.status(400).send(err);
+    } else {
+     return res.send(ExcelConvertor.excelToJson(req.file.path))
+    }
+  });
 });
 
-module.exports=route;
+module.exports = route;

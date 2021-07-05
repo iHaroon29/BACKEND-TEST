@@ -3,7 +3,7 @@ const ClassroomSchema = Joi.object({
   name: Joi.string().required(),
   timeline: Joi.object().optional().default({}),
   status: Joi.string().optional().default("verified"),
-  classroom_type: Joi.string().optional().default("demo"),
+  // classroom_type: Joi.string().default("demo"),
   students: Joi.array().optional().items(Joi.string()).default([]),
   courses: Joi.array().optional().items(Joi.string()).default([]),
   teachers: Joi.array().optional().items(Joi.string()).default([]),

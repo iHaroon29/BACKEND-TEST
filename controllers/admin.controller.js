@@ -5,12 +5,12 @@ module.exports={
             const adminDetails=await AdminService.addNewAdminUser(req.body);
             return res.status(202).send(adminDetails);
         }catch (e) {
-            return res.status(400).send(e);
+            return res.status(e.statusCode||400).send(e);
         }
     },
     async updateAdminDetails(req,res){
         try{
-            const updatedAdmin=await AdminService.updateAdminDetails(req.body.id,req.body);
+            const updatedAdmin=await AdminService.updateAdminDetails(req.params.adminId,req.body);
             return res.status(202).send(updatedAdmin);
         }catch (e) {
             return res.status(400).send(e);
@@ -43,7 +43,15 @@ module.exports={
     async getAdminDetails(req,res){
         try{
             const details=await AdminService.getAdminDetailsById(req.params.adminId);
-            return  res.send(details);
+            return  res.status(200).send(details);
+        }catch (e) {
+            return res.status(400).send(e);
+        }
+    },
+    async getAdminDetailsUsingEmail(req,res){
+        try{
+            const details=await AdminService.getAdminUsingEmail(req.body.email);
+            return  res.status(200).send(details);
         }catch (e) {
             return res.status(400).send(e);
         }

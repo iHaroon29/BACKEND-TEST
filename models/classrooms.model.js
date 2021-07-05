@@ -13,12 +13,14 @@ const ClassroomSchema= new mongoose.Schema({
         },
         'status':{
             type:String,
-            required:true
+            required:true,
+            lowercase:true
         },
         'classroom_type':{
             type:String,
             default:"demo",
-            required:true
+            required:true,
+            lowercase:true
         },
         'enrolled_students':{
             type: Object, // student id of enrolled student as key and enrollment details as values

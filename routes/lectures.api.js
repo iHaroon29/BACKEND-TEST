@@ -1,11 +1,11 @@
 const route = require("express").Router();
 const LectureController = require("../controllers/lectures.controller");
 route.get(
-  "/classroom/:classroomId/lecture/all",
+  "/classroom/:classroomId/lectures/all",
   LectureController.getAllLecturesOfClassroom
 );
 route.get(
-  "/classroom/:classroomId/lecture/:lectureId",
+  "/classroom/:classroomId/lecture/details/:lectureId",
   LectureController.getLectureDetails
 );
 route.post(
@@ -13,12 +13,12 @@ route.post(
   LectureController.addNewLecture
 );
 route.put(
-  "/classroom/:classroomId/lecture/:lectureId",
+  "/classroom/:classroomId/lecture/update/:lectureId",
   LectureController.updateLecture
 );
 route.delete(
-  "/classroom/:classroomId/lecture/:lectureId",
+  "/classroom/:classroomId/lecture/delete/:lectureId",
   LectureController.deleteLecture
 );
-route.get("/lecture/all", LectureController.getAllLectures);
+route.get("/lectures/all", LectureController.getAllLectures);
 module.exports = route;

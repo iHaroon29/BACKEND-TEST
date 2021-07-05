@@ -55,5 +55,21 @@ module.exports={
             console.log(e);
             return res.status(400).send(e);
         }
+    },
+    async makeClassroomLive(req,res){
+        try {
+            const updatedDetails=await ClassroomService.makeClassroomLiveUsingClassroomId(req.params.classroomId);
+            return  res.status(202).send(updatedDetails);
+        }catch (e) {
+            return res.status(e.statusCode||400).send(e);
+        }
+    },
+    async getAllDemoClasses(req,res){
+        try {
+            const allDemoClasses=await ClassroomService.getAllDemoClassroom();
+            return  res.status(202).send(allDemoClasses);
+        }catch (e) {
+            return res.status(e.statusCode||400).send(e);
+        }
     }
 };
