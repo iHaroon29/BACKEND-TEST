@@ -26,7 +26,7 @@ const CoursesSchema=new mongoose.Schema({
         },
         quiz:{
             type:Array(Object),
-            default:[{}],
+            default:[],
         }
     },
     {
