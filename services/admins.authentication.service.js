@@ -21,6 +21,13 @@ module.exports={
                                     })
                                 })
                         }).catch((err)=>{
+                        if(err==="texts doesn't match"){
+                            reject({
+                                message:"invalid username or password",
+                                statusCode:401,
+                                // trace:err
+                            })
+                        }
                         reject({
                             message:"unable to verify password",
                             statusCode:503,
@@ -28,6 +35,12 @@ module.exports={
                         })
                     })
                 }).catch((err)=>{
+                    if(err.message==="no admin found"){
+                        reject({
+                            message:"invalid username or password",
+                            statusCode:401,
+                        })
+                    }
                 reject({
                     message:"unable to find admin",
                     statusCode:503,
