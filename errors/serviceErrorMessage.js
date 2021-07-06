@@ -1,9 +1,11 @@
+function Message(message,trace,statusCode){
+    this.message=message;
+    this.trace=trace;
+    this.statusCode=statusCode;
+    this.type="service"
+}
 module.exports={
     getRejectResponse(message,statusCode=503,trace="no trace found"){
-        return {
-            message:message,
-            trace:trace,
-            statusCode:statusCode
-        }
+        return new Message(message,trace,statusCode);
     }
 };

@@ -71,5 +71,13 @@ module.exports={
         }catch (e) {
             return res.status(e.statusCode||400).send(e);
         }
+    },
+    async getClassroomsOfStudents(req,res){
+        try {
+            const allDemoClasses=await ClassroomService.getClassroomByStudentId();
+            return  res.status(202).send(allDemoClasses);
+        }catch (e) {
+            return res.status(e.statusCode||400).send(e);
+        }
     }
 };
