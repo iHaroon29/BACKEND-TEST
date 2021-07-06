@@ -43,7 +43,7 @@ module.exports={
     },
     async deleteCourseById(req,res){
         try{
-            const deletedCourse=await CoursesServices.deleteCourseById(req.param.id);
+            const deletedCourse=await CoursesServices.deleteCourseById(req.params.id);
             return res.status(200).send(deletedCourse);
         }
         catch (e) {

@@ -1,95 +1,75 @@
-const Course = require("../models/courses.model");
 const courseValidator = require("../validators/Course.validators");
-const CourseSectionService=require("../services/course.section.services");
-const CourseActivityLogger = require("../middlewares/courses.activity.logger");
+const ActivityLogger = require("../loggers/activity.logger");
+const CourseDao=require("../dao/course.dao");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
 
 module.exports = {
   getCourseByCourseId(courseId){
     return new Promise((resolve,reject)=>{
-      Course.findById(courseId).then(course=>{
-        course=JSON.parse(JSON.stringify(course));
-        return CourseSectionService.getAllCourseSectionByCourseId(course._id)
-            .then((courseSections)=>{
-              course.course_section=courseSections;
-              delete course.quiz;
-              resolve(course);
-              return course;
-            }).catch(err=>{
-              reject({
-                message:"unable to find course sections",
-                trace:err,
-                statusCode:503
-              })
-            })
-      }).catch(err=>{
-        reject({
-          message:"unable to find course",
-          trace:err,
-          statusCode:503
-        })
+      CourseDao.getCourseByCourseId(courseId)
+          .then(courseDetails=>{
+            resolve(courseDetails)
+          }).catch(err=>{
+        reject(ServiceErrorMessage("unable to find course",503,err));
       })
     })
   },
-  addNewCourse(courseDetails) {
-    return courseValidator.newCourse(courseDetails).then((validData) => {
-      return new Course(validData).save().then((savedCourse) => {
-        return savedCourse;
-      });
-    });
+  async addNewCourse(courseDetails,userDetails) {
+    try{
+      const validData=await courseValidator.newCourse(courseDetails);
+      const createdCourse=await CourseDao.createNewCourse(validData);
+      await ActivityLogger.logActivityCreatedNew(createdCourse,"course",userDetails||{});
+      return createdCourse;
+    }catch (e) {
+      return ServiceErrorMessage(e.message||"unable to delete course",e.statusCode||503,e)
+    }
   },
-  updateCourseById(courseId,courseDetails) {
-    return courseValidator.updateCourse(courseDetails).then((validData) => {
-      return Course.findByIdAndUpdate(courseId, validData, { new: true }).then(
-          (updatedCourse) => {
-            delete updatedCourse.quiz;
-            return updatedCourse;
-          }
-      );
-    });
+  async updateCourseById(courseId,courseDetails,userDetails) {
+    try{
+      courseDetails._id=courseId;
+      const validData=courseValidator.updateCourse(courseDetails)
+          .catch(err=>{throw new ServiceErrorMessage("invalid data",400,err)});
+      const oldCourse=await CourseDao.getCourseByCourseId(courseId);
+      const updatedCourse=await CourseDao.updateCourseByCourseId(courseId,courseDetails);
+      await ActivityLogger.logActivityUpdated(oldCourse, updatedCourse, "course",userDetails||{});
+      return updatedCourse;
+    }catch (e) {
+      return ServiceErrorMessage(e.message||"unable to update course",e.statusCode||503,e)
+    }
   },
-  deleteCourseById(courseId) {
-    return Course.findByIdAndDelete(courseId).then((deletedCourse) => {
-      return deletedCourse;
-    });
+  async deleteCourseById(courseId,userDetails) {
+    try{
+      const deletedCourse=await CourseDao.deleteCourseByCourseId(courseId);
+      await ActivityLogger.logActivityDeleted(deletedCourse,"course",userDetails||{});
+      return  deletedCourse;
+    }catch (e) {
+      return ServiceErrorMessage(e.message||"unable to delete course",e.statusCode||503,e)
+    }
   },
   getAllCourses() {
     return new Promise((resolve,reject)=>{
-      Course.find().then((courses) => {
-        return (async()=>{
-          let coursesWithCourseSections=[];
-          for(let course of courses){
-            const temp=JSON.parse(JSON.stringify(course));
-            delete temp.quiz;
-            temp.course_section=await CourseSectionService.getAllCourseSectionByCourseId(temp._id)||[];
-            coursesWithCourseSections.push(temp);
-          }
-          resolve(coursesWithCourseSections);
-          return coursesWithCourseSections;
-        })();
-
-      }).catch(e=>{
-        reject({
-          message:"unable to find course",
-          trace:e,
-          code:503
-        })
+      CourseDao.getAllCourses()
+          .then(allCourses=>{
+            if(!allCourses){
+              reject(ServiceErrorMessage("no course found",204))
+            }
+            resolve(allCourses)
+          }).catch(err=>{
+        reject(ServiceErrorMessage(err.message||"unable to find courses",err.statusCode||503,err))
       })
     })
   },
   getAllCourseByTeacherId(teacherId){
     return new Promise((resolve,reject)=>{
-      const filter={};
-      filter['teachers.'+teacherId]={$exists:true};
-      Course.find(filter).then(allCourses=>{
-        resolve(allCourses);
+      CourseDao.getCourseByTeacherId(teacherId)
+          .then(allCourses=>{
+            if(!allCourses){
+              reject(ServiceErrorMessage("no course present",400));
+            }
+            resolve(allCourses);
+          }).catch(err=>{
+        reject(ServiceErrorMessage(err.message||"unable to find courses",err.statusCode||503,err))
       })
-          .catch(err=>{
-            reject({
-              message:"error in finding courses",
-              statusCode:503,
-              trace:"No trace found"
-            })
-          })
     })
   }
 };

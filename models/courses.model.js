@@ -10,13 +10,6 @@ const CoursesSchema=new mongoose.Schema({
         'description':{
             type:String,
         },
-        'price':{
-            type:Number,
-        },
-        'discount':{
-            type:Number,
-            default:0,
-        },
         teachers:{
             type:Object, // Teacher's id as key and details as values
             default:{},
@@ -26,7 +19,7 @@ const CoursesSchema=new mongoose.Schema({
         },
         quiz:{
             type:Array(Object),
-            default:[{}],
+            default:[],
         }
     },
     {

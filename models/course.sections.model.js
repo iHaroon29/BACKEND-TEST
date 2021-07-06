@@ -19,6 +19,13 @@ const CourseSectionsSchema=new mongoose.Schema({
         'image':{
             type:String,
         },
+        'price':{
+            type:Number,
+        },
+        'discount':{
+            type:Number,
+            default:0,
+        },
     },
     {
         timestamps:true,
