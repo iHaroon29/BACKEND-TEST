@@ -2,6 +2,7 @@ const Classroom = require("../models/classrooms.model");
 const ClassroomValidator = require("../validators/classroom.validators");
 const CourseService=require("../services/course.services");
 const RejectResponseMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const ClassroomDAO=require("../dao/classroom.dao");
 
 module.exports = {
   addNewClassroom(classroomDetails) {
@@ -143,5 +144,15 @@ module.exports = {
                 reject(RejectResponseMessage("unable to update classroom",503,err))
             })
         })
-    }
+    },
+    getClassroomByStudentId(studentId){
+        return new Promise((resolve,reject)=>{
+            ClassroomDAO.getClassroomByStudentId(studentId)
+                .then(allClassrooms=>{
+                    resolve(allClassrooms)
+                }).catch(err=>{
+                reject(RejectResponseMessage("unable to find classroom",503,err))
+            })
+        })
+    },
 };
