@@ -6,14 +6,14 @@ module.exports={
         return Joi.object({
             trainer_id:Joi.objectId().required(),
             trainee_id:Joi.objectId().required(),
-            trainee_role:Joi.string().valid(...TRAINEE_ROLES).required(),
+            trainee_role:Joi.string().uppercase().valid(...TRAINEE_ROLES).required(),
         }).options({stripUnknown:true}).validateAsync(trainingDetails);
     },
     updateTraining(trainingDetails){
         return Joi.object({
             trainer_id:Joi.objectId().optional(),
             trainee_id:Joi.objectId().optional(),
-            trainee_role:Joi.string().valid(...TRAINEE_ROLES).required(),
+            trainee_role:Joi.string().uppercase().valid(...TRAINEE_ROLES).optional(),
         }).options({stripUnknown:true}).validateAsync(trainingDetails);
     }
 };

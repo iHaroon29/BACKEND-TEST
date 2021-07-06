@@ -73,5 +73,18 @@ module.exports={
                     reject(ServiceError("unable to find training",503,err))
                 })
         })
+    },
+    getAllTrainings(){
+        return new Promise((resolve,reject)=>{
+            TrainingDAO.findAllTraining()
+                .then((allTrainings)=>{
+                    if(!allTrainings){
+                        reject(ServiceError("no trainings available",400));
+                    }
+                    resolve(allTrainings);
+                }).catch(err=>{
+                reject(ServiceError("unable to find training",503,err))
+            })
+        })
     }
 };
