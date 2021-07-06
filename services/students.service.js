@@ -2,6 +2,7 @@ const Student = require("../models/students.model");
 const Classroom = require("../models/classrooms.model");
 const StudentValidator = require("../validators/Students.validators");
 const bcrypt = require("bcrypt");
+const xlsx = require("../modules/excel.converter");
 
 module.exports = {
   addNewStudent(studentDetails) {
@@ -19,7 +20,9 @@ module.exports = {
       }
     );
   },
-  addNewStudentsUsingExcelSheet() {},
+  addNewStudentsUsingExcelSheet(file) {
+    return xlsx.excelToJson(file.path);
+  },
   async getAllStudentsAndTheirCourseDetails() {
     let student = await Student.find();
     if (student.length === 0) return student;
