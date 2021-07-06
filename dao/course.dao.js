@@ -56,12 +56,33 @@ module.exports={
                 .then((allCourses)=>{
                     allCourses=JSON.parse(JSON.stringify(allCourses));
                     allCourses.filter(async (courseDetails,index)=>{
-                        courseDetails[index].sections=await CourseSectionDao.getCourseSectionByCourseId(courseDetails._id)
+                        courseDetails=await this.getCourseByCourseId(courseDetails._id).catch()
                             .catch();
                         return courseDetails;
                     });
+                    resolve(allCourses)
                 }).catch(err=>{
-                reject(DAOError("unable to delete course",503,err));
+                reject(DAOError("unable to find course",503,err));
+            })
+        })
+    },
+    getCourseByTeacherId(teacherId){
+        return new Promise((resolve,reject)=>{
+            const filter={};
+            filter["teachers."+teacherId]={
+                $exists:true
+            };
+            Course.find(filter)
+                .then((allCourses)=>{
+                    allCourses=JSON.parse(JSON.stringify(allCourses));
+                    allCourses.filter(async (courseDetails,index)=>{
+                        courseDetails=await this.getCourseByCourseId(courseDetails._id).catch()
+                            .catch();
+                        return courseDetails;
+                    });
+                    resolve(allCourses)
+                }).catch(err=>{
+                reject(DAOError("unable to find course",503,err));
             })
         })
     }
