@@ -24,44 +24,44 @@ module.exports = {
     });
   },
 
-    updateCourseSection(courseSectionId,courseSectionDetails){
-        return new Promise((resolve,reject)=>{
-            CourseSectionValidator.updateCourseSection(courseSectionDetails)
-                .then((validData)=>{
-                    return CourseSection.findByIdAndUpdate(courseSectionId,validData).then(savedCourseSection=>{
-                        if(!savedCourseSection)
-                            throw new Error("No course Section found with specified course id ");
-                        return savedCourseSection;
-                    }).catch(e=>{
-                        reject({
-                            message:"unable to get course",
-                            statusCode:503,
-                            trace:e,
-                        })
-                    })
-                }).catch(err=>{
-                reject({
-                    message:"unable to get course",
-                    statusCode:503,
-                    trace:err,
-                })
+  updateCourseSection(courseSectionId, courseSectionDetails) {
+    return new Promise((resolve, reject) => {
+      CourseSectionValidator.updateCourseSection(courseSectionDetails).then(
+        (validData) => {
+          return CourseSection.findByIdAndUpdate(courseSectionId, validData)
+            .then((savedCourseSection) => {
+              if (!savedCourseSection)
+                throw new Error(
+                  "No course Section found with specified course id "
+                );
+              return savedCourseSection;
             })
-        })
-    },
+            .catch((e) => {
+              reject({
+                message: "unable to get course",
+                statusCode: 503,
+                trace: e,
+              });
+            });
+        }
+      );
+    });
+  },
 
-    getAllCourseSectionByCourseId(courseId){
-        return new Promise((resolve,reject)=>{
-            CourseSection.find({"course_id":courseId})
-                .then(coursesSection=>{
-                    return resolve(coursesSection);
-                }).catch(e=>{
-                reject({
-                    message:"unable to get course",
-                    statusCode:503,
-                    trace:e,
-                })
-            })
+  getAllCourseSectionByCourseId(courseId) {
+    return new Promise((resolve, reject) => {
+      CourseSection.find({ course_id: courseId })
+        .then((coursesSection) => {
+          return resolve(coursesSection);
         })
+        .catch((e) => {
+          reject({
+            message: "unable to get course",
+            statusCode: 503,
+            trace: e,
+          });
+        });
+    });
   },
 
   getCourseSectionDetails(courseSectionId) {

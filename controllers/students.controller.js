@@ -22,7 +22,7 @@ module.exports = {
     try {
       const studentUpdatedCourse =
         await StudentsServices.updateStudentCourseDetailsByStudentId(
-          req.params.id,
+          req.params.studentId,
           req.body
         );
       return res.status(202).send(studentUpdatedCourse);

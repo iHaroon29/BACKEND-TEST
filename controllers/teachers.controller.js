@@ -6,7 +6,7 @@ module.exports = {
       const teacher = await TeachersServices.addNewTeacher(req.body);
       return res.status(202).send(teacher);
     } catch (e) {
-      res.status(400).send(e);
+      res.status(e.statusCode ||400).send(e);
     }
   },
   async getAllTeachersAndPersonalDetails(req, res) {
@@ -15,7 +15,7 @@ module.exports = {
         await TeachersServices.getAllTeachersAndPersonalDetails();
       return res.status(200).send(allTeachers);
     } catch (e) {
-      return res.status(400).send(e);
+      return res.status(e.statusCode ||400).send(e);
     }
   },
   async deleteTeacherById(req, res) {
@@ -25,7 +25,7 @@ module.exports = {
       );
       return res.status(202).send(deletedTeacher);
     } catch (e) {
-      res.status(400).send(e);
+      res.status(e.statusCode ||400).send(e);
     }
   },
   async getTeacherPersonalDetailById(req, res) {
@@ -34,7 +34,7 @@ module.exports = {
         await TeachersServices.getTeacherPersonalDetailById(req.params.id);
       return res.status(202).send(teacherDetails);
     } catch (e) {
-      res.status(400).send(e);
+      res.status(e.statusCode ||400).send(e);
     }
   },
   async updateTeacherPersonalDetailsById(req, res) {
@@ -46,7 +46,7 @@ module.exports = {
         );
       return res.status(202).send(updatedTeacher);
     } catch (e) {
-      return res.status(400).send(e);
+      return res.status(e.statusCode ||400).send(e);
     }
   },
 };

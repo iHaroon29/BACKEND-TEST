@@ -1,8 +1,14 @@
-const jwt = require("jsonwebtoken");
-const TOKEN_EXPIRATION_IN_SECONDS = 20 * 60;
-const ALGORITHM = "HS256";
+const TokenHandler = require("./tokenHandler");
 const env = require("dotenv");
 env.config();
+
+const TokenErrorMessages={
+	TOKEN_EXPIRED:"Token expired",
+	INVALID_TOKEN_PROVIDED:"Provide a valid token",
+	NOT_REQUIRED_ROLE:"not required role",
+	TOKEN_VERIFICATION_MODULE_ERROR:"unable to verify tokens"
+};
+// module.exports.TokenErrorMessages=TokenErrorMessages;
 
 const ROLES = {
 	EMPLOYEE: "DIGITAL_AIDED_SCHOOL_HRMS_TEAM_MEMBER",
@@ -11,92 +17,68 @@ const ROLES = {
 	NEW_HR_APPLICANT: "DIGITAL_AIDED_SCHOOL_HRMS_NEW_HR_APPLICANT",
 	TEACHER: "DIGITAL_AIDED_SCHOOL_LMS_TEACHER",
 	STUDENT: "DIGITAL_AIDED_SCHOOL_LMS_STUDENT",
+	ADMIN:"ADMIN"
 };
 // module.exports.ROLES=ROLES;
-const SECRET = process.env.TOKEN_SECRET || "SECRET";
 
-const generateToken = (data, role) => {
-	return new Promise((resolve, reject) => {
+const generateToken = async (data, role) => {
+
+	try{
 		if (!data || !role) {
-			reject("data and role both are required");
+			throw new Error("data and role both are required");
 		}
 		if (!ROLES[role]) {
-			reject("Not valid role");
+			throw new Error("Not valid role");
 		}
 		if (!data.id) {
-			reject("id field is required");
+			throw new Error("id field is required");
 		}
-		jwt.sign(
-			{
-				data: {
-					token_details: data,
-					role: role,
-				},
-			},
-			SECRET,
-			{
-				expiresIn: TOKEN_EXPIRATION_IN_SECONDS,
-				algorithm: ALGORITHM,
-			},
-			(err, encode) => {
-				if (encode)
-					resolve({
-						token: encode,
-						role: role,
-					});
-				else reject(err);
-			}
-		);
-	});
+		return await TokenHandler.encodeWithRole(data,role);
+
+	}catch (e) {
+		throw e;
+	}
 };
 
 module.exports.generateToken = generateToken;
 
 const verifyToken = (token, requiredRole) => {
-	return new Promise((resolve, reject) => {
-		if (!token)
-			reject({
-				message: "Provide a valid token.",
-			});
-		jwt.verify(token, SECRET, {}, (err, decoded) => {
-			if (decoded) {
-				if (decoded.role === requiredRole) resolve(decoded);
-				reject({
-					message: "not required role",
-				});
-			} else {
-				if (err.name === "TokenExpiredError") {
-					reject({
-						message: "Token expired",
-					});
+	return new Promise((resolve,reject)=>{
+		TokenHandler.decodeToken(token)
+			.then(decoded=>{
+				if(decoded.role && decoded.role.toLowerCase()===requiredRole.toLowerCase()){
+					reject("Not required Role")
 				}
-				reject({
-					message: "unable to verify tokens",
-					stack: err,
-				});
-			}
-		});
-	});
+				resolve(decoded);
+			}).catch(err=>{
+				reject(err);
+		})
+	})
 };
 
 module.exports.getTokenDetails = (token) => {
-	return new Promise((resolve, reject) => {
-		jwt.verify(token, SECRET, {}, (err, decoded) => {
-			if (decoded) {
-				resolve(decoded);
-			} else {
-				if (err.name === "TokenExpiredError") {
-					reject({
-						message: "Token expired",
-					});
-				}
-				reject({
-					message: "unable to verify tokens",
-					stack: err,
-				});
-			}
-		});
-	});
+	return TokenHandler.decodeToken(token);
+
+
+	// new Promise((resolve, reject) => {
+	// 	TokenHandler.decodeToken(token)
+	// 		.then(decode)
+	// 	jwt.verify(token, SECRET, {}, (err, decoded) => {
+	// 		if (decoded) {
+	// 			resolve(decoded);
+	// 		} else {
+	// 			if (err.name === "TokenExpiredError") {
+	// 				reject({
+	// 					message: TokenErrorMessages.TOKEN_EXPIRED,
+	// 				});
+	// 			}
+	// 			reject({
+	// 				message: TokenErrorMessages.TOKEN_VERIFICATION_MODULE_ERROR,
+	// 				stack: err,
+	// 			});
+	// 		}
+	// 	});
+	// });
 };
 
 //===========================================================================
@@ -118,6 +100,9 @@ module.exports.tokenGenerateForTeacher = (data) => {
 };
 module.exports.tokenGenerateForStudent = (data) => {
 	return generateToken(data, "STUDENT");
+};
+module.exports.tokenGenerateForAdmin = (data) => {
+	return generateToken(data, "ADMIN");
 };
 
 //===========================================================================
@@ -144,6 +129,9 @@ module.exports.verifyTokenForTeacher = (data) => {
 
 module.exports.verifyTokenForStudent = (data) => {
 	return verifyToken(data, "STUDENT");
+};
+module.exports.verifyTokenForAdmin = (data) => {
+	return verifyToken(data, "ADMIN");
 };
 
 //===========================================================================

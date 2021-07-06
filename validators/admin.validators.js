@@ -1,3 +1,4 @@
+const Joi=require("joi");
 module.exports = {
   addNewAdmin(adminDetails) {
     const Schema = Joi.object({
@@ -10,7 +11,7 @@ module.exports = {
   updateAdminDetails(adminDetails) {
     const Schema = Joi.object({
       name: Joi.string().optional(),
-      email: Joi.string().optional(),
+      email: Joi.string().email().optional(),
       password: Joi.string().optional(),
     }).options({ stripUnknown: true });
     return Schema.validateAsync(adminDetails);

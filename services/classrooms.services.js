@@ -1,11 +1,14 @@
 const Classroom = require("../models/classrooms.model");
 const ClassroomValidator = require("../validators/classroom.validators");
 const CourseService=require("../services/course.services");
+const RejectResponseMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const ClassroomDAO=require("../dao/classroom.dao");
 
 module.exports = {
   addNewClassroom(classroomDetails) {
     return ClassroomValidator.newClassroom(classroomDetails).then(
       (validClassroomDetails) => {
+          validClassroomDetails.classroom_type="demo";
         const courses = {};
         for (let i of validClassroomDetails.courses) {
           if (!courses[i])
@@ -32,11 +35,9 @@ module.exports = {
             };
         }
         validClassroomDetails.teachers = teachers;
-        console.log(validClassroomDetails);
         return new Classroom(validClassroomDetails)
           .save()
           .then((savedDetails) => {
-            console.log(savedDetails);
             return savedDetails;
           });
       }
@@ -120,5 +121,38 @@ module.exports = {
                   })
           })
       })
-    }
+    },
+    makeClassroomLiveUsingClassroomId(classroomId){
+      return new Promise((resolve,reject)=>{
+          Classroom.findByIdAndUpdate(classroomId,{classroom_type:"live"},{new:true})
+              .then(updatedClassroom=>{
+                  if(!updatedClassroom){
+                      reject(RejectResponseMessage("no classroom found",400))
+                  }
+                  resolve(updatedClassroom)
+              }).catch(err=>{
+              reject(RejectResponseMessage("unable to update classroom",503,err))
+          })
+      })
+    },
+    getAllDemoClassroom(){
+        return new Promise((resolve,reject)=>{
+            Classroom.find({"classroom_type":"demo"})
+                .then(allDemoClassrooms=>{
+                    resolve(allDemoClassrooms)
+                }).catch(err=>{
+                reject(RejectResponseMessage("unable to update classroom",503,err))
+            })
+        })
+    },
+    getClassroomByStudentId(studentId){
+        return new Promise((resolve,reject)=>{
+            ClassroomDAO.getClassroomByStudentId(studentId)
+                .then(allClassrooms=>{
+                    resolve(allClassrooms)
+                }).catch(err=>{
+                reject(RejectResponseMessage("unable to find classroom",503,err))
+            })
+        })
+    },
 };
