@@ -4,7 +4,7 @@ const CourseSectionDao=require("./course.section.dao");
 module.exports={
     createNewCourse(courseDetails){
         return new Promise((resolve,reject)=>{
-            new Course(courseDetails)
+            new Course(courseDetails).save()
                 .then((savedCourse)=>{
                     resolve(savedCourse)
                 }).catch(err=>{
@@ -25,8 +25,11 @@ module.exports={
     deleteCourseByCourseId(courseId){
         return new Promise((resolve,reject)=>{
             Course.findByIdAndDelete(courseId)
-                .then((updatedCourse)=>{
-                    resolve(updatedCourse)
+                .then((deletedCourse)=>{
+                    if(!deletedCourse){
+                        reject(DAOError("no course found",400))
+                    }
+                    resolve(deletedCourse)
                 }).catch(err=>{
                 reject(DAOError("unable to delete course",503,err));
             })
@@ -41,6 +44,9 @@ module.exports={
                     }
                     courseDetails=JSON.parse(JSON.stringify(courseDetails));
                     CourseSectionDao.getCourseSectionByCourseId(courseId).then((courseSections)=>{
+                        if(!courseSections){
+                            reject(DAOError("no course found",400))
+                        }
                         courseDetails.course_sections=courseSections;
                         resolve(courseDetails)
 
