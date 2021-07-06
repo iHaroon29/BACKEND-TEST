@@ -1,5 +1,6 @@
 const Student=require("../models/students.model");
 const DaoError=require("../errors/dao.errors").getDAOErrorMessage;
+const ClassroomDAO=require("../dao/classroom.dao");
 
 module.exports={
     getStudentByEmail(email){
@@ -14,9 +15,19 @@ module.exports={
                     }
                     resolve(studentDetails);
                 }).catch((err)=>{
-                    reject(DaoError("unable to find student",503,err));
+                reject(DaoError("unable to find student",503,err));
             })
         })
-    }
+    },
+    async getStudentFullDetails(studentId){
+        try{
+            let studentDetails=await Student.findById(studentId);
+            studentDetails=JSON.parse(JSON.stringify(studentDetails));
+            studentDetails.classrooms=await ClassroomDAO.getClassroomByStudentId(studentId);
+
+        }catch (e) {
+
+        }
+    },
 
 };
