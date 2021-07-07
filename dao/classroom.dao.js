@@ -22,5 +22,19 @@ module.exports={
                     reject(DaoError(err.message|| "unable to find classrooms",503,err));
             })
         })
+    },
+
+    getClassroomDetailsByClassromId(classroomId){
+        return new Promise((resolve, reject) =>{
+            Classroom.findById(classroomId).then((classroomDetails)=>{
+                if(!classroomDetails){
+                    reject(DaoError(err.message|| "no classroom found",400));
+                }
+                resolve(classroomDetails)
+
+            }).catch((error)=>{
+                reject(DaoError(err.message|| "no classroom found",503,err));
+            })
+        })
     }
 };
