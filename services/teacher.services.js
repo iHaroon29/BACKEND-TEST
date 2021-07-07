@@ -3,6 +3,7 @@ const teacherValidator = require("../validators/Teacher.validators");
 const CourseService = require("./course.services");
 const ClassroomCourseService = require("./classroom.course.services");
 const bcrypt = require("../modules/bcrypt");
+const xlsx = require("../modules/excel.converter");
 const RejectResponseMessage =
   require("../errors/serviceErrorMessage").getRejectResponse;
 
@@ -53,7 +54,22 @@ module.exports = {
       });
     });
   },
-  addNewTeacherUsingExcelSheet() {},
+  async addNewTeacherUsingExcelSheet(file) {
+    const teachers = xlsx.excelToJson(file.path);
+    for (let i = 0; i < teachers.length; i++) {
+      const validTeacher = await teacherValidator.newTeacher(teachers[i]);
+
+      let teacher = await Teacher.findOne({ email: validTeacher.email });
+      if (teacher) {
+        continue;
+      }
+      teacher = new Teacher(validTeacher);
+
+      await teacher.save();
+    }
+    return "Teachers saved successfully";
+  },
+
   getAllTeachersAndPersonalDetails() {
     return new Promise((resolve, reject) => {
       Teacher.find()
@@ -73,6 +89,7 @@ module.exports = {
         });
     });
   },
+
   updateTeacherPersonalDetailsById(teacherId, updateDetails) {
     return new Promise((resolve, reject) => {
       teacherValidator

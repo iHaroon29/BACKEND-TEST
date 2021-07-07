@@ -20,8 +20,21 @@ module.exports = {
       }
     );
   },
-  addNewStudentsUsingExcelSheet(file) {
-    return xlsx.excelToJson(file.path);
+  async addNewStudentsUsingExcelSheet(file) {
+    const students = xlsx.excelToJson(file.path);
+
+    for (let i = 0; i < students.length; i++) {
+      const validStudent = await StudentValidator.newStudent(students[i]);
+
+      let student = await Student.findOne({ email: validStudent.email });
+      if (student) {
+        continue;
+      }
+      student = new Student(validStudent);
+
+      await student.save();
+    }
+    return "students saved successfully";
   },
   async getAllStudentsAndTheirCourseDetails() {
     let student = await Student.find();
