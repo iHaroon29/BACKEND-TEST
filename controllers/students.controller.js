@@ -63,4 +63,16 @@ module.exports = {
       res.status(400).send(e);
     }
   },
+
+  async addNewStudentsUsingExcelSheet(req, res) {
+    // console.log(req.file);
+    try {
+      const addedStudent = await StudentsServices.addNewStudentsUsingExcelSheet(
+        req.file
+      );
+      return res.status(202).send(addedStudent);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  },
 };
