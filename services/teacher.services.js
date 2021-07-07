@@ -74,15 +74,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       Teacher.find()
         .then(async (teachers) => {
-          const teacherFullDetails = [];
-          for (let teacher of teachers) {
-            teacherFullDetails.push(
-              await this.getTeacherPersonalDetailById(teacher._id)
-                .then((teacherDetails) => teacherDetails)
-                .catch()
-            );
-          }
-          resolve(teacherFullDetails);
+          resolve(teachers);
         })
         .catch((err) => {
           reject(RejectResponseMessage("Unable to find Teacher", 503, err));
