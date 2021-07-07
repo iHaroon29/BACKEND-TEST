@@ -1,50 +1,41 @@
 const TrainingDAO=require("../dao/training.dao");
 const TrainingValidators=require("../validators/training.validators");
 const ServiceError=require("../errors/serviceErrorMessage").getRejectResponse;
-module.exports={
-    addNewTraining(trainingDetails){
-        return new Promise((resolve,reject)=>{
-            TrainingValidators.newTraining(trainingDetails)
-                .then(validData=>{
-                    TrainingDAO.createNewTraining(validData)
-                        .then(savedData=>{
-                            resolve(savedData);
-                        })
-                        .catch(err=>{
-                            reject(ServiceError("unable to create training",503,err))
+const ActivityLogger=require("../loggers/activity.logger");
 
-                        })
-                }).catch(err=>{
-                reject(ServiceError("invalid data",400,err))
-            })
-        })
+module.exports={
+    async addNewTraining(trainingDetails,userDetails){
+        try{
+            const validData=await TrainingValidators.newTraining(trainingDetails);
+            const trainingDetails=await TrainingDAO.createNewTraining(validData);
+            await ActivityLogger.logActivityCreatedNew(trainingDetails,"training",userDetails||{})
+                .catch();
+            return trainingDetails;
+        }catch (e) {
+            return ServiceError(e.message||"unable to create training",503,err);
+        }
     },
-    updateTrainingUsingTrainingID(trainingId,trainingDetails){
-        return new Promise((resolve,reject)=>{
-            TrainingValidators.updateTraining(trainingDetails)
-                .then(validData=>{
-                    TrainingDAO.updateTrainingDetailsByTrainingId(trainingId,validData)
-                        .then(savedData=>{
-                            resolve(savedData);
-                        })
-                        .catch(err=>{
-                            reject(ServiceError("unable to update training",503,err))
-                        })
-                }).catch(err=>{
-                reject(ServiceError("invalid data",400,err))
-            })
-        })
+    async updateTrainingUsingTrainingID(trainingId,trainingDetails,userDetails){
+        try{
+            const validData=await TrainingValidators.updateTraining(trainingDetails);
+            const oldData=await TrainingDAO.getTrainingDetailsByTrainingId(trainingId);
+            const newTrainingData=await TrainingDAO.createNewTraining(validData);
+            await ActivityLogger.logActivityUpdated(oldData,newTrainingData,"training",userDetails||{})
+                .catch();
+            return trainingDetails;
+        }catch (e) {
+            return ServiceError(e.message||"unable to create training",503,err);
+        }
     },
-    deleteTrainingUsingTrainingID(trainingId){
-        return new Promise((resolve,reject)=>{
-            TrainingDAO.deleteTrainingDetailsByTrainingId(trainingId)
-                .then(savedData=>{
-                    resolve(savedData);
-                })
-                .catch(err=>{
-                    reject(ServiceError("unable to delete training",503,err))
-                })
-        })
+    async deleteTrainingUsingTrainingID(trainingId,userDetails){
+        try{
+            const oldData=await TrainingDAO.deleteTrainingDetailsByTrainingId(trainingId);
+            await ActivityLogger.logActivityDeleted(oldData,"training",userDetails||{})
+                .catch();
+            return oldData;
+        }catch (e) {
+            return ServiceError(e.message||"unable to create training",503,err);
+        }
     },
     getTrainingUsingTrainingID(trainingId){
         return new Promise((resolve,reject)=>{
