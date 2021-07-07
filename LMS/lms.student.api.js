@@ -9,6 +9,7 @@ const AttendanceRoutes = require("../routes/attendance.api");
 const AuthChecker=require("../middlewares/authTokenVerifyForTeacher");
 const QuizRoutes=require("../routes/quiz.api");
 const QuizQuestionRoutes=require("../routes/quiz.question.api");
+const NotesRoutes=
 
 // ============ Quiz Routes ================
 route.use(QuizRoutes);
@@ -30,6 +31,12 @@ route.use(CourseSectionRoutes);
 route.use(ClassroomRoutes);
 //==================== CLASSROOM================
 
+//======================= LECTURE=====================
+route.use(LectureRoutes);
+//======================= LECTURE====================
+//======================= LECTURE=====================
+route.use(LectureRoutes);
+//======================= LECTURE====================
 //======================= LECTURE=====================
 route.use(LectureRoutes);
 //======================= LECTURE====================

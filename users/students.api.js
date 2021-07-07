@@ -1,9 +1,16 @@
 const route=require("express").Router();
-const ClassroomController=require("../controllers/classroom.controller");
-const AssignmentController=require("../controllers/assignment.controller");
+const StudentController=require("./student.controller");
 
-route.get("/classroom/all",ClassroomController.getClassroomsOfStudents);
-route.get("/assignments/classroom/all",AssignmentController.getAllAssignmentOfAClassroom);
-route.get("/assignments/course/:id/all",AssignmentController.getAssignmentOfACourse);
-
+route.use(require("../routes/students.api"));
+route.get("/classroom/all",StudentController.getAllClass);
+route.get("/assignments/classroom/all",StudentController.getAllAssignmentUsingClassroomId);
+route.get("/assignments/course/:id/all",StudentController.getAssignmentOfACourse);
+/*
+route.get("/assignments/submission/:assignmentId",StudentController.getAssignmentOfACourse);
+route.get("/classroom/notes/get/all",StudentController.getAssignmentOfACourse);
+route.get("/course/notes/get/all",StudentController.getAssignmentOfACourse);
+route.get("/course/lectures/all");
+route.get("/classroom/lectures/all");
+route.get("/classroom/attendance/all");
+ */
 module.exports=route;

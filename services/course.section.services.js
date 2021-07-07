@@ -56,7 +56,7 @@ module.exports = {
         })
         .catch((e) => {
           reject({
-            message: "unable to get course",
+            message: "unable to find course sections",
             statusCode: 503,
             trace: e,
           });

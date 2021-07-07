@@ -17,6 +17,7 @@ const MeetLinkRoute = require("../routes/meetLinks.api");
 const AdminAuthTokenVerfication=require("../middlewares/authTokenVerifyForAdmin");
 const TrainerRoutes=require("../routes/trainers.api");
 const AuthenticationRoutes=require("../routes/authentication.api");
+const TrainingRoutes=require("../routes/training.api");
 // route.use(AdminAuthTokenVerfication);
 
 // ============Testing Routes================
@@ -26,6 +27,11 @@ route.use(require("../routes/test.api"));
 // ============Quiz Question Routes================
 route.use(QuizQuestionRoutes);
 // ============Quiz Question Routes================
+
+
+// ============Training Routes================
+route.use(TrainingRoutes);
+// ============Training Routes================
 
 
 // ============Trainer Routes================
