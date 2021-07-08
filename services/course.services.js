@@ -17,6 +17,12 @@ module.exports = {
   async addNewCourse(courseDetails,userDetails) {
     try{
       const validData=await courseValidator.newCourse(courseDetails);
+      let teachers=validData.teachers;
+      validData.teachers={};
+      for(let teacherId of teachers){
+        validData.teachers[teacherId]={createdAt:Date.now()}
+      }
+      console.log(validData);
       const createdCourse=await CourseDao.createNewCourse(validData);
       await ActivityLogger.logActivityCreatedNew(createdCourse,"course",userDetails||{});
       return createdCourse;

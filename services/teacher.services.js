@@ -5,52 +5,55 @@ const ClassroomCourseService = require("./classroom.course.services");
 const bcrypt = require("../modules/bcrypt");
 const xlsx = require("../modules/excel.converter");
 const RejectResponseMessage =
-  require("../errors/serviceErrorMessage").getRejectResponse;
+    require("../errors/serviceErrorMessage").getRejectResponse;
+const MailService=require("../modules/emailSender");
+const TokenHandler=require("../modules/tokenHandler");
+const OtpDao=require("../dao/otp.dao");
 
 module.exports = {
   addNewTeacher(teacherDetails) {
     return new Promise((resolve, reject) => {
       teacherValidator.newTeacher(teacherDetails).then(async (validData) => {
         this.findTeacherByEmail(validData.email)
-          .then(() => {
-            reject(
-              RejectResponseMessage(
-                "Email: " + validData.email + " already present",
-                406
-              )
-            );
-          })
-          .catch((err) => {
-            if (err.message !== "No teacher found with this email id") {
+            .then(() => {
               reject(
-                RejectResponseMessage("unable to create new teacher", 503, err)
+                  RejectResponseMessage(
+                      "Email: " + validData.email + " already present",
+                      406
+                  )
               );
-            }
-            bcrypt
-              .genHash(validData.password)
-              .then((hashedPassword) => {
-                validData.password = hashedPassword;
-                new Teacher(validData)
-                  .save()
-                  .then((savedTeacherDetails) => {
-                    resolve(savedTeacherDetails);
+            })
+            .catch((err) => {
+              if (err.message !== "No teacher found with this email id") {
+                reject(
+                    RejectResponseMessage("unable to create new teacher", 503, err)
+                );
+              }
+              bcrypt
+                  .genHash(validData.password)
+                  .then((hashedPassword) => {
+                    validData.password = hashedPassword;
+                    new Teacher(validData)
+                        .save()
+                        .then((savedTeacherDetails) => {
+                          resolve(savedTeacherDetails);
+                        })
+                        .catch((err) => {
+                          reject(
+                              RejectResponseMessage(
+                                  "unable to create new teacher",
+                                  503,
+                                  err
+                              )
+                          );
+                        });
                   })
                   .catch((err) => {
                     reject(
-                      RejectResponseMessage(
-                        "unable to create new teacher",
-                        503,
-                        err
-                      )
+                        RejectResponseMessage("unable to hash password", 503, err)
                     );
                   });
-              })
-              .catch((err) => {
-                reject(
-                  RejectResponseMessage("unable to hash password", 503, err)
-                );
-              });
-          });
+            });
       });
     });
   },
@@ -73,46 +76,38 @@ module.exports = {
   getAllTeachersAndPersonalDetails() {
     return new Promise((resolve, reject) => {
       Teacher.find()
-        .then(async (teachers) => {
-          const teacherFullDetails = [];
-          for (let teacher of teachers) {
-            teacherFullDetails.push(
-              await this.getTeacherPersonalDetailById(teacher._id)
-                .then((teacherDetails) => teacherDetails)
-                .catch()
-            );
-          }
-          resolve(teacherFullDetails);
-        })
-        .catch((err) => {
-          reject(RejectResponseMessage("Unable to find Teacher", 503, err));
-        });
+          .then(async (teachers) => {
+            resolve(teachers);
+          })
+          .catch((err) => {
+            reject(RejectResponseMessage("Unable to find Teacher", 503, err));
+          });
     });
   },
 
   updateTeacherPersonalDetailsById(teacherId, updateDetails) {
     return new Promise((resolve, reject) => {
       teacherValidator
-        .updateTeacherDetails(updateDetails)
-        .then((validDetails) => {
-          return Teacher.findByIdAndUpdate(teacherId, validDetails, {
-            new: true,
+          .updateTeacherDetails(updateDetails)
+          .then((validDetails) => {
+            return Teacher.findByIdAndUpdate(teacherId, validDetails, {
+              new: true,
+            })
+                .then((updatedDetails) => resolve(updatedDetails))
+                .catch((err) => {
+                  console.log(err);
+                  reject(
+                      RejectResponseMessage(
+                          "unable to update teacher details",
+                          503,
+                          err
+                      )
+                  );
+                });
           })
-            .then((updatedDetails) => resolve(updatedDetails))
-            .catch((err) => {
-              console.log(err);
-              reject(
-                RejectResponseMessage(
-                  "unable to update teacher details",
-                  503,
-                  err
-                )
-              );
-            });
-        })
-        .catch((invalidDetails) => {
-          reject(RejectResponseMessage("invalid details", 400, invalidDetails));
-        });
+          .catch((invalidDetails) => {
+            reject(RejectResponseMessage("invalid details", 400, invalidDetails));
+          });
     });
   },
 
@@ -125,79 +120,116 @@ module.exports = {
   getTeacherPersonalDetailById(teacherId) {
     return new Promise((resolve, reject) => {
       Teacher.findOne({ _id: teacherId })
-        .then((teacherDetails) => {
-          teacherDetails = JSON.parse(JSON.stringify(teacherDetails));
-          teacherDetails.classrooms = [];
-          teacherDetails.courses = [];
-          CourseService.getAllCourseByTeacherId(teacherId)
-            .then((courseDetails) => {
-              teacherDetails.courses = courseDetails;
-              const alreadyAddedClassrooms = {};
-              (async () => {
-                for (let i of courseDetails) {
-                  if (!alreadyAddedClassrooms[i._id]) {
-                    teacherDetails.classrooms.push(
-                      await ClassroomCourseService.getAllClassroomByCourseId(
-                        i._id
-                      )
-                        .then((classroom) => classroom)
-                        .catch()
-                    );
-                  }
-                  alreadyAddedClassrooms[i._id] = "ADDED";
-                }
-                resolve(teacherDetails);
-              })();
-            })
-            .catch((err) => {
-              reject(RejectResponseMessage("Unable to find courses", 503, err));
+          .then((teacherDetails) => {
+            teacherDetails = JSON.parse(JSON.stringify(teacherDetails));
+            teacherDetails.classrooms = [];
+            teacherDetails.courses = [];
+            CourseService.getAllCourseByTeacherId(teacherId)
+                .then((courseDetails) => {
+                  teacherDetails.courses = courseDetails;
+                  const alreadyAddedClassrooms = {};
+                  (async () => {
+                    for (let i of courseDetails) {
+                      if (!alreadyAddedClassrooms[i._id]) {
+                        teacherDetails.classrooms.push(
+                            await ClassroomCourseService.getAllClassroomByCourseId(
+                                i._id
+                            )
+                                .then((classroom) => classroom)
+                                .catch()
+                        );
+                      }
+                      alreadyAddedClassrooms[i._id] = "ADDED";
+                    }
+                    resolve(teacherDetails);
+                  })();
+                })
+                .catch((err) => {
+                  reject(RejectResponseMessage("Unable to find courses", 503, err));
+                });
+          })
+          .catch((err) => {
+            reject(RejectResponseMessage("Unable to find Teacher", 503, err));
+          })
+          .catch((err) => {
+            reject({
+              message: "Unable to find courses",
+              statusCode: 503,
+              trace: err,
             });
-        })
-        .catch((err) => {
-          reject(RejectResponseMessage("Unable to find Teacher", 503, err));
-        })
-        .catch((err) => {
-          reject({
-            message: "Unable to find courses",
-            statusCode: 503,
-            trace: err,
           });
-        });
     });
   },
   getTeacherActivityById() {},
   getAllAvailableTeachers() {
     return new Promise((resolve, reject) => {
       return Teacher.find({ is_available: true })
-        .then((teachers) => {
-          resolve(teachers);
-          return teachers;
-        })
-        .catch((errorInFindingTeacher) => {
-          reject(
-            RejectResponseMessage(
-              "unable to find teachers",
-              503,
-              errorInFindingTeacher
-            )
-          );
-        });
+          .then((teachers) => {
+            resolve(teachers);
+            return teachers;
+          })
+          .catch((errorInFindingTeacher) => {
+            reject(
+                RejectResponseMessage(
+                    "unable to find teachers",
+                    503,
+                    errorInFindingTeacher
+                )
+            );
+          });
     });
   },
   findTeacherByEmail(emailId) {
     return new Promise((resolve, reject) => {
       Teacher.findOne({ email: emailId })
-        .then((teacher) => {
-          if (!teacher) {
-            reject(
-              RejectResponseMessage("No teacher found with this email id", 400)
-            );
-          }
-          resolve(teacher);
-        })
-        .catch((err) => {
-          reject(RejectResponseMessage("Unable to find teacher", 503, err));
-        });
+          .then((teacher) => {
+            if (!teacher) {
+              reject(
+                  RejectResponseMessage("No teacher found with this email id", 400)
+              );
+            }
+            resolve(teacher);
+          })
+          .catch((err) => {
+            reject(RejectResponseMessage("Unable to find teacher", 503, err));
+          });
     });
   },
+  async sendMailForPasswordUpdateTeacher(email){
+    try{
+      let TeacherDetails=await Teacher.findOne({email:email})
+          .then((teacherDetails)=>{
+            if(!teacherDetails){
+              throw RejectResponseMessage("no teacher found",400)
+            }
+            return teacherDetails
+          });
+      const Token=await TokenHandler.encodeWithoutRole(TeacherDetails._id,60*30);
+      const otp=await OtpDao.createNewOtp(Token.token);
+      const MailStatus=await MailService.sendMailWithOutAttachment(TeacherDetails.email,"update password link",
+          `
+            link is active for 30 minutes only
+            your otp is ${otp}
+          <a href="http://localhost:8004/lms/api/authenticated/update/password/${Token.token}">click here to update password</a>
+          `
+      );
+      return "mail sent";
+    }catch (e) {
+      throw RejectResponseMessage("unable to update password",503,e)
+    }
+  },
+  /**
+   * @return {string}
+   */
+  async PasswordUpdateOfTeacher(newPassword,token,otp){
+    try{
+      const decodedToken=await TokenHandler.decodeToken(token);
+      // console.log(decodedToken.iat);
+      await OtpDao.verifyOTP(token,otp);
+      const updatedPassword=await Teacher.findByIdAndUpdate(decodedToken.token_details,{password:newPassword},{new:true});
+      return "password updated";
+    }catch (e) {
+      return RejectResponseMessage("unable to update password",503,e)
+    }
+  }
 };

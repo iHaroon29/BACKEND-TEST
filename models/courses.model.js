@@ -10,7 +10,7 @@ const CoursesSchema=new mongoose.Schema({
         'description':{
             type:String,
         },
-        teachers:{
+        "teachers":{
             type:Object, // Teacher's id as key and details as values
             default:{},
         },

@@ -6,7 +6,7 @@ module.exports={
         return new Promise((reject,resolve)=>{
             const filter={};
             filter["enrolled_courses."+courseId]={$exists:true};
-            ClassroomService.find(filter)
+            Classroom.find(filter)
                 .then(allClassrooms=>{
                     resolve(allClassrooms);
                 }).catch(err=>{
