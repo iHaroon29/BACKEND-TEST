@@ -6,10 +6,10 @@ const LectureRoutes = require("../routes/lectures.api");
 const StudentsRoutes = require("../routes/students.api");
 const TeacherRoutes = require("../routes/teachers.api");
 const AttendanceRoutes = require("../routes/attendance.api");
-const AuthChecker=require("../middlewares/authTokenVerifyForTeacher");
-const QuizRoutes=require("../routes/quiz.api");
-const QuizQuestionRoutes=require("../routes/quiz.question.api");
-const NotesRoutes=
+const AuthChecker = require("../middlewares/authTokenVerifyForTeacher");
+const QuizRoutes = require("../routes/quiz.api");
+const QuizQuestionRoutes = require("../routes/quiz.question.api");
+const AssignmentRoutes = require("../routes/assignment.api");
 
 // ============ Quiz Routes ================
 route.use(QuizRoutes);
@@ -40,5 +40,9 @@ route.use(LectureRoutes);
 //======================= LECTURE=====================
 route.use(LectureRoutes);
 //======================= LECTURE====================
+
+//======================ASSIGNMENT=========================
+route.use(AssignmentRoutes);
+//======================ASSIGNMENT=========================
 
 module.exports = route;
