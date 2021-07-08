@@ -27,7 +27,7 @@ module.exports = {
                             createdAt: new Date(),
                         };
                 }
-                delete validClassroomDetails.students;
+                validClassroomDetails.enrolled_students=students;
                 const teachers = {};
                 for (let i of validClassroomDetails.teachers) {
                     if (!teachers[i])
