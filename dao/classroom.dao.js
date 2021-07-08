@@ -1,38 +1,22 @@
 const Classroom = require("../models/classrooms.model");
 const DaoError = require("../errors/dao.errors").getDAOErrorMessage;
-const LecturesDao = require("./lectures.dao");
-const Course = require("../models/courses.model");
+const Lectures = require("../models/lectures.model");
 
 module.exports = {
-	getClassroomByStudentId(studentId) {
+	async getClassroomByStudentId(studentId) {
 		const filter = {};
 		filter["enrolled_students." + studentId] = {
 			$exists: true,
 		};
-		return new Promise((resolve, reject) => {
-			Classroom.find(filter)
-				.then(async (allClassrooms) => {
-					allClassrooms = JSON.parse(JSON.stringify(allClassrooms));
-					for (let classroom of allClassrooms) {
-						allClassrooms[classroom._id].lectures =
-							await LecturesDao.getAllLecturesOfClassroom(
-								classroom._id
-							)
-								.then((allLectures) => allLectures)
-								.catch();
-					}
-					resolve(allClassrooms);
-				})
-				.catch((err) => {
-					reject(
-						DaoError(
-							err.message || "unable to find classrooms",
-							503,
-							err
-						)
-					);
-				});
-		});
+		try{
+			const allClassrooms=await Classroom.find(filter);
+			for(let i in allClassrooms){
+				allClassrooms[i]=await this.getClassRoomDetailsByClassroomId(allClassrooms[i]._id);
+			}
+			return allClassrooms;
+		} catch(err) {
+
+		}
 	},
 	async getClassroomByTeacherId(teacherId) {
 		try {
@@ -40,22 +24,11 @@ module.exports = {
 			filter["teachers." + teacherId] = {
 				$exists: true,
 			};
-			const coursesInTeacherIsEnrolled = await Course.find(filter).catch(
-				(err) => {
-					throw DaoError("unable to find course", 503, err);
-				}
-			);
-			if (!coursesInTeacherIsEnrolled) {
-				throw DaoError(
-					"no course found for the specified teacher",
-					400
-				);
+			allClassrooms=await Classroom.find(filter);
+			for(let i in allClassrooms){
+				allClassrooms[i]=await this.getClassRoomDetailsByClassroomId(allClassrooms[i]._id);
 			}
-			const classroomsOfTeacher = [];
-			for (let i in coursesInTeacherIsEnrolled) {
-				console.log(i);
-			}
-			return ["none"];
+			return allClassrooms;
 		} catch (e) {}
 	},
 
@@ -79,19 +52,30 @@ module.exports = {
 	},
 	async getClassRoomDetailsByClassroomId(classroomId){
 		try{
-			let classroomDetails=await Classroom.findById(classroomId)
-				.then(classrooms=>{
-					if(!classrooms){
-						throw DaoError("no classroom present",400)
-					}
-					return JSON.parse(JSON.stringify(classrooms));
-				}).catch(err=>{
-					throw DaoError("unable to find all classrooms",503,err);
-				});
-			classroomDetails.lectures=await LecturesDao.getAllLecturesOfClassroom(classroomId._id)||[];
+			let classroomDetails=JSON.parse(JSON.stringify(await Classroom.findById(classroomId)));
+			classroomDetails.lectures=await Lectures.find({classroom_id:classroomId._id});
 			return classroomDetails;
 		}catch (e) {
 			throw DaoError(e.message||"unable to get classroom details",e.statusCode||503,e)
+		}
+	},
+	async getAllClassroomDetails(){
+		try{
+			let allClassrooms=await Classroom.find();
+			allClassrooms=JSON.parse(JSON.stringify(allClassrooms));
+			for(let i in allClassrooms){
+				allClassrooms[i]=await this.getClassRoomDetailsByClassroomId(allClassrooms[i]._id);
+			}
+			return  allClassrooms;
+		}catch (e) {
+			throw DaoError("unable to find all classrooms ",503,e)
+		}
+	},
+	async createNewClassroom(classroomDetails){
+		try {
+			return await new Classroom(classroomDetails).save()
+		}catch (e) {
+			throw DaoError("unable to create classroom",503,e)
 		}
 	}
 };

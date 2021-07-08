@@ -62,7 +62,12 @@ module.exports = {
     },
     getClassroomActivitiesByClassroomId(classroomId) {},
     getAllClassroom() {
-        return Classroom.find();
+        try{
+            return ClassroomDAO.getAllClassroomDetails();
+        }catch (e) {
+            console.log(e);
+            throw e;
+        }
     },
 
     getAllCoursesInClassroom(classroomId) {

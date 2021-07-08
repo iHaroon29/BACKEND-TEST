@@ -13,6 +13,7 @@ const ClassroomSchema= new mongoose.Schema({
         },
         'status':{
             type:String,
+            default:"active",
             required:true,
             lowercase:true
         },
