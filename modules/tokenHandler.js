@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const TOKEN_EXPIRATION_IN_SECONDS = 20 * 60;
+const TOKEN_EXPIRATION_IN_SECONDS = 20 * 60*60;
 const ALGORITHM = "HS256";
 const env = require("dotenv");
 const SECRET = process.env.TOKEN_SECRET || "SECRET";

@@ -3,6 +3,7 @@ const ClassroomValidator = require("../validators/classroom.validators");
 const CourseService=require("../services/course.services");
 const RejectResponseMessage=require("../errors/serviceErrorMessage").getRejectResponse;
 const ClassroomDAO=require("../dao/classroom.dao");
+const courseDAO=require("../dao/course.dao");
 
 module.exports = {
   addNewClassroom(classroomDetails) {
@@ -155,4 +156,11 @@ module.exports = {
             })
         })
     },
+    async getClassroomsByTeacherId(teacher_id){
+      try{
+          const courses=courseDAO.getCourseByTeacherId(teacher_id);
+      }catch (e) {
+
+      }
+    }
 };

@@ -43,11 +43,14 @@ module.exports={
                         reject(DAOError("no courses found",400));
                     }
                     courseDetails=JSON.parse(JSON.stringify(courseDetails));
+                    courseDetails.course_sections=[];
+                    delete courseDetails.quiz;
                     CourseSectionDao.getCourseSectionByCourseId(courseId).then((courseSections)=>{
                         if(!courseSections){
-                            reject(DAOError("no course found",400))
+                            reject(DAOError("no course section found",400))
                         }
                         courseDetails.course_sections=courseSections;
+                        // console.log(courseDetails)
                         resolve(courseDetails)
 
                     })
@@ -56,21 +59,17 @@ module.exports={
             })
         })
     },
-    getAllCourses(){
-        return new Promise((resolve,reject)=>{
-            Course.find()
-                .then((allCourses)=>{
-                    allCourses=JSON.parse(JSON.stringify(allCourses));
-                    allCourses.filter(async (courseDetails,index)=>{
-                        courseDetails=await this.getCourseByCourseId(courseDetails._id).catch()
-                            .catch();
-                        return courseDetails;
-                    });
-                    resolve(allCourses)
-                }).catch(err=>{
-                reject(DAOError("unable to find course",503,err));
-            })
-        })
+    async getAllCourses(){
+        try{
+            let courses=await Course.find();
+            for(let x in courses){
+                courses[x]=await this.getCourseByCourseId(courses[x]._id).catch()
+            }
+            return courses;
+        }catch (e) {
+            console.log(e)
+        }
+
     },
     getCourseByTeacherId(teacherId){
         return new Promise((resolve,reject)=>{
