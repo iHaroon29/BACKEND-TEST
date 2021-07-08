@@ -14,11 +14,12 @@ const QuizQuestionRoutes = require("../routes/quiz.question.api");
 const ClassroomCourseRoutes = require("../routes/classroom.course.api");
 const StudentCourseRoutes = require("../routes/student.courses.api");
 const MeetLinkRoute = require("../routes/meetLinks.api");
-const AdminAuthTokenVerfication=require("../middlewares/authTokenVerifyForAdmin");
+const AdminAuthTokenVerification=require("../middlewares/authTokenVerifyForAdmin");
 const TrainerRoutes=require("../routes/trainers.api");
 const AuthenticationRoutes=require("../routes/authentication.api");
 const TrainingRoutes=require("../routes/training.api");
-// route.use(AdminAuthTokenVerfication);
+const TeacherCourseRoutes=require("../routes/teacher.coures.api");
+// route.use(AdminAuthTokenVerification);
 
 // ============Testing Routes================
 route.use(require("../routes/test.api"));
@@ -110,5 +111,12 @@ route.get("/dashboard", DashboardController.getDashboardData);
 //======================ATTENDANCE=========================
 route.use(AttendanceRoutes);
 //======================ATTENDANCE=========================
+
+
+
+
+//======================Teacher Course Routes=========================
+route.use(TeacherCourseRoutes);
+//======================Teacher Course Routes=========================
 
 module.exports = route;
