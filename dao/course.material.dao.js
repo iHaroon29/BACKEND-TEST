@@ -26,14 +26,14 @@ module.exports = {
           });
     },
 
-    updateCourseMaterialBySection(sectionId, newCourseMaterialDetails){
+    updateCourseMaterialByCourseMaterialId(courseMaterialId, newCourseMaterialDetails){
         return new Promise((resolve, reject) => {
-            CourseMaterial.findByIdAndUpdate(sectionId, newCourseMaterialDetails, {
+            CourseMaterial.findByIdAndUpdate(courseMaterialId, newCourseMaterialDetails, {
               new: true,
             })
               .then((updatedDetails) => {
-                if (!sectionId) { 
-                  reject(DAOError("unable to find course material", 400));
+                if (!courseMaterialId) { 
+                  reject(DAOError("no course material found", 400));
                 }
                 resolve(updatedDetails);
               })
@@ -55,4 +55,15 @@ module.exports = {
               });
           });
     },
-}
+    getCourseMaterialById(courseMaterialId){
+        return new Promise((resolve, reject) => {
+            CourseMaterial.findById(courseMaterialId)
+              .then((allCourseMaterial) => {
+                resolve(allCourseMaterial);
+              })
+              .catch((error) => {
+                reject(DAOError("unable to get course material", 503, error));
+              });
+          });
+    },
+};

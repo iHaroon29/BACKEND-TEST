@@ -19,6 +19,7 @@ const TrainerRoutes=require("../routes/trainers.api");
 const AuthenticationRoutes=require("../routes/authentication.api");
 const TrainingRoutes=require("../routes/training.api");
 const TeacherCourseRoutes=require("../routes/teacher.coures.api");
+const CourseMaterialRoutes=require("../routes/course.material.api");
 // route.use(AdminAuthTokenVerification);
 
 // ============Testing Routes================
@@ -28,6 +29,11 @@ route.use(require("../routes/test.api"));
 // ============Quiz Question Routes================
 route.use(QuizQuestionRoutes);
 // ============Quiz Question Routes================
+
+
+// ============Course Material Routes================
+route.use(CourseMaterialRoutes);
+// ============Course Material Routes================
 
 
 // ============Training Routes================
