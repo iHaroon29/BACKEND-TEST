@@ -1,5 +1,7 @@
 const Lecture=require("../models/lectures.model");
 const DAOError=require("../errors/dao.errors").getDAOErrorMessage;
+const Classroom = require("./classroom.dao")
+
 module.exports={
     getAllLecturesOfClassroom(classroomId){
         return new Promise((resolve,reject)=>{
@@ -14,5 +16,24 @@ module.exports={
                     reject(DAOError("unable to get lectures",503,err));
             })
         })
-    }
+    },
+
+    getLectureDetailsById(){
+
+    },
+
+    getAllLectures(){
+
+    },
+
+    updateLectureById(){
+
+    },
+    deleteLectureById(){
+
+    },
+    addNewLectureInClassroom(){
+
+    },
+
 };
