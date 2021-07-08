@@ -1,6 +1,9 @@
 const AuthToken=require("../modules/authTokens");
 const Teacher=require("../models/teachers.model");
 module.exports=(req,res,next)=>{
+    if(req.path.startsWith("/teacher/update/password/")|| req.path==="/teacher/forgot/password"){
+        return next();
+    }
     const token=req.headers.authorization;
     if(!token){
         return res.sendStatus(401);
