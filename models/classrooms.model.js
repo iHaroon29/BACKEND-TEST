@@ -32,6 +32,11 @@ const ClassroomSchema= new mongoose.Schema({
             default:{},
             required:true
         },
+        'teachers':{
+            type:Object, // course id of registered courses as key and course details as values
+            default:{},
+            required:true
+        },
         'demo_class':{
             type:Object,
             default:{},

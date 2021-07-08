@@ -77,4 +77,21 @@ module.exports = {
 				});
 		});
 	},
+	async getClassRoomDetailsByClassroomId(classroomId){
+		try{
+			let classroomDetails=await Classroom.findById(classroomId)
+				.then(classrooms=>{
+					if(!classrooms){
+						throw DaoError("no classroom present",400)
+					}
+					return JSON.parse(JSON.stringify(classrooms));
+				}).catch(err=>{
+					throw DaoError("unable to find all classrooms",503,err);
+				});
+			classroomDetails.lectures=await LecturesDao.getAllLecturesOfClassroom(classroomId._id)||[];
+			return classroomDetails;
+		}catch (e) {
+			throw DaoError(e.message||"unable to get classroom details",e.statusCode||503,e)
+		}
+	}
 };

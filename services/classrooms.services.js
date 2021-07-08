@@ -105,14 +105,8 @@ module.exports = {
     },
     getClassroomDetailsByClassroomId(classroomId){
         return new Promise((resolve,reject)=>{
-            Classroom.findById(classroomId)
+            ClassroomDAO.getClassRoomDetailsByClassroomId(classroomId)
                 .then(classroomDetails=>{
-                    classroomDetails=JSON.parse(JSON.stringify(classroomDetails));
-                    (async ()=>{
-                        for(let courseId of classroomDetails.enrolled_courses){
-                            classroomDetails.enrolled_courses_details=await CourseService.getCourseByCourseId(courseId);
-                        }
-                    })();
                     resolve(classroomDetails);
                 }).catch(err=>{
                 reject({
