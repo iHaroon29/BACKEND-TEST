@@ -53,6 +53,9 @@ module.exports = {
 	async getClassRoomDetailsByClassroomId(classroomId){
 		try{
 			let classroomDetails=JSON.parse(JSON.stringify(await Classroom.findById(classroomId)));
+			if(!classroomDetails){
+				return [];
+			}
 			classroomDetails.lectures=await Lectures.find({classroom_id:classroomId});
 			return classroomDetails;
 		}catch (e) {
