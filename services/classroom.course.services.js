@@ -1,117 +1,62 @@
-const ClassroomService=require("./classrooms.services");
-const Classroom=require("../models/classrooms.model");
-const Course=require("../models/courses.model");
+const ClassroomDao=require("../dao/classroom.dao");
+const CourseDao=require("../dao/course.dao");
+const ActivityLogger=require("../loggers/activity.logger");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const LOG_FOR_CLASSROOM=require("../config/LOGGERS_FOR").classroom;
 module.exports={
-    getAllClassroomByCourseId(courseId){
-        return new Promise((reject,resolve)=>{
-            const filter={};
-            filter["enrolled_courses."+courseId]={$exists:true};
-            Classroom.find(filter)
-                .then(allClassrooms=>{
-                    resolve(allClassrooms);
-                }).catch(err=>{
-                   reject({
-                        message:"Unable to find Classrooms",
-                        statusCode:503,
-                        trace:err
-                    })
-            })
-        })
+    async getAllClassroomByCourseId(courseId){
+        try {
+            return await ClassroomDao.getAllClassroomsByCourseId(courseId);
+        }catch (e) {
+            throw ServiceErrorMessage("unable to get classrooms",503,e)
+        }
     },
-    addCourseInClassroom(classroomId, courseId,teacherId) {
-        return new Promise((resolve,reject)=>{
-            Classroom.findById(classroomId).then((classroom) => {
-                classroom=JSON.parse(JSON.stringify(classroom));
-                if (classroom.enrolled_courses[courseId]) {
-                    throw new Error("Already enrolled in course");
-                }
-                Course.findById(courseId)
-                    .then(course=>{
-                        if(!course.teachers[teacherId]){
-                            reject({
-                                message:"teacher is not registered for the specified course",
-                                statusCode:304,
-                                trace:"no trace found"
-                            })
-                        }
-                        classroom.enrolled_courses[courseId] = {
-                            createdAt: new Date()
-                        };
-                        classroom.enrolled_courses[courseId].teachers=teacherId;
-                        Classroom.findByIdAndUpdate(
-                            classroomId,
-                            {enrolled_courses: classroom.enrolled_courses},
-                            {new: true}
-                        )
-                            .then(newClassroomDetails=>resolve(newClassroomDetails))
-                            .catch(err=>{
-                                reject({
-                                    message:"Unable to update classroom",
-                                    statusCode:503,
-                                    trace:err
-                                }
-                            )})
-                    }).catch(err=>{
-                    reject({
-                            message:"Unable to find course",
-                            statusCode:503,
-                            trace:err
-                        }
-                    )})
-            }).catch(err=>{
-                reject({
-                        message:"Unable to find classroom",
-                        statusCode:503,
-                        trace:err
-                    }
-                )})
-        });
+    async addCourseInClassroom(classroomId, courseId, teacherId,userDetails={}) {
+        try{
+            const courseWithTeacherId=await CourseDao.getCourseByTeacherId(teacherId);
+            if(courseWithTeacherId.teachers[teacherId]){
+                throw ServiceErrorMessage("teacher is not enrolled in this course",400);
+            }
+            const oldClassroomDetails=await ClassroomDao.getClassroomDetailsById(classroomId);
+            if(oldClassroomDetails.enrolled_courses[courseId]){
+                throw ServiceErrorMessage("course already enrolled",400);
+            }
+            let updateClassroomDetails=oldClassroomDetails;
+            updateClassroomDetails.enrolled_courses[courseId]={createdAt:Date.now()};
+            if(!updateClassroomDetails.teachers){
+                updateClassroomDetails.teachers={};
+            }
+            if(!updateClassroomDetails.teachers[teacherId])
+                updateClassroomDetails.teachers[teacherId]={createdAt:Date.now()};
+            const newClassroomDetails=await ClassroomDao.updateClassroomDetailsById(classroomId,
+                updateClassroomDetails
+            );
+            await ActivityLogger.logActivityUpdated(oldClassroomDetails,newClassroomDetails,LOG_FOR_CLASSROOM,userDetails);
+            return newClassroomDetails;
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to add course",400);
+        }
     },
-    removeCourseFromClassroom(classroomId,courseId){
-        return new Promise((resolve,reject)=>{
-            Classroom.findById(classroomId).then(classroom=>{
-                if(!classroom){
-                    reject({
-                        message:"no classroom found ",
-                        statusCode:304,
-                        trace:"no trace found"
-                    })
-                }
-                classroom=JSON.parse(JSON.stringify(classroom));
-                delete classroom.enrolled_courses[courseId];
-                Classroom.findByIdAndUpdate(classroomId,classroom,{new:true})
-                    .then((updatedClassroom)=>resolve(updatedClassroom)).catch(err=>{
-                    reject({
-                        message:"unable to remove course from classroom ",
-                        statusCode:503,
-                        trace:err
-                    })
-                })
-
-            }).catch((err)=>{
-                reject({
-                    message:"unable to find classroom ",
-                    statusCode:503,
-                    trace:err
-                })
-            })
-        })
+    async removeCourseFromClassroom(classroomId,courseId,userDetails={}){
+        try{
+            const oldClassroomDetails=await ClassroomDao.getClassroomDetailsById(classroomId);
+            if(!oldClassroomDetails.enrolled_courses[courseId]){
+                throw ServiceErrorMessage("course not enrolled",400);
+            }
+            let newCourseDetails=oldClassroomDetails;
+            delete newCourseDetails[courseId];
+            const newClassroomDetails=await ClassroomDao.updateClassroomDetailsById(classroomId,newCourseDetails);
+            await ActivityLogger.logActivityUpdated(oldClassroomDetails,newClassroomDetails,LOG_FOR_CLASSROOM,userDetails);
+            return newClassroomDetails;
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to remove course",400);
+        }
     },
-    getAllClassroomByStudentId(studentID){
-        const filter= {};
-        filter["enrolled_students." + studentID] = {$exists:true}
-        return new Promise((resolve, reject)=>{
-            Classroom.find().then((allClassrooms)=>{
-                resolve(allClassrooms)
-
-            }).catch((error)=>{
-                reject({
-                    message:"unable to find all classroom ",
-                    statusCode:503,
-                    trace:error
-                })
-            })
-        })
+    async getAllClassroomByStudentId(studentID){
+        try{
+            return await ClassroomDao.getClassroomByStudentId(studentID);
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to get classroom for student",400);
+        }
     }
-
 };

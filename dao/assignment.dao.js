@@ -79,7 +79,7 @@ module.exports = {
 
   getAllAsignmentsOfAClassroom(classroomId) {
     return new Promise((resolve, reject) => {
-      Classroom.getClassroomDetailsByClassromId(classroomId)
+      Classroom.getClassroomDetailsByClassroomId(classroomId)
         .then(async (classroomsDetails) => {
           classroomsDetails = JSON.parse(JSON.stringify(classroomsDetails));
           for (let course in classroomsDetails.enrolled_courses) {

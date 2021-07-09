@@ -12,13 +12,13 @@ module.exports = {
 			$exists: true,
 		};
 		try{
-			const allClassrooms=await Classroom.find(filter);
+			const allClassrooms=JSON.parse(JSON.stringify(await Classroom.find(filter)));
 			for(let i in allClassrooms){
-				allClassrooms[i]=await this.getClassRoomDetailsByClassroomId(allClassrooms[i]._id);
+				allClassrooms[i]=await this.getClassroomFullDetailsByClassroomId(allClassrooms[i]._id);
 			}
 			return allClassrooms;
 		} catch(err) {
-
+			throw DaoError("unable to get student's classroom",503,err)
 		}
 	},
 	async getClassroomByTeacherId(teacherId) {
@@ -27,15 +27,17 @@ module.exports = {
 			filter["teachers." + teacherId] = {
 				$exists: true,
 			};
-			allClassrooms=await Classroom.find(filter);
+			const allClassrooms=JSON.parse(JSON.stringify(await Classroom.find(filter)));
 			for(let i in allClassrooms){
-				allClassrooms[i]=await this.getClassRoomDetailsByClassroomId(allClassrooms[i]._id);
+				allClassrooms[i]=await this.getClassroomFullDetailsByClassroomId(allClassrooms[i]._id);
 			}
 			return allClassrooms;
-		} catch (e) {}
+		} catch (e) {
+			throw DaoError("unable to get teacher's classroom",503,err)
+		}
 	},
 
-	getClassroomDetailsByClassromId(classroomId) {
+	getClassroomDetailsByClassroomId(classroomId) {
 		return new Promise((resolve, reject) => {
 			Classroom.findById(classroomId)
 				.then((classroomDetails) => {
@@ -48,7 +50,7 @@ module.exports = {
 				})
 				.catch((error) => {
 					reject(
-						DaoError(err.message || "no classroom found", 503, err)
+						DaoError(err.message || "no classroom found", 503, error)
 					);
 				});
 		});
@@ -58,7 +60,7 @@ module.exports = {
 			let allClassrooms=await Classroom.find();
 			allClassrooms=JSON.parse(JSON.stringify(allClassrooms));
 			for(let i in allClassrooms){
-				allClassrooms[i]=await this.getClassRoomDetailsByClassroomId(allClassrooms[i]._id);
+				allClassrooms[i]=await this.getClassroomFullDetailsByClassroomId(allClassrooms[i]._id);
 			}
 			return  allClassrooms;
 		}catch (e) {
@@ -74,12 +76,63 @@ module.exports = {
 	},
 
 
+	async deleteClassroomById(classroomId){
+		try {
+			const deletedClassroom=await Classroom.findByIdAndDelete(classroomId);
+			if(!deletedClassroom){
+				throw DaoError("no classroom found",400);
+			}
+			return deletedClassroom;
+		}catch (e) {
+			throw DaoError("unable to delete classroom",503,e)
+		}
+	},
+	async getClassroomDetailsById(classroomId){
+		try{
+			const classroomDetails=await Classroom.findById(classroomId);
+			if(!classroomDetails){
+				throw DaoError("no classroom found",400);
+			}
+			return await this.getClassroomFullDetailsByClassroomId(classroomId);
+		}catch (e) {
+			throw DaoError(e.message||"unable to find classrooms",e.statusCode||503,e);
+		}
+	},
+	getAllCoursesInClassroom(){
 
+	},
 
+	updateClassroomDetailsById(classroomId,newClassroomDetails){
+		return new Promise((resolve,reject)=>{
+			Classroom.findByIdAndUpdate(classroomId,newClassroomDetails,{new:true})
+				.then(classroomDetails=>{
+					if(!classroomDetails){
+						reject(DaoError("no classroom found",400));
+					}
+					resolve(classroomDetails)
+				}).catch(err=>{
+				reject(DaoError("unable to find classroom",503,err))
+			})
+		})
+	},
 
+	async getAllClassroomsByCourseId(courseId){
+		const filter={};
+		filter["enrolled_courses."+courseId]={$exists:true};
+		try{
+			const classrooms=JSON.parse(JSON.stringify(await Classroom.find(filter)));
+			for(let i in classrooms){
+				const classroomId=classrooms[i]._id;
+				classrooms[i]=await this.getClassroomFullDetailsByClassroomId(classroomId);
+			}
+			return classrooms;
+		}catch (e) {
+			throw DaoError("unable to get classrooms",503,e)
+		}
+	},
 	//========================== data merging===============================
 
-	async getClassRoomDetailsByClassroomId(classroomId){
+	async getClassroomFullDetailsByClassroomId(classroomId){
 		try{
 			let classroomDetails=JSON.parse(JSON.stringify(await Classroom.findById(classroomId)));
 			if(!classroomDetails){
@@ -103,7 +156,7 @@ module.exports = {
 					classroomDetails.lectures[currentLectureDetails._id].presentStudents[presentStudentId]=studentData;
 				}
 			}
-			return classroomDetails;
+			return JSON.parse(JSON.stringify(classroomDetails));
 		}catch (e) {
 			throw DaoError(e.message||"unable to get classroom details",e.statusCode||503,e)
 		}
