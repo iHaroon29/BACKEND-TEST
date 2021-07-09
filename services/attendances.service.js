@@ -19,52 +19,46 @@ module.exports = {
       throw ServiceErrorMessage(e.message||"unable to mark attendance",503,e);
     }
   },
-  getClassroomAttendanceStatsByClassroomId(classroomId) {
-    return LectureService.getAllLecturesOfClassroom(classroomId).then(
-      async (allLectures) => {
-        const totalLecturesInClassroom =
-          await LectureService.getTotalLecturesInClassroom();
-        const attendances = {};
-        for (let i = 0; i < allLectures.length; i++) {
-          await Attendance.find({ lecture_id: allLectures[i]._id }).then(
-            (oneLectureAttendance) => {
-              attendances[allLectures[i]._id] = oneLectureAttendance;
-            }
-          );
-        }
-        attendances["total_lectures_in_classroom"] = totalLecturesInClassroom;
-        return allLectures;
-      }
-    );
+  async getClassroomAttendanceStatsByClassroomId(classroomId) {
+    try{
+      return await LectureAttendanceDao.getAllLectureAttendanceByClassroomId(classroomId);
+    }catch (e) {
+      throw ServiceErrorMessage("unable to attendances of classroom");
+    }
   },
   async getAttendanceByLectureId(lectureId) {
     try{
       return await LectureAttendanceDao.getLectureAttendanceByLectureId(lectureId);
     }catch (e) {
-      throw ServiceErrorMessage("unable to get attendance for the specified lecture id",503,err);
+      throw ServiceErrorMessage("unable to get attendance for the specified lecture",503,err);
     }
   },
-  getAttendanceByStudentId(studentId) {
-    console.log(studentId);
-    return Attendance.find({ student_id: studentId });
+  async getAttendanceByStudentId(studentId) {
+    try{
+      return await LectureAttendanceDao.getAllLectureAttendanceByStudentId(studentId);
+    }catch (e) {
+      throw ServiceErrorMessage("unable to get attendance for the specified student",503,err);
+    }
   },
-  getAttendanceByCourseId(courseId) {
-    return Attendance.find({ course_id: courseId });
+  async getAttendanceByAttendanceId(attendanceId) {
+    try{
+      return await LectureAttendanceDao.getLectureAttendanceDetailsById(attendanceId);
+    }catch (e) {
+      throw ServiceErrorMessage("unable to get attendance for the specified student",503,err);
+    }
   },
-  deleteAttendanceByStudentID(studentId) {
-    console.log(studentId);
-    return Attendance.findOneAndDelete({ student_id: studentId }).then(
-      (deletedData) => {
-        console.log("deleted");
-        return deletedData;
-      }
-    );
+  async getAttendanceByCourseId(courseId) {
+    try{
+      return await LectureAttendanceDao.getAllLectureAttendanceByCourseId(courseId);
+    }catch (e) {
+      throw ServiceErrorMessage("unable to get attendance for the specified course",503,e);
+    }
   },
-  updateAttendanceByStudentId(studentId, updateDetails) {
-    return Attendance.findOneAndUpdate(studentId, updateDetails, {
-      new: true,
-    }).then((updatedDetails) => {
-      return updatedDetails;
-    });
+  async getAllAttendances() {
+    try{
+      return await LectureAttendanceDao.getAllLectureAttendance();
+    }catch (e) {
+      throw ServiceErrorMessage("unable to get all attendances",503,e);
+    }
   },
 };

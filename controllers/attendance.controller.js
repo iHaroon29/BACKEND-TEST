@@ -22,7 +22,7 @@ module.exports = {
         );
       return res.status(202).send(attendanceStatus);
     } catch (e) {
-      return res.status(400).send(e);
+      return res.status(e.statusCode||503).send(e);
     }
   },
 
@@ -33,7 +33,7 @@ module.exports = {
       );
       return res.status(202).send(attendance);
     } catch (e) {
-      return res.status(400).send(e);
+      return res.status(e.statusCode||503).send(e);
     }
   },
 
@@ -44,7 +44,7 @@ module.exports = {
       );
       return res.status(202).send(attendanceStatus);
     } catch (e) {
-      return res.status(400).send(e);
+      return res.status(e.statusCode||503).send(e);
     }
   },
 
@@ -55,32 +55,26 @@ module.exports = {
       );
       return res.status(202).send(attendanceStatus);
     } catch (e) {
-      return res.status(400).send(e);
+
+      console.log(e)
+      return res.status(e.statusCode||503).send(e);
+    }
+  },
+  async allLectureAttendances(req, res) {
+    try {
+      const allAttendances = await AttendanceService.getAllAttendances();
+      return res.status(202).send(allAttendances);
+    } catch (e) {
+      return res.status(e.statusCode||503).send(e);
+    }
+  },
+  async attendanceDetails(req, res) {
+    try {
+      const allAttendances = await AttendanceService.getAttendanceByAttendanceId(req.params.attendanceId);
+      return res.status(202).send(allAttendances);
+    } catch (e) {
+      return res.status(e.statusCode||503).send(e);
     }
   },
 
-  async deleteAttendanceByStudentID(req, res) {
-    try {
-      const deletedAttendance =
-        await AttendanceService.deleteAttendanceByStudentID(
-          req.params.studentId
-        );
-      return res.status(202).send(deletedAttendance);
-    } catch (e) {
-      return res.status(400).send(e);
-    }
-  },
-
-  async updateAttendanceByStudentId(req, res) {
-    try {
-      const updatedAttendance =
-        await AttendanceService.updateAttendanceByStudentId(
-          req.params.studentId,
-          req.body
-        );
-      return res.status(202).send(updatedAttendance);
-    } catch (e) {
-      return res.status(400).send(e);
-    }
-  },
 };
