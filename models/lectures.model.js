@@ -29,9 +29,9 @@ const Lecture=new mongoose.Schema( {
         'is_active':{
             type: Boolean,
         },
-        "reschedule_information":{
-            type:Array(Object),
-            default:[],
+        "teacher":{
+            type:String,
+            required:true
         }
     },
     {

@@ -27,7 +27,7 @@ module.exports = {
                             createdAt: new Date(),
                         };
                 }
-                delete validClassroomDetails.students;
+                validClassroomDetails.enrolled_students=students;
                 const teachers = {};
                 for (let i of validClassroomDetails.teachers) {
                     if (!teachers[i])
@@ -62,7 +62,12 @@ module.exports = {
     },
     getClassroomActivitiesByClassroomId(classroomId) {},
     getAllClassroom() {
-        return Classroom.find();
+        try{
+            return ClassroomDAO.getAllClassroomDetails();
+        }catch (e) {
+            console.log(e);
+            throw e;
+        }
     },
 
     getAllCoursesInClassroom(classroomId) {
@@ -105,14 +110,8 @@ module.exports = {
     },
     getClassroomDetailsByClassroomId(classroomId){
         return new Promise((resolve,reject)=>{
-            Classroom.findById(classroomId)
+            ClassroomDAO.getClassRoomDetailsByClassroomId(classroomId)
                 .then(classroomDetails=>{
-                    classroomDetails=JSON.parse(JSON.stringify(classroomDetails));
-                    (async ()=>{
-                        for(let courseId of classroomDetails.enrolled_courses){
-                            classroomDetails.enrolled_courses_details=await CourseService.getCourseByCourseId(courseId);
-                        }
-                    })();
                     resolve(classroomDetails);
                 }).catch(err=>{
                 reject({

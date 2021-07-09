@@ -1,25 +1,33 @@
 const Student = require("../models/students.model");
 const Classroom = require("../models/classrooms.model");
 const StudentValidator = require("../validators/Students.validators");
-const bcrypt = require("bcrypt");
+const bcrypt = require("../modules/bcrypt");
 const xlsx = require("../modules/excel.converter");
+const ClassroomDao=require("../dao/classroom.dao");
+const StudentDao=require("../dao/students.dao");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
 
 module.exports = {
-  addNewStudent(studentDetails, profilePic) {
-    console.log(profilePic.filename);
-    return StudentValidator.newStudent(studentDetails).then(
-      async (validData) => {
-        let student = await Student.findOne({ email: validData.email });
-        if (student) throw "Student already Registered";
-
-        student = new Student(validData);
-
-        const salt = await bcrypt.genSalt(10);
-        student.password = await bcrypt.hash(student.password, salt);
-        await student.save();
-        return student;
+  async addNewStudent(studentDetails) {
+    try{
+      const validData=await StudentValidator.newStudent(studentDetails);
+      validData.password=await bcrypt.genHash(validData.password);
+      const createdStudent=await StudentDao.createNewStudent(validData);
+      const classroomDetails={
+        name:validData.name,
+        enrolled_students:{}
+      };
+      classroomDetails.enrolled_students[createdStudent._id]={
+        createdAt:Date.now()
+      };
+      const classroom=await ClassroomDao.createNewClassroom(classroomDetails);
+      return {
+        studentDetails:createdStudent,
+        classroomDetails:classroom
       }
-    );
+    }catch (e) {
+      throw ServiceErrorMessage("unable to create new student",503,e);
+    }
   },
   async addNewStudentsUsingExcelSheet(file) {
     const students = xlsx.excelToJson(file.path);
@@ -84,13 +92,13 @@ module.exports = {
     console.log(updateDetails);
 
     return StudentValidator.updateStudentDetails(updateDetails).then(
-      (validDetails) => {
-        return Student.findByIdAndUpdate(studentId, validDetails, {
-          new: true,
-        }).then((updatedDetails) => {
-          return updatedDetails;
-        });
-      }
+        (validDetails) => {
+          return Student.findByIdAndUpdate(studentId, validDetails, {
+            new: true,
+          }).then((updatedDetails) => {
+            return updatedDetails;
+          });
+        }
     );
   },
 

@@ -13,6 +13,7 @@ const ClassroomSchema= new mongoose.Schema({
         },
         'status':{
             type:String,
+            default:"active",
             required:true,
             lowercase:true
         },
@@ -28,6 +29,11 @@ const ClassroomSchema= new mongoose.Schema({
             required:true
         },
         'enrolled_courses':{
+            type:Object, // course id of registered courses as key and course details as values
+            default:{},
+            required:true
+        },
+        'teachers':{
             type:Object, // course id of registered courses as key and course details as values
             default:{},
             required:true
