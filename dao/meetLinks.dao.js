@@ -62,6 +62,16 @@ module.exports = {
           });
     },
 
-    getMeetLinkById(){
+    getMeetLinkById(meetLinkId){
+      return new Promise((resolve, reject)=>{
+        MeetLink.findById(meetLinkId).then((meetDetails)=>{
+            if(!meetDetails){
+                reject("unable to find", 400)
+            }
+            resolve(meetDetails)
+        }).catch((error)=>{
+            reject(DaoError("unable to find note",503,error))
+        })
+    })
     }
 }

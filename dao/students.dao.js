@@ -39,6 +39,42 @@ module.exports={
                     reject(DaoError("unable to create student",503,err));
                 })
         })
+    },
+
+    updateStudentByStudentId(studentId, newDetails){
+            return new Promise((resolve, reject)=>{
+                Student.findByIdAndUpdate(studentId, newDetails).then((studentDetails)=>{
+                    if(!studentDetails){
+                        reject("no student found", 400)
+                    }
+                    resolve(studentDetails)
+                }).catch((error)=>{
+                    reject(DaoError("unable to update student",503,error));
+                })
+            })
+    },
+  
+    deleteStudentByStudentId(studentId){
+        return new Promise((resolve, reject)=>{
+            Student.findByIdAndDelete(studentId).then((deletedStudent)=>{
+                if(!deletedStudent){
+                    reject("no student found", 400)
+                }
+                resolve(deletedStudent)
+            }).catch((error)=>{
+                reject(DaoError("unable to delete student",503,error));
+            })
+        })
+    },
+
+    findStudentByStudentId(studentId){
+        return new Promise((resolve, reject)=>{
+            Student.findById(studentId).then((studentDetails)=>{
+                resolve(studentDetails)
+            }).catch((error)=>{
+                reject(DaoError("unable to delete student",503,error));
+            })
+        })
     }
 
 };
