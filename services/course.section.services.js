@@ -20,7 +20,7 @@ module.exports = {
   async deleteCourseSection(courseSectionId,userDetails={}) {
     try {
       const newCourseSection=await CourseSectionDao.deleteCourseSectionById(courseSectionId);
-      await ActivityLogger.logActivityCreatedNew(newCourseSection,LOG,userDetails).catch();
+      await ActivityLogger.logActivityDeleted(newCourseSection,LOG,userDetails).catch();
       return  newCourseSection;
     }catch (e) {
       throw ServiceErrorMessage("unable to update course section",503,e);
