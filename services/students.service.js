@@ -1,7 +1,7 @@
 const Student = require("../models/students.model");
 const Classroom = require("../models/classrooms.model");
 const StudentValidator = require("../validators/Students.validators");
-const bcrypt = require("bcrypt");
+const bcrypt = require("../modules/bcrypt");
 const xlsx = require("../modules/excel.converter");
 const ClassroomDao=require("../dao/classroom.dao");
 const StudentDao=require("../dao/students.dao");
@@ -11,6 +11,7 @@ module.exports = {
   async addNewStudent(studentDetails) {
     try{
       const validData=await StudentValidator.newStudent(studentDetails);
+      validData.password=await bcrypt.genHash(validData.password);
       const createdStudent=await StudentDao.createNewStudent(validData);
       const classroomDetails={
         name:validData.name,
