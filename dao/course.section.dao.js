@@ -1,4 +1,5 @@
 const CourseSection=require("../models/course.sections.model");
+const Course=require("../models/courses.model");
 const DAOError=require("../errors/dao.errors").getDAOErrorMessage;
 module.exports={
     createCourseSection(courseSectionDetails){
@@ -31,24 +32,49 @@ module.exports={
             })
         })
     },
-    getCourseSectionByCourseId(courseId){
-        return new Promise((resolve,reject)=>{
-            CourseSection.find({course_id:courseId})
-                .then(allCourseSections=>{
-                    resolve(allCourseSections);
-                }).catch(err=>{
-                    reject(DAOError("unable to find course section",503,err));
-            })
-        })
+    async getCourseSectionByCourseId(courseId){
+       try{
+           const courseSections=await JSON.parse(JSON.stringify(await CourseSection.find({"course_id":courseId})));
+           for(let i in courseSections){
+               courseSections[i]=await this.getCourseSectionByCourseSectionId(courseSections[i]._id);
+           }
+           return courseSections;
+       }catch (e) {
+           throw DAOError("unable to get course sections",500,e)
+       }
     },
-    getCourseSectionByCourseSectionId(courseSectionId){
-        return new Promise((resolve,reject)=>{
-            CourseSection.findById(courseSectionId)
-                .then(courseSection=>{
-                    resolve(courseSection);
-                }).catch(err=>{
-                    reject(DAOError("unable to find course section",503,err));
-            })
-        })
+
+    async getAllCourseSections(){
+       try{
+           const courseSections=await JSON.parse(JSON.stringify(await CourseSection.find()));
+           for(let i in courseSections){
+               courseSections[i]=await this.getCourseSectionByCourseSectionId(courseSections[i]._id);
+           }
+           return courseSections;
+       }catch (e) {
+           throw DAOError("unable to get course sections",500,e)
+       }
+    },
+
+
+
+
+
+
+
+
+
+    async getCourseSectionByCourseSectionId(courseSectionId){
+        try{
+            const courseSections= JSON.parse(JSON.stringify(await CourseSection.findById(courseSectionId)));
+            if(!courseSections){
+                return {};
+            }
+            courseSections.courseDetails=JSON.parse(JSON.stringify(await Course.findById(courseSections.course_id)));
+            delete courseSections.courseDetails.quiz;
+            return courseSections;
+        }catch (e) {
+            throw DAOError("unable to get course sections",500,e)
+        }
     },
 };
