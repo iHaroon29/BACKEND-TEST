@@ -13,10 +13,7 @@ module.exports={
     },
     async addCourseInClassroom(classroomId, courseId, teacherId,userDetails={}) {
         try{
-            const courseWithTeacherId=await CourseDao.getCourseByTeacherId(teacherId);
-            if(courseWithTeacherId.teachers[teacherId]){
-                throw ServiceErrorMessage("teacher is not enrolled in this course",400);
-            }
+            const courseWithTeacherId=await CourseDao.checkIfTeacherIsEnrolledInSpecifiedCourse(teacherId,courseId);
             const oldClassroomDetails=await ClassroomDao.getClassroomDetailsById(classroomId);
             if(oldClassroomDetails.enrolled_courses[courseId]){
                 throw ServiceErrorMessage("course already enrolled",400);
@@ -34,6 +31,7 @@ module.exports={
             await ActivityLogger.logActivityUpdated(oldClassroomDetails,newClassroomDetails,LOG_FOR_CLASSROOM,userDetails);
             return newClassroomDetails;
         }catch (e) {
+            console.log(e);
             throw ServiceErrorMessage(e.message||"unable to add course",400);
         }
     },

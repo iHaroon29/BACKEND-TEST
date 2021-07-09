@@ -71,6 +71,28 @@ module.exports={
         }
 
     },
+
+    async checkIfTeacherIsEnrolledInSpecifiedCourse(teacherId,courseId){
+        try {
+            const filter={
+                _id:courseId,
+            };
+            filter["teachers."+teacherId]={
+                $exists:true,
+            };
+            const course=await Course.find(filter);
+            if(course.length<1){
+                throw DAOError("teacher not is enrolled in course",503);
+            }
+            return course[0];
+        }catch (e) {
+            throw DAOError(e.message||"unable to check",e.statusCode||503,e);
+        }
+    },
+
+
+
+
     getCourseByTeacherId(teacherId){
         return new Promise((resolve,reject)=>{
             const filter={};
