@@ -5,20 +5,34 @@ route.get(
   LectureController.getAllLecturesOfClassroom
 );
 route.get(
-  "/classroom/:classroomId/lecture/details/:lectureId",
+  "/lecture/details/:lectureId",
   LectureController.getLectureDetails
 );
 route.post(
-  "/classroom/:classroomId/lecture/new",
+  "/lecture/new",
   LectureController.addNewLecture
 );
 route.put(
-  "/classroom/:classroomId/lecture/update/:lectureId",
+  "/lecture/update/:lectureId",
   LectureController.updateLecture
 );
+route.put(
+  "/lecture/completed/:lectureId",
+  LectureController.lectureCompleted
+);
+route.put(
+  "/lecture/ongoing/:lectureId",
+  LectureController.lectureOngoing
+);
+route.put(
+  "/lecture/:lectureId/attendance/done",
+  LectureController.attendanceDone
+);
 route.delete(
-  "/classroom/:classroomId/lecture/delete/:lectureId",
+  "/lecture/delete/:lectureId",
   LectureController.deleteLecture
 );
 route.get("/lectures/all", LectureController.getAllLectures);
+route.get("/course/:courseId/lectures/all", LectureController.lecturesOfCourse);
+route.get("/teacher/:teacherId/lectures/all", LectureController.lecturesOfTeacher);
 module.exports = route;
