@@ -5,6 +5,10 @@ route.post(
   "/attendance/new",
   AttendanceController.markStudentAsPresentUsingClassroomIdAndLectureId
 );
+route.put(
+  "/attendance/update/:attendanceId",
+  AttendanceController.markStudentAsPresentUsingClassroomIdAndLectureId
+);
 
 route.get(
   "/attendance/classroom/:classroomId",
@@ -12,33 +16,28 @@ route.get(
 );
 
 route.get(
-  "/attendance/all",
-  AttendanceController.getClassroomAttendanceStatsByClassroomId
+  "/attendances/all",
+  AttendanceController.allLectureAttendances
 );
 
 route.get(
-  "/attendance/lecture/:lectureId",
+  "/attendance/all/lecture/:lectureId",
   AttendanceController.getAttendanceByLectureId
 );
 
 route.get(
-  "/attendance/student/:studentId",
+  "/attendance/all/student/:studentId",
   AttendanceController.getAttendanceByStudentId
 );
 
+// route.get(
+//   "/attendance/all/course/:courseId",
+//   AttendanceController.getAttendanceByCourseId
+// );
+
 route.get(
-  "/attendance/course/:courseId",
-  AttendanceController.getAttendanceByCourseId
-);
-
-route.delete(
-  "/attendance/delete/:studentId",
-  AttendanceController.deleteAttendanceByStudentID
-);
-
-route.put(
-  "/attendance/update/:studentId",
-  AttendanceController.updateAttendanceByStudentId
+  "/attendance/details/:attendanceId",
+  AttendanceController.attendanceDetails
 );
 
 module.exports = route;
