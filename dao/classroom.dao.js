@@ -53,7 +53,7 @@ module.exports = {
 	async getClassRoomDetailsByClassroomId(classroomId){
 		try{
 			let classroomDetails=JSON.parse(JSON.stringify(await Classroom.findById(classroomId)));
-			classroomDetails.lectures=await Lectures.find({classroom_id:classroomId._id});
+			classroomDetails.lectures=await Lectures.find({classroom_id:classroomId});
 			return classroomDetails;
 		}catch (e) {
 			throw DaoError(e.message||"unable to get classroom details",e.statusCode||503,e)
