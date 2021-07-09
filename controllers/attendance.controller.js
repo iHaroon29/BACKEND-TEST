@@ -2,15 +2,15 @@ const AttendanceService = require("../services/attendances.service");
 module.exports = {
   async markStudentAsPresentUsingClassroomIdAndLectureId(req, res) {
     try {
-      const attendanceDetails =
-        await AttendanceService.markStudentAsPresentUsingClassroomIdAndLectureId(
-          req.body.student_id,
-          req.body.lecture_id,
-          req.body.course_id
-        );
+      const lectureAttendanceDetails={
+        student_id:req.body.student_id,
+        lecture_id:req.body.lecture_id,
+        course_id:req.body.course_id
+      };
+      const attendanceDetails = await AttendanceService.markStudentAsPresentUsingClassroomIdAndLectureId(lectureAttendanceDetails);
       return res.status(202).send(attendanceDetails);
     } catch (e) {
-      return res.sendStatus(400);
+      return res.status(e.statusCode||503).send(e);
     }
   },
 

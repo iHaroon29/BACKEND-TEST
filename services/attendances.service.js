@@ -1,26 +1,23 @@
 const Attendance = require("../models/lecture.attendances.model");
 const LectureService = require("../services/lectures.service");
+const LectureAttendanceDao=require("../dao/lecture.attedance.dao");
+const ActivityLogger=require("../loggers/activity.logger");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const LOG_FOR_LECTURE_ATTENDANCE=require("../config/LOGGERS_FOR").lecture_attendance;
+const LectureAttendanceValidator=require("../validators/lecture.attendance.validators");
+
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 module.exports = {
-  markStudentAsPresentUsingClassroomIdAndLectureId(
-    // classroomId,
-    studentId,
-    lectureId,
-    courseId
-    // details
-  ) {
-    console.log(lectureId);
-    return new Attendance({
-      student_id: studentId,
-      lecture_id: lectureId,
-      course_id: courseId,
-    })
-      .save()
-      .then((savedAttendance) => {
-        console.log(savedAttendance);
-        return savedAttendance;
-      });
+  async markStudentAsPresentUsingClassroomIdAndLectureId(lectureAttendanceDetails,userDetails={}) {
+    try{
+      const validData=await LectureAttendanceValidator.addNewAttendance(lectureAttendanceDetails);
+      const addedLectureAttendance=await LectureAttendanceDao.markStudentAsPresentUsingLectureId(validData);
+      await ActivityLogger.logActivityCreatedNew(addedLectureAttendance,LOG_FOR_LECTURE_ATTENDANCE,userDetails).catch();
+      return addedLectureAttendance;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to mark attendance",503,e);
+    }
   },
   getClassroomAttendanceStatsByClassroomId(classroomId) {
     return LectureService.getAllLecturesOfClassroom(classroomId).then(
@@ -40,19 +37,12 @@ module.exports = {
       }
     );
   },
-  getAttendanceByLectureId(lectureId) {
-    return Attendance.find({ lecture_id: lectureId }).then((attendance) => {
-      const presentStudents = {};
-      for (let i = 0; i < attendance.length; i++) {
-        // presentStudents.push(attendance[i].student_id);
-        if (!presentStudents[attendance[i].student_id]) {
-          presentStudents[attendance[i].student_id] = [attendance[i]];
-        } else {
-          presentStudents[attendance[i].student_id].push(attendance[i]);
-        }
-      }
-      return presentStudents;
-    });
+  async getAttendanceByLectureId(lectureId) {
+    try{
+      return await LectureAttendanceDao.getLectureAttendanceByLectureId(lectureId);
+    }catch (e) {
+      throw ServiceErrorMessage("unable to get attendance for the specified lecture id",503,err);
+    }
   },
   getAttendanceByStudentId(studentId) {
     console.log(studentId);

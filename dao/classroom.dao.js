@@ -1,6 +1,9 @@
 const Classroom = require("../models/classrooms.model");
 const DaoError = require("../errors/dao.errors").getDAOErrorMessage;
 const Lectures = require("../models/lectures.model");
+const Student = require("../models/students.model");
+const Course = require("../models/courses.model");
+const LectureAttendance = require("../models/lecture.attendances.model");
 
 module.exports = {
 	async getClassroomByStudentId(studentId) {
@@ -50,18 +53,6 @@ module.exports = {
 				});
 		});
 	},
-	async getClassRoomDetailsByClassroomId(classroomId){
-		try{
-			let classroomDetails=JSON.parse(JSON.stringify(await Classroom.findById(classroomId)));
-			if(!classroomDetails){
-				return [];
-			}
-			classroomDetails.lectures=await Lectures.find({classroom_id:classroomId});
-			return classroomDetails;
-		}catch (e) {
-			throw DaoError(e.message||"unable to get classroom details",e.statusCode||503,e)
-		}
-	},
 	async getAllClassroomDetails(){
 		try{
 			let allClassrooms=await Classroom.find();
@@ -80,5 +71,41 @@ module.exports = {
 		}catch (e) {
 			throw DaoError("unable to create classroom",503,e)
 		}
-	}
+	},
+
+
+
+
+
+	//========================== data merging===============================
+
+	async getClassRoomDetailsByClassroomId(classroomId){
+		try{
+			let classroomDetails=JSON.parse(JSON.stringify(await Classroom.findById(classroomId)));
+			if(!classroomDetails){
+				return [];
+			}
+			let classroomLectureDetails=JSON.parse(JSON.stringify(await Lectures.find({classroom_id:classroomId})));
+			classroomDetails.lectures={};
+			// course and lecture details merging
+			for(let i in classroomLectureDetails){
+				const currentLectureDetails=classroomLectureDetails[i];
+				const currentCourseId=currentLectureDetails.course_id;
+				const courseDetails=JSON.parse(JSON.stringify(await Course.findById(currentCourseId)));
+				classroomDetails.lectures[currentLectureDetails._id]=currentLectureDetails;
+				classroomDetails.lectures[currentLectureDetails._id].presentStudents={};
+				classroomDetails.lectures[currentLectureDetails._id].course_details=courseDetails;
+				const temp=await LectureAttendance.find({lecture_id:currentLectureDetails._id});
+				for (let j in temp){
+					let presentStudentId=temp[j].student_id;
+					const studentData=JSON.parse(JSON.stringify(await Student.findById(presentStudentId)));
+					delete studentData.password;
+					classroomDetails.lectures[currentLectureDetails._id].presentStudents[presentStudentId]=studentData;
+				}
+			}
+			return classroomDetails;
+		}catch (e) {
+			throw DaoError(e.message||"unable to get classroom details",e.statusCode||503,e)
+		}
+	},
 };
