@@ -1,5 +1,5 @@
 const mongoose=require("mongoose");
-
+require("dotenv").config()
 
 const MONGODB_LOCALHOST_DATABASE_NAME=process.env.MONGODB_DATABASE_NAME || "digital_aided_school_lms";
 const MONGODB_LOCALHOST_CONNECTION_PORT=process.env.MONGODB_CONNECTION_PORT || "27017";

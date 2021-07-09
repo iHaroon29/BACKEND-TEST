@@ -12,6 +12,11 @@ route.get(
 );
 
 route.get(
+  "/attendance/all",
+  AttendanceController.getClassroomAttendanceStatsByClassroomId
+);
+
+route.get(
   "/attendance/lecture/:lectureId",
   AttendanceController.getAttendanceByLectureId
 );

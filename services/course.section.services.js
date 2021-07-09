@@ -34,6 +34,7 @@ module.exports = {
                 throw new Error(
                   "No course Section found with specified course id "
                 );
+              resolve(savedCourseSection);
               return savedCourseSection;
             })
             .catch((e) => {

@@ -9,7 +9,8 @@ module.exports={
             'is_attendance_marked':Joi.boolean().optional().default(false),
             'crm_meeting_link':Joi.string().optional(),
             'status':Joi.string().optional().default("new"),
-            'is_active':Joi.boolean().optional().default(true)
+            'is_active':Joi.boolean().optional().default(true),
+            teacher:Joi.string().required(),
         }).options({stripUnknown:true}).validateAsync(lectureDetails);
 
     },
@@ -21,7 +22,8 @@ module.exports={
             'is_attendance_marked':Joi.boolean().optional(),
             'crm_meeting_link':Joi.string().optional(),
             'status':Joi.string().optional(),
-            'is_active':Joi.boolean().optional()
+            'is_active':Joi.boolean().optional(),
+            teacher:Joi.string().optional(),
         }).options({stripUnknown:true}).validateAsync(lectureDetails);
     }
 };

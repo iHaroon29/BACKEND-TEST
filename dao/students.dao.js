@@ -29,5 +29,16 @@ module.exports={
 
         }
     },
+    createNewStudent(studentDetails){
+        return new Promise((resolve,reject)=>{
+            new Student(studentDetails).save()
+                .then(savedStudent=>{
+                    resolve(savedStudent);
+                })
+                .catch(err=>{
+                    reject(DaoError("unable to create student",503,err));
+                })
+        })
+    }
 
 };

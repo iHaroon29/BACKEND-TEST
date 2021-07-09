@@ -6,11 +6,10 @@ module.exports = {
         req.params.courseId,
         req.params.teacherId
       );
-      // console.log(req.params.studentId,req.params.courseId)
       return res.status(202).send(TeacherDetails);
     } catch (e) {
-      console.log(e);
-      return res.status(400).send(e);
+      // console.log(e);
+      return res.status(e.statusCode||400).send(e);
     }
   },
   async removeTeacherFromCourse(req, res) {
