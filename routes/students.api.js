@@ -1,8 +1,13 @@
 const StudentsController = require("../controllers/students.controller");
 const route = require("express").Router();
 const upload = require("../middlewares/checkIfUploadedFileIsExcel");
+const image = require("../modules/fileUploads").StudentProfilePictureUpload;
 
-route.post("/student/new", StudentsController.addNewStudent);
+route.post(
+  "/student/new",
+  image.single("profile"),
+  StudentsController.addNewStudent
+);
 
 route.get(
   "/student/all/courses/all",

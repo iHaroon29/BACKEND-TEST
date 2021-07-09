@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 const xlsx = require("../modules/excel.converter");
 
 module.exports = {
-  addNewStudent(studentDetails) {
+  addNewStudent(studentDetails, profilePic) {
+    console.log(profilePic.filename);
     return StudentValidator.newStudent(studentDetails).then(
       async (validData) => {
         let student = await Student.findOne({ email: validData.email });
