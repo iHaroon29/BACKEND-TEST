@@ -1,5 +1,6 @@
 const QuizValidator=require("../validators/quiz.validators");
 const Course=require("../models/courses.model");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
 const RejectErrorResponse=require("../errors/serviceErrorMessage").getRejectResponse;
 
 module.exports={

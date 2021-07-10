@@ -1,10 +1,10 @@
 const Joi=require("joi");
 const CourseSchema=Joi.object({
-    // 'classroom_id':Joi.string().alphanum().lowercase().required(),
     'title':Joi.string().required(),
-    // 'image':Joi.string().required(),
-    'description':Joi.string().required(),
-    // "teachers":Joi.array().required(),
+    'description':Joi.string().optional(),
+    'image':Joi.string().optional(),
+    'price':Joi.number().greater(0).optional(),
+    'discount':Joi.number().greater(0).optional(),
 }).options({stripUnknown:true});
 Object.freeze(CourseSchema);
 
