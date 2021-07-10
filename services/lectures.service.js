@@ -17,7 +17,7 @@ module.exports = {
   },
   async updateLectureById(lectureId, lectureDetails,userDetails={}) {
     try{
-      const validLectureDetails=LectureValidators.updateLecture(lectureDetails);
+      const validLectureDetails=await LectureValidators.updateLecture(lectureDetails);
       const oldLectureData=await LectureDao.getLectureById(lectureId);
       const updatedLecture= await LectureDao.updateLectureById(lectureId,validLectureDetails);
       await ActivityLogger.logActivityUpdated(oldLectureData,updatedLecture,ACTIVITY_FOR_LECTURES,userDetails);

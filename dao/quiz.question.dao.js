@@ -1,4 +1,4 @@
-const Course=require("../models/courses.model");
+const Course=require("../models/course.sections.model");
 const DaoError=require("../errors/dao.errors").getDAOErrorMessage;
 
 module.exports={

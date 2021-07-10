@@ -3,8 +3,8 @@ const CourseSchema=Joi.object({
     'title':Joi.string().required(),
     'description':Joi.string().optional(),
     'image':Joi.string().optional(),
-    'price':Joi.number().greater(0).optional(),
-    'discount':Joi.number().greater(0).optional(),
+    'price':Joi.number().greater(-1).optional(),
+    'discount':Joi.number().greater(-1).optional(),
 }).options({stripUnknown:true});
 Object.freeze(CourseSchema);
 

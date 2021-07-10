@@ -13,8 +13,11 @@ module.exports={
     },
     async addCourseInClassroom(classroomId, courseId, teacherId,userDetails={}) {
         try{
-            const courseWithTeacherId=await CourseDao.checkIfTeacherIsEnrolledInSpecifizedCourse(teacherId,courseId);
+            const courseWithTeacherId=await CourseDao.checkIfTeacherIsEnrolledInSpecifiedCourse(teacherId,courseId);
             const oldClassroomDetails=await ClassroomDao.getClassroomDetailsById(classroomId);
+            if(!oldClassroomDetails.enrolled_courses){
+                oldClassroomDetails.enrolled_courses={};
+            }
             if(oldClassroomDetails.enrolled_courses[courseId]){
                 throw ServiceErrorMessage("course already enrolled",400);
             }
