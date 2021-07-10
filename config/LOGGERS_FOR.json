@@ -14,5 +14,6 @@
   "meet_links":"meet_links",
   "trainers": "trainers",
   "notes":"notes",
-  "quiz_question":"quiz_question"
+  "quiz_question":"quiz_question",
+  "quiz_submission":"quiz_submission"
 }

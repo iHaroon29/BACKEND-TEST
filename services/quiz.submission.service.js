@@ -1,54 +1,47 @@
-const QuizSubmission=require("../models/quiz.submitted.model");
-const Course=require("../models/courses.model");
 const QuizSubmissionValidator=require("../validators/quiz.validators");
-module.exports={
-    getAllSubmittedQuizOfQuiz(courseId){
-        const filters={};
-        filters["course_id."+courseId]={ $exists:true};
-        return QuizSubmission.find(filters)
-            .then(submittedQuiz=>submittedQuiz);
-    },
-    submitQuiz(courseId,submittedQuiz){
-        const quiz={};
-        return new Promise((resolve,reject)=>{
-            Course.findById(courseId).then(course=>{
-                quiz.quiz_questions_and_answers=course.quiz;
-                quiz.course_id=courseId;
-                quiz.user_role="STUDENT";
-                quiz.quiz_response=submittedQuiz;
-                quiz.user_id=submittedQuiz.user_id;
-                return QuizSubmissionValidator.quizSubmission(quiz)
-                    .then(validQuizSubmissionData=>{
-                        return new QuizSubmission(validQuizSubmissionData)
-                            .then(submittedQuiz=>{
-                                if(!submittedQuiz) {
-                                    reject({
-                                        statusCode: 304,
-                                        trace: err,
-                                        message: "No data found"
-                                    })
-                                }
-                                resolve(submittedQuiz)
-                            })
-                            .catch(err=>{
-                                reject({
-                                    statusCode:503,
-                                    trace:err,
-                                    message:"Unable to find data"
-                                })
-                            })
-                    }).catch(err=>{
-                        reject({
-                            statusCode:400,
-                            trace:err,
-                            message:"Invalid requested data"
-                        })
-                    })
-            })
-        })
+const QuizSubmissionDao=require("../dao/quiz.submitted.dao");
+const CourseDao=require("../dao/course.dao");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const ActivityLogger=require("../loggers/activity.logger");
+const LOG_FOR_QUIZ_SUBMISSION=require("../config/LOGGERS_FOR").quiz_submission;
 
+module.exports={
+    async getAllSubmittedQuizOfCourse(courseId){
+       try{
+           return await QuizSubmissionDao.getAllQuizSubmissionByCourseId(courseId)
+       }catch (e) {
+           throw ServiceErrorMessage("unable to get all submission of quiz for this course",503,e)
+       }
     },
-    getQuizDetails(submittedQuizId){
-        return QuizSubmission.findById(submittedQuizId);
+    async submitQuiz(courseId,submittedQuiz,userDetails={}){
+        try{
+            const quiz={};
+            const course=await CourseDao.getCourseByCourseId(courseId);
+            quiz.quiz_questions_and_answers=course.quiz;
+            quiz.course_id=courseId;
+            quiz.user_role="STUDENT";
+            quiz.quiz_response=submittedQuiz;
+            quiz.user_id=submittedQuiz.user_id;
+            const validQuizSubmission=await QuizSubmissionValidator.quizSubmission(quiz);
+            const newQuizSubmission=await QuizSubmissionDao.createQuizSubmission(validQuizSubmission);
+            await ActivityLogger.logActivityCreatedNew(newQuizSubmission,LOG_FOR_QUIZ_SUBMISSION,userDetails).catch();
+            return newQuizSubmission;
+        }catch (e) {
+            throw ServiceErrorMessage("unable to submit quiz",503,e)
+        }
+    },
+    async getQuizDetails(submittedQuizId){
+        try{
+            return await QuizSubmissionDao.getQuizSubmissionById(submittedQuizId)
+        }catch (e) {
+            throw ServiceErrorMessage("unable to get all submission of quiz for this course",503,e)
+        }
+    },
+    async getAllQuizSubmission(){
+        try{
+            return await QuizSubmissionDao.getAllSubmittedQuiz()
+        }catch (e) {
+            throw ServiceErrorMessage("unable to get all submission of quiz for this course",503,e)
+        }
     }
 };
