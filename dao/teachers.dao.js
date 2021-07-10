@@ -1,6 +1,5 @@
-const DAOError=require("../errors/dao.errors").getDAOErrorMessage;
-const Teacher = require("../models/teachers.model")
-const Course = require("./course.dao")
+const DaoError=require("../errors/dao.errors").getDAOErrorMessage;
+const Teacher = require("../models/teachers.model");
 
 
 module.exports={
@@ -73,4 +72,4 @@ module.exports={
         })
     }
     
-}
+};

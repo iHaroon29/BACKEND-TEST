@@ -19,16 +19,18 @@ module.exports={
             })
         })
     },
+
     async getStudentFullDetails(studentId){
         try{
             let studentDetails=await Student.findById(studentId);
             studentDetails=JSON.parse(JSON.stringify(studentDetails));
             studentDetails.classrooms=await ClassroomDAO.getClassroomByStudentId(studentId);
-
+            return studentDetails;
         }catch (e) {
-
+            throw DaoError("unable to get students",503,e)
         }
     },
+
     createNewStudent(studentDetails){
         return new Promise((resolve,reject)=>{
             new Student(studentDetails).save()
@@ -42,18 +44,18 @@ module.exports={
     },
 
     updateStudentByStudentId(studentId, newDetails){
-            return new Promise((resolve, reject)=>{
-                Student.findByIdAndUpdate(studentId, newDetails).then((studentDetails)=>{
-                    if(!studentDetails){
-                        reject("no student found", 400)
-                    }
-                    resolve(studentDetails)
-                }).catch((error)=>{
-                    reject(DaoError("unable to update student",503,error));
-                })
+        return new Promise((resolve, reject)=>{
+            Student.findByIdAndUpdate(studentId, newDetails,{new:true}).then((studentDetails)=>{
+                if(!studentDetails){
+                    reject("no student found", 400)
+                }
+                resolve(studentDetails)
+            }).catch((error)=>{
+                reject(DaoError("unable to update student",503,error));
             })
+        })
     },
-  
+
     deleteStudentByStudentId(studentId){
         return new Promise((resolve, reject)=>{
             Student.findByIdAndDelete(studentId).then((deletedStudent)=>{
@@ -73,6 +75,16 @@ module.exports={
                 resolve(studentDetails)
             }).catch((error)=>{
                 reject(DaoError("unable to delete student",503,error));
+            })
+        })
+    },
+
+    getAllStudents(){
+        return new Promise((resolve, reject)=>{
+            Student.find().then((allStudentDetails)=>{
+                resolve(allStudentDetails)
+            }).catch((error)=>{
+                reject(DaoError("unable to get all students",503,error));
             })
         })
     }
