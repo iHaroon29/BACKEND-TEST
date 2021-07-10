@@ -1,76 +1,75 @@
 const DAOError=require("../errors/dao.errors").getDAOErrorMessage;
-const MeetLink = require("../models/meetlinks.model")
-const Classroom = require("./classroom.dao");
+const MeetLink = require("../models/meetlinks.model");
 
 module.exports = {
-    addNewMeetLink(){
+    addNewMeetLink(meetLinkDetails){
         return new Promise((resolve, reject) => {
             new MeetLink(meetLinkDetails)
-              .save()
-              .then((savedDetails) => {
-                resolve(savedDetails);
-              })
-              .catch((error) => {
-                reject(DAOError("unable to create meetlink", 503, error));
-              });
-          });
+                .save()
+                .then((savedDetails) => {
+                    resolve(savedDetails);
+                })
+                .catch((error) => {
+                    reject(DAOError("unable to create new meet-link", 503, error));
+                });
+        });
 
     },
 
-    UpdateMeetLinkById(meetLinkId, newmeetLinkDetails){
+    UpdateMeetLinkById(meetLinkId, newMeetLinkDetails){
         return new Promise((resolve, reject) => {
-            MeetLink.findByIdAndUpdate(meetLinkId, newmeetLinkDetails, {
-              new: true,
+            MeetLink.findByIdAndUpdate(meetLinkId, newMeetLinkDetails, {
+                new: true,
             })
-              .then((updatedDetails) => {
-                if (!meetLinkId) {
-                  reject(DAOError("unable to find meetlink", 400));
-                }
-                resolve(updatedDetails);
-              })
-              .catch((error) => {
-                reject(DAOError("unable to update meetlink", 503, error));
-              });
-          });
+                .then((updatedDetails) => {
+                    if (!meetLinkId) {
+                        reject(DAOError("unable to find meet-link", 400));
+                    }
+                    resolve(updatedDetails);
+                })
+                .catch((error) => {
+                    reject(DAOError("unable to update meet-link", 503, error));
+                });
+        });
     },
 
     deleteMeetLinkById(meetLinkId){
         return new Promise((resolve, reject) => {
             MeetLink.findByIdAndDelete(meetLinkId)
-              .then((deletedMeetLink) => {
-                if (!deletedMeetLink) {
-                  reject(DAOError("no meetlink present", 400));
-                }
-                resolve(deletedMeetLink);
-              })
-              .catch((error) => {
-                reject(DAOError("unable to delete meetlink", 503, error));
-              });
-          });
+                .then((deletedMeetLink) => {
+                    if (!deletedMeetLink) {
+                        reject(DAOError("no meet-link present", 400));
+                    }
+                    resolve(deletedMeetLink);
+                })
+                .catch((error) => {
+                    reject(DAOError("unable to delete meet-link", 503, error));
+                });
+        });
     },
 
-    getAllMeetLinks(classroomId){
+    getAllMeetLinks(){
         return new Promise((resolve, reject) => {
-            Classroom.getMeetLinkDetailsByClassromId(classroomId)
-              .then(async (classroomsDetails) => {
-                
-                resolve(classroomsDetails);
-              })
-              .catch((error) => {
-                reject(DAOError("unable to update assignment", 503, error));
-              });
-          });
+            MeetLink.find()
+                .then(async (classroomsDetails) => {
+
+                    resolve(classroomsDetails);
+                })
+                .catch((error) => {
+                    reject(DAOError("unable to update assignment", 503, error));
+                });
+        });
     },
 
     getMeetLinkById(meetLinkId){
       return new Promise((resolve, reject)=>{
         MeetLink.findById(meetLinkId).then((meetDetails)=>{
             if(!meetDetails){
-                reject("unable to find", 400)
+                reject("no meet link details found", 400)
             }
             resolve(meetDetails)
         }).catch((error)=>{
-            reject(DaoError("unable to find note",503,error))
+            reject(DAOError("unable to find note",503,error))
         })
     })
     }
