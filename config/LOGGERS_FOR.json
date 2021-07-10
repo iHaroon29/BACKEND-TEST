@@ -13,5 +13,6 @@
   "attendance": "attendance",
   "meet_links":"meet_links",
   "trainers": "trainers",
-  "notes":"notes"
+  "notes":"notes",
+  "quiz_question":"quiz_question"
 }
