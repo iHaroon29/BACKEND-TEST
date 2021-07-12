@@ -7,9 +7,10 @@ module.exports={
     async getTeacherAuthToken(loginDetails){
         try {
             const validLoginDetails = await LoginSchema(loginDetails);
+            console.log(validLoginDetails)
 
             let teacher = await TeacherDao.getTeacherByEmail(validLoginDetails.username)
-            if(!teacher){
+            if(!teacher.length){
                  throw AuthErrorMessage("Invalid Credentials");
 
             }
@@ -19,7 +20,7 @@ module.exports={
                 throw AuthErrorMessage("Invalid Credentials");
 
             }
-            return await AuthToken.tokenGenerateForTeacher({ email: student.email, id: teacher._id })
+            return await AuthToken.tokenGenerateForTeacher({ email: teacher.email, id: teacher._id })
         }
         catch (e) {
             throw AuthErrorMessage(e.message || "Invalid Credentials");
