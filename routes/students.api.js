@@ -4,9 +4,7 @@ const upload = require("../middlewares/checkIfUploadedFileIsExcel");
 const image = require("../modules/fileUploads").StudentProfilePictureUpload;
 
 route.post(
-  "/student/new",
-  image.single("profile"),
-  StudentsController.addNewStudent
+  "/student/new", StudentsController.addNewStudent
 );
 
 route.get(

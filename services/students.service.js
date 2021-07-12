@@ -117,4 +117,11 @@ module.exports = {
     const deletedStudent = await Student.findByIdAndDelete(studentId);
     return deletedStudent;
   },
+
+  async getStudentPersonalDetailById(studentId){
+    const student= await Student.findOne({ _id: studentId });
+    if (!student) throw "No student with this id available";
+
+    return student;
+  }
 };

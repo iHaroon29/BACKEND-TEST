@@ -2,9 +2,8 @@ const StudentsServices = require("../services/students.service");
 
 module.exports = {
   async addNewStudent(req, res) {
-    console.log(req.file);
     try {
-      const student = await StudentsServices.addNewStudent(req.body, req.file);
+      const student = await StudentsServices.addNewStudent(req.body );
       return res.status(202).send(student);
     } catch (e) {
       return res.status(400).send(e);
