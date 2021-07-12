@@ -3,12 +3,16 @@ const Teacher = require("../models/teachers.model");
 
 
 module.exports={
-    addNewTeacher(){
+    addNewTeacher(teacherDetails){
         return new Promise((resolve, reject)=>{
-            Teacher.save().then((teacherDetails)=>{
+            new Teacher(teacherDetails).save().then((teacherDetails)=>{
                 resolve(teacherDetails)
             }).catch((error)=>{
-                reject(DaoError("unable to create teacher",503,error))
+                if(error.code===11000 && error.keyValue.email){
+
+                    reject(DaoError("teacher already present with this email",503,error))
+                }
+                reject(DaoError("unable to create new teacher",503,error))
             })
         })
     },
@@ -25,11 +29,11 @@ module.exports={
 
     updateTeacherById(teacherId, newTeacherDetails){
         return new Promise((resolve, reject)=>{
-            Teacher.findByIdAndUpdate(teacherId, newTeacherDetails).then((teacherDetails)=>{
-                if(!teacherDetails){
-                    reject("unable to update", 400)
+            Teacher.findByIdAndUpdate(teacherId, newTeacherDetails,{new:true}).then((updatedTeacherDetails)=>{
+                if(!updatedTeacherDetails){
+                    reject("no teacher found", 400)
                 }
-                resolve(teacherDetails)
+                resolve(updatedTeacherDetails)
             }).catch((error)=>{
                 reject(DaoError("unable to update teacher",503,error))
             })
@@ -40,7 +44,7 @@ module.exports={
         return new Promise((resolve, reject)=>{
             Teacher.findByIdAndDelete(teacherId, deleteTeacher).then((deletedTeacher)=>{
                 if(!deletedTeacher){
-                    reject("unable to delete", 400)
+                    reject("no teacher found", 400)
                 }
                 resolve(deletedTeacher)
             }).catch((error)=>{
@@ -62,14 +66,22 @@ module.exports={
     getTeacherByEmail(teacherEmail){
         return new Promise((resolve, reject)=>{
             Teacher.find({email:teacherEmail}).then((teacherDetails)=>{
-                if(!teacherDetails){
-                    reject("unable to find", 400)
-                }
                 resolve(teacherDetails)
             }).catch((error)=>{
                 reject(DaoError("unable to find teacher",503,error))
             })
         })
-    }
+    },
+    getAllAvailableTeachers() {
+        return new Promise((resolve, reject) => {
+            Teacher.find({ is_available: true })
+                .then((teachers) => {
+                    resolve(teachers);
+                })
+                .catch((err) => {
+                    reject(DaoError("unable to find teachers",503,err));
+                });
+        });
+    },
     
 };

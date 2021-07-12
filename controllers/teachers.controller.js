@@ -51,6 +51,9 @@ module.exports = {
   },
   async addNewTeacherUsingExcelSheet(req, res) {
     try {
+      if(!req.file){
+        return  res.status(400).send("please provide an excel file")
+      }
       const addedTeacher = await TeachersServices.addNewTeacherUsingExcelSheet(
         req.file
       );
