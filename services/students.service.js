@@ -6,9 +6,12 @@ const xlsx = require("../modules/excel.converter");
 const ClassroomDao=require("../dao/classroom.dao");
 const StudentDao=require("../dao/students.dao");
 const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const ActivityLogger=require("../loggers/activity.logger");
+const LOG_FOR_STUDENT=require("../config/LOGGERS_FOR").students;
+
 
 module.exports = {
-  async addNewStudent(studentDetails) {
+  async addNewStudent(studentDetails,userDetails={}) {
     try{
       const validData=await StudentValidator.newStudent(studentDetails);
       validData.password=await bcrypt.genHash(validData.password);
@@ -83,39 +86,39 @@ module.exports = {
 
     return studentCourse;
   },
+
   async updateStudentCourseDetailsByStudentId(studentId, newDetails) {
     console.log(studentId, newDetails);
   },
 
-  updateStudentPersonalDetailsById(studentId, updateDetails) {
-    console.log(studentId);
-    console.log(updateDetails);
-
-    return StudentValidator.updateStudentDetails(updateDetails).then(
-        (validDetails) => {
-          return Student.findByIdAndUpdate(studentId, validDetails, {
-            new: true,
-          }).then((updatedDetails) => {
-            return updatedDetails;
-          });
-        }
-    );
+  async updateStudentPersonalDetailsById(studentId, updateDetails,userDetails={}) {
+    try{
+      const oldDetails=await StudentDao.findStudentByStudentId(studentId);
+      const validDetails=await StudentValidator.updateStudentDetails(updateDetails);
+      const newDetails=await StudentDao.updateStudentByStudentId(studentId,validDetails);
+      await ActivityLogger.logActivityUpdated(oldDetails,newDetails,LOG_FOR_STUDENT,userDetails).catch();
+      return newDetails;
+    }catch (e) {
+      throw ServiceErrorMessage("unable to update students",503,e);
+    }
   },
 
   async getAllStudents() {
-    let student = await Student.find();
-    if (student.length === 0) return student;
-
-    return student;
+    try{
+      return await StudentDao.getAllStudents();
+    }catch (e) {
+      throw ServiceErrorMessage("unable to get all students", 503, e);
+    }
   },
 
-  async deleteStudentById(studentId) {
-    console.log(studentId);
-    let student = await Student.findOne({ _id: studentId });
-    if (!student) throw "Given Id not found";
-
-    const deletedStudent = await Student.findByIdAndDelete(studentId);
-    return deletedStudent;
+  async deleteStudentById(studentId,userDetails={}) {
+    try{
+      const newDetails=await StudentDao.deleteStudentByStudentId(studentId);
+      await ActivityLogger.logActivityDeleted(newDetails,LOG_FOR_STUDENT,userDetails).catch();
+      return newDetails;
+    }catch (e) {
+      throw ServiceErrorMessage("unable to update students",503,e);
+    }
   },
 
   async getStudentPersonalDetailById(studentId){

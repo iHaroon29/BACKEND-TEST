@@ -1,4 +1,4 @@
-const CourseMaterial = require("../models/course.materials.model")
+const CourseMaterial = require("../models/course.materials.model");
 const DAOError = require("../errors/dao.errors").getDAOErrorMessage;
 
 module.exports = {
@@ -52,6 +52,17 @@ module.exports = {
               })
               .catch((error) => {
                 reject(DAOError("unable to get all course material", 503, error));
+              });
+          });
+    },
+    getAllCourseMaterialsByCourseSectionId(courseSectionId){
+        return new Promise((resolve, reject) => {
+            CourseMaterial.find({course_section_id:courseSectionId})
+              .then((allCourseMaterial) => {
+                resolve(allCourseMaterial);
+              })
+              .catch((error) => {
+                reject(DAOError("unable to get all course material for specified course section", 503, error));
               });
           });
     },

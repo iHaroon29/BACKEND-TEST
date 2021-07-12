@@ -5,7 +5,7 @@ const MeetLink = new mongoose.Schema(
       "link":{
           type:String,
           required:true,
-
+          unique:true
       }
 
   },

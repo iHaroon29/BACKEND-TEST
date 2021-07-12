@@ -55,6 +55,18 @@ module.exports = {
       if(!oldCourseMaterial){
         throw ServiceErrorMessage("no course material found",400);
       }
+      return oldCourseMaterial;
+    }catch (err) {
+      throw ServiceErrorMessage(err.message||"unable to find all course material",503,err);
+    }
+  },
+  async getCourseMaterialByCourseSectionId(courseSectionId) {
+    try{
+      const courseMaterials=await CourseMaterialDao.getAllCourseMaterialsByCourseSectionId(courseSectionId);
+      if(!courseMaterials){
+        throw ServiceErrorMessage("no course material found",400);
+      }
+      return courseMaterials;
     }catch (err) {
       throw ServiceErrorMessage(err.message||"unable to find all course material",503,err);
     }

@@ -1,24 +1,24 @@
 const OTP=require("../models/otp.model");
 const DAOError=require("../errors/dao.errors").getDAOErrorMessage;
 module.exports={
-    createNewOtp(token){
+    createNewOtp(token,role){
         let otp="";
         for(let i=0;i<4;i++){
             otp+=Math.floor(Math.random()*9);
         }
         return new Promise((resolve,reject)=>{
-            new OTP({token:token,otp:otp})
+            new OTP({token:token,otp:otp,role:role})
                 .save()
                 .then(()=>{
                     resolve(otp)
                 }).catch((err)=>{
-                DAOError("unable to save otp",503,err)
+                reject(DAOError("unable to save otp",503,err))
             })
         })
     },
-    verifyOTP(token,otp){
+    verifyOTP(token,otp,role){
         return new Promise((resolve,reject)=>{
-            OTP.findOneAndDelete({token:token,otp:otp})
+            OTP.findOneAndDelete({token:token,otp:otp,role:role})
                 .then(otpDetails=>{
                     if(!otpDetails){
                         reject("invalid otp")

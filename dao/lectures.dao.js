@@ -1,5 +1,7 @@
 const Lecture=require("../models/lectures.model");
 const DAOError=require("../errors/dao.errors").getDAOErrorMessage;
+const Classroom = require("./classroom.dao")
+
 module.exports={
     async createNewLecture(lectureDetails){
         try{

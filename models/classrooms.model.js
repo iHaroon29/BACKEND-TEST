@@ -34,7 +34,7 @@ const ClassroomSchema= new mongoose.Schema({
             required:true
         },
         'teachers':{
-            type:Object, // course id of registered courses as key and course details as values
+            type:Object, // course id of registered teachers as key and course details as values
             default:{},
             required:true
         },

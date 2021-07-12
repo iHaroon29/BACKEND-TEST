@@ -35,7 +35,6 @@ const StudentSchema = new Schema(
     },
     parent_email: {
       type: String,
-      unique: true,
       required: true,
     },
     parent_mobile_number: {

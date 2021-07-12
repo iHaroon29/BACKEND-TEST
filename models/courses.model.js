@@ -1,26 +1,29 @@
 const mongoose=require("../db/mongoDB");
 
 const CoursesSchema=new mongoose.Schema({
-        'classroom_id':{
-            type:mongoose.ObjectId,
-        },
         'title':{
             type:String,
+            default:"title"
         },
         'description':{
             type:String,
+            default:"",
         },
         "teachers":{
             type:Object, // Teacher's id as key and details as values
             default:{},
         },
-        'is_active':{
-            type:Boolean,
+        'image':{
+            type:String,
         },
-        quiz:{
-            type:Array(Object),
-            default:[],
-        }
+        'price':{
+            type:Number,
+            default:0,
+        },
+        'discount':{
+            type:Number,
+            default:0,
+        },
     },
     {
         timestamps:true

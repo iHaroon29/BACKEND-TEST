@@ -1,8 +1,6 @@
 const Assignment = require("../models/assignments.model");
 const DAOError = require("../errors/dao.errors").getDAOErrorMessage;
 const Classroom = require("./classroom.dao");
-const Course = require("../models/courses.model");
-const assignmentValidator = require("../validators/assignment.validators");
 
 module.exports = {
   createAssignment(assignmentDetails) {
@@ -30,13 +28,10 @@ module.exports = {
     });
   },
 
-  removeAssignmentById(assignmentId) {
+  deleteAssignmentById(assignmentId) {
     return new Promise((resolve, reject) => {
       Assignment.findByIdAndDelete(assignmentId)
         .then((deletedAssignment) => {
-          if (!deletedAssignment) {
-            reject(DAOError("no assignment present", 400));
-          }
           resolve(deletedAssignment);
         })
         .catch((error) => {
@@ -45,13 +40,10 @@ module.exports = {
     });
   },
 
-  getAssigmnentById(assignmentId) {
+  getAssignmentById(assignmentId) {
     return new Promise((resolve, reject) => {
       Assignment.findById(assignmentId)
         .then((assignmentDetails) => {
-          if (!assignmentDetails) {
-            reject(DAOError("unable to find assignment", 400));
-          }
           resolve(assignmentDetails);
         })
         .catch((error) => {
@@ -66,9 +58,6 @@ module.exports = {
         new: true,
       })
         .then((updatedDetails) => {
-          if (!assignmentId) {
-            reject(DAOError("unable to find assignment", 400));
-          }
           resolve(updatedDetails);
         })
         .catch((error) => {
@@ -77,9 +66,9 @@ module.exports = {
     });
   },
 
-  getAllAsignmentsOfAClassroom(classroomId) {
+  getAllAssignmentsOfAClassroom(classroomId) {
     return new Promise((resolve, reject) => {
-      Classroom.getClassroomDetailsByClassromId(classroomId)
+      Classroom.getClassroomDetailsByClassroomId(classroomId)
         .then(async (classroomsDetails) => {
           classroomsDetails = JSON.parse(JSON.stringify(classroomsDetails));
           for (let course in classroomsDetails.enrolled_courses) {
@@ -97,13 +86,10 @@ module.exports = {
     return new Promise((resolve, reject) => {
       Assignment.find({ course_id: courseId })
         .then((allAssignments) => {
-          if (!allAssignments) {
-            reject(DAOError("unable to find assignment", 400));
-          }
           resolve(allAssignments);
         })
         .catch((error) => {
-          reject(DAOError("unable to update assignment", 503, error));
+          reject(DAOError("unable to find assignments of course", 503, error));
         });
     });
   },
