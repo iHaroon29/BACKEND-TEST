@@ -26,7 +26,27 @@ module.exports={
     },
     async updatePassword(req,res){
         try{
-            const updatedAdminDetails=await AdminService.updatePassword(req.body.id,req.body);
+            if(!req.body.password){
+                return res.status(400).send("password is required");
+            }
+            if(!req.body.otp){
+                return res.status(400).send("otp is required");
+            }
+            if(!req.params.token){
+                return res.status(400).send("reset token is required");
+            }
+            const updatedAdminDetails=await AdminService.PasswordUpdateOfAdmin(req.body.password,req.params.token,req.body.otp);
+            return res.status(202).send(updatedAdminDetails);
+        }catch (e) {
+            return res.status(e.statusCode|| 400).send(e);
+        }
+    },
+    async resetPassword(req,res){
+        try{
+            if(!req.body.email){
+                return res.status(400).send("email is required");
+            }
+            const updatedAdminDetails=await AdminService.sendMailForPasswordUpdateAdmin(req.body.email);
             return res.status(202).send(updatedAdminDetails);
         }catch (e) {
             return res.status(400).send(e);

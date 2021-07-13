@@ -3,6 +3,7 @@ const DaoError = require("../errors/dao.errors").getDAOErrorMessage;
 const Lectures = require("../models/lectures.model");
 const Student = require("../models/students.model");
 const Course = require("../models/courses.model");
+const Teacher = require("../models/teachers.model");
 const LectureAttendance = require("../models/lecture.attendances.model");
 
 module.exports = {
@@ -135,6 +136,15 @@ module.exports = {
 	async getClassroomFullDetailsByClassroomId(classroomId){
 		try{
 			let classroomDetails=JSON.parse(JSON.stringify(await Classroom.findById(classroomId)));
+			for ( let i in classroomDetails.teachers){
+				await Teacher.findById(i)
+					.then((teacherDetails)=>{
+						classroomDetails.teachers[i].personelDetails=teacherDetails
+					}).catch(()=>{
+						delete classroomDetails.teachers[i];
+					})
+
+			}
 			if(!classroomDetails){
 				return [];
 			}

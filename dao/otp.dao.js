@@ -18,7 +18,7 @@ module.exports={
     },
     verifyOTP(token,otp,role){
         return new Promise((resolve,reject)=>{
-            OTP.findOneAndDelete({token:token,otp:otp,role:role})
+            OTP.findOneAndDelete({token:token,otp:otp})
                 .then(otpDetails=>{
                     if(!otpDetails){
                         reject("invalid otp")
