@@ -9,10 +9,6 @@ const LectureAttendanceSchema=new mongoose.Schema({
         'student_id':{
             type:  mongoose.ObjectId,
             required:true,
-        },
-        course_id:{
-            type:  mongoose.ObjectId,
-            required:true,
         }
     },
     {
