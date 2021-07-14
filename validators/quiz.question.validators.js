@@ -5,7 +5,8 @@ const QuestionSchema=Joi.object({
     question:Joi.string().required(),
     answer:Joi.string().required(),
     options:Joi.array().items(Joi.string()).optional(),
-    question_type:Joi.string().required()
+    question_type:Joi.string().required(),
+    maximum_marks:Joi.number().greater(0).optional()
 }).options({stripUnknown:true});
 module.exports={
     newQuestion(questionDetails){

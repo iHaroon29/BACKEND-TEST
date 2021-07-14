@@ -1,6 +1,6 @@
 const QuizSubmissionValidator=require("../validators/quiz.validators");
 const QuizSubmissionDao=require("../dao/quiz.submitted.dao");
-const CourseDao=require("../dao/course.dao");
+const CourseSection=require("../models/course.sections.model");
 const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
 const ActivityLogger=require("../loggers/activity.logger");
 const LOG_FOR_QUIZ_SUBMISSION=require("../config/LOGGERS_FOR").quiz_submission;
@@ -13,21 +13,24 @@ module.exports={
            throw ServiceErrorMessage("unable to get all submission of quiz for this course",503,e)
        }
     },
-    async submitQuiz(courseId,submittedQuiz,userDetails={}){
+    async createNewQuizSubmission(courseSectionId,submittedQuiz,userDetails={}){
         try{
             const quiz={};
-            const course=await CourseDao.getCourseByCourseId(courseId);
+            const course=await CourseSection.findById(courseSectionId);
             quiz.quiz_questions_and_answers=course.quiz;
-            quiz.course_id=courseId;
+            if(!quiz.quiz_questions_and_answers){
+                throw ServiceErrorMessage("no quiz present",400);
+            }
+            quiz.course_section_id=courseSectionId;
             quiz.user_role="STUDENT";
-            quiz.quiz_response=submittedQuiz;
+            quiz.quiz_response=submittedQuiz.quiz_response;
             quiz.user_id=submittedQuiz.user_id;
             const validQuizSubmission=await QuizSubmissionValidator.quizSubmission(quiz);
             const newQuizSubmission=await QuizSubmissionDao.createQuizSubmission(validQuizSubmission);
             await ActivityLogger.logActivityCreatedNew(newQuizSubmission,LOG_FOR_QUIZ_SUBMISSION,userDetails).catch();
             return newQuizSubmission;
         }catch (e) {
-            throw ServiceErrorMessage("unable to submit quiz",503,e)
+            throw ServiceErrorMessage(e.message||"unable to submit quiz",e.statusCode||503,e)
         }
     },
     async getQuizDetails(submittedQuizId){
@@ -41,7 +44,14 @@ module.exports={
         try{
             return await QuizSubmissionDao.getAllSubmittedQuiz()
         }catch (e) {
-            throw ServiceErrorMessage("unable to get all submission of quiz for this course",503,e)
+            throw ServiceErrorMessage(e.message||"unable to get all submission of quiz for this course",e.statusCode||503,e)
+        }
+    },
+    async getAllQuizSubmissionOfCourseSection(courseSectionId){
+        try{
+            return await QuizSubmissionDao.getAllQuizSubmissionByCourseSectionId(courseSectionId)
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to get all submission of quiz for this course",e.statusCode||503,e)
         }
     }
 };

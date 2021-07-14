@@ -24,8 +24,10 @@ module.exports={
                 question:Joi.string().required(),
                 submitted_answer:Joi.string().required(),
             })),
-            course_id:Joi.string().required(),
-            quiz_questions_and_answers:Joi.string().required()
+            course_section_id:Joi.string().required(),
+            quiz_questions_and_answers:Joi.array().items(
+                QuestionSchema
+            ).required()
         }).validateAsync(data);
     }
 };

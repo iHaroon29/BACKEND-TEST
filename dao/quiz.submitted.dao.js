@@ -1,5 +1,7 @@
 const DAOError=require("../errors/dao.errors").getDAOErrorMessage;
 const QuizSubmission = require("../models/quiz.submitted.model");
+const Course = require("../models/courses.model");
+const CourseSection = require("../models/course.sections.model");
 
 module.exports = {
     createQuizSubmission(quizSubmissionDetails){
@@ -62,12 +64,40 @@ module.exports = {
         })
 
     },
-    getAllQuizSubmissionByCourseId(courseId){
+    async getAllQuizSubmissionByCourseId(courseId){
+        try{
+            const course=await Course.findById(courseId);
+            if(!course){
+                throw DAOError("no course found",400)
+            }
+            const allCourseSections=await CourseSection.find({"course_id":courseId});
+            if(!allCourseSections){
+                throw DAOError("no course sections found",400)
+            }
+            const allQuizSubmissions=[];
+            for( let i of allCourseSections){
+                allQuizSubmissions.push(...(JSON.parse(JSON.stringify(await QuizSubmission.find({"course_section_id":i._id})))));
+            }
+            return allQuizSubmissions;
+        }catch (e) {
+
+            throw DAOError(e.message||"no course found",e.statusCode||503,e)
+        }
         return new Promise((resolve, reject)=>{
             QuizSubmission.find({course_id:courseId}).then((allSubmittedQuizOfCourses)=>{
                 resolve(allSubmittedQuizOfCourses)
             }).catch((error)=>{
                 reject(DAOError("unable to get all quiz submissions of course", 503, error));
+            })
+        })
+
+    },
+    getAllQuizSubmissionByCourseSectionId(courseSectionId){
+        return new Promise((resolve, reject)=>{
+            QuizSubmission.find({course_section_id:courseSectionId}).then((allSubmittedQuizOfCourses)=>{
+                resolve(allSubmittedQuizOfCourses)
+            }).catch((error)=>{
+                reject(DAOError("unable to get all quiz submissions of course section", 503, error));
             })
         })
 

@@ -4,15 +4,16 @@ const CourseSectionRoutes = require("../routes/course.sections.api");
 const CoursesRoutes = require("../routes/courses.api");
 const LectureRoutes = require("../routes/lectures.api");
 const StudentsRoutes = require("../routes/students.api");
-const TeacherRoutes = require("../routes/teachers.api");
-const AttendanceRoutes = require("../routes/attendance.api");
-const AuthChecker = require("../middlewares/authTokenVerifyForTeacher");
 const QuizRoutes = require("../routes/quiz.api");
-const QuizQuestionRoutes = require("../routes/quiz.question.api");
+const QuizSubmissionRoutes = require("../routes/quiz.submission.api");
 const AssignmentRoutes = require("../routes/assignment.api");
 
 // ============ Quiz Routes ================
 route.use(QuizRoutes);
+// ======================================
+
+// ============ Quiz Submission Routes ================
+route.use(QuizSubmissionRoutes);
 // ======================================
 
 // ============ Students ================

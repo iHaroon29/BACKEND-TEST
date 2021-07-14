@@ -8,9 +8,6 @@ module.exports={
             return res.status(e.statusCode||500).send(e||"");
         }
     },
-    submitQuiz(req,res){
-
-    },
     async deleteQuiz(req,res){
         try {
             const deletedQuiz=await QuizService.deleteQuizByCourseId(req.params.courseId);

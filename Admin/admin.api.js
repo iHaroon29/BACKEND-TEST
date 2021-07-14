@@ -20,11 +20,18 @@ const AuthenticationRoutes=require("../routes/authentication.api");
 const TrainingRoutes=require("../routes/training.api");
 const TeacherCourseRoutes=require("../routes/teacher.coures.api");
 const CourseMaterialRoutes=require("../routes/course.material.api");
+
+const QuizSubmissionRoutes = require("../routes/quiz.submission.api");
+
 // route.use(AdminAuthTokenVerification);
 
 // ============Testing Routes================
 route.use(require("../routes/test.api"));
 // ============Testing Routes================
+
+// ============ Quiz Submission Routes ================
+route.use(QuizSubmissionRoutes);
+// ======================================
 
 // ============Quiz Question Routes================
 route.use(QuizQuestionRoutes);
