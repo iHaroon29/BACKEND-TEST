@@ -1,186 +1,143 @@
-const Teacher = require("../models/teachers.model");
 const teacherValidator = require("../validators/Teacher.validators");
-const CourseService = require("./course.services");
-const ClassroomCourseService = require("./classroom.course.services");
 const bcrypt = require("../modules/bcrypt");
-const RejectResponseMessage =
-  require("../errors/serviceErrorMessage").getRejectResponse;
+const xlsx = require("../modules/excel.converter");
+const ServiceErrorMessage =
+    require("../errors/serviceErrorMessage").getRejectResponse;
+const MailService=require("../modules/emailSender");
+const TokenHandler=require("../modules/tokenHandler");
+const OtpDao=require("../dao/otp.dao");
+const ActivityLogger=require("../loggers/activity.logger");
+const LOG_FOR_TEACHER=require("../config/LOGGERS_FOR").teacher;
+const TeacherDao=require("../dao/teachers.dao");
 
 module.exports = {
-  addNewTeacher(teacherDetails) {
-    return new Promise((resolve, reject) => {
-      teacherValidator.newTeacher(teacherDetails).then(async (validData) => {
-        this.findTeacherByEmail(validData.email)
-          .then(() => {
-            reject(
-              RejectResponseMessage(
-                "Email: " + validData.email + " already present",
-                406
-              )
-            );
-          })
-          .catch((err) => {
-            if (err.message !== "No teacher found with this email id") {
-              reject(
-                RejectResponseMessage("unable to create new teacher", 503, err)
-              );
+    async addNewTeacher(teacherDetails,userDetails={}) {
+        try {
+            const teacherValidDetails=await teacherValidator.newTeacher(teacherDetails);
+            teacherValidDetails.password=await bcrypt.genHash(teacherValidDetails.password);
+            const newDetails=await TeacherDao.addNewTeacher(teacherValidDetails);
+            await ActivityLogger.logActivityCreatedNew(newDetails,LOG_FOR_TEACHER,userDetails).catch()
+            return newDetails;
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to create new teacher",e.statusCode||503,e);
+        }
+    },
+    async addNewTeacherUsingExcelSheet(file) {
+        const createdTeacher=[];
+        const unableToCreateTeacher=[];
+        const teachers=xlsx.excelToJson(file.path);
+        for (let i in  teachers) {
+            await teacherValidator.newTeacher(teachers[i])
+                .then(async (validTeacher)=>{
+                    validTeacher.password=await bcrypt.genHash(validTeacher.password);
+                    const savedTeacher=await TeacherDao.addNewTeacher(validTeacher);
+                    createdTeacher.push(savedTeacher);
+                })
+                .catch((err)=>{
+                    unableToCreateTeacher.push({
+                        index:i,
+                        teacher_details:teachers[i],
+                        trace:err
+                    })
+                });
+        }
+        return {unableToCreateTeacher,createdTeacher};
+    },
+
+    async getAllTeachersAndPersonalDetails() {
+        try {
+            return await TeacherDao.getAllTeachers();
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to get all teachers",e.statusCode||503,e);
+        }
+    },
+
+    async updateTeacherPersonalDetailsById(teacherId, updateDetails,userDetails={}) {
+        try {
+            const teacherValidDetails=await teacherValidator.updateTeacherDetails(updateDetails);
+            if(teacherValidDetails.password){
+                teacherValidDetails.password=await bcrypt.genHash(teacherValidDetails.password);
             }
-            bcrypt
-              .genHash(validData.password)
-              .then((hashedPassword) => {
-                validData.password = hashedPassword;
-                new Teacher(validData)
-                  .save()
-                  .then((savedTeacherDetails) => {
-                    resolve(savedTeacherDetails);
-                  })
-                  .catch((err) => {
-                    reject(
-                      RejectResponseMessage(
-                        "unable to create new teacher",
-                        503,
-                        err
-                      )
-                    );
-                  });
-              })
-              .catch((err) => {
-                reject(
-                  RejectResponseMessage("unable to hash password", 503, err)
-                );
-              });
-          });
-      });
-    });
-  },
-  addNewTeacherUsingExcelSheet() {},
-  getAllTeachersAndPersonalDetails() {
-    return new Promise((resolve, reject) => {
-      Teacher.find()
-        .then(async (teachers) => {
-          const teacherFullDetails = [];
-          for (let teacher of teachers) {
-            teacherFullDetails.push(
-              await this.getTeacherPersonalDetailById(teacher._id)
-                .then((teacherDetails) => teacherDetails)
-                .catch()
-            );
-          }
-          resolve(teacherFullDetails);
-        })
-        .catch((err) => {
-          reject(RejectResponseMessage("Unable to find Teacher", 503, err));
-        });
-    });
-  },
-  updateTeacherPersonalDetailsById(teacherId, updateDetails) {
-    return new Promise((resolve, reject) => {
-      teacherValidator
-        .updateTeacherDetails(updateDetails)
-        .then((validDetails) => {
-          return Teacher.findByIdAndUpdate(teacherId, validDetails, {
-            new: true,
-          })
-            .then((updatedDetails) => resolve(updatedDetails))
-            .catch((err) => {
-              console.log(err);
-              reject(
-                RejectResponseMessage(
-                  "unable to update teacher details",
-                  503,
-                  err
-                )
-              );
-            });
-        })
-        .catch((invalidDetails) => {
-          reject(RejectResponseMessage("invalid details", 400, invalidDetails));
-        });
-    });
-  },
+            const oldDetails=await TeacherDao.getTeacherById(teacherId);
+            if(!oldDetails){
+                throw ServiceErrorMessage("no teacher found",400);
+            }
+            const newDetails=await TeacherDao.updateTeacherById(teacherId,teacherValidDetails);
+            await ActivityLogger.logActivityUpdated(oldDetails,newDetails,LOG_FOR_TEACHER,userDetails).catch();
+            return newDetails;
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to update teacher",e.statusCode||503,e);
+        }
+    },
 
-  async deleteTeacherById(teacherId) {
-    let teacher = await Teacher.findOne({ _id: teacherId });
-    if (!teacher) throw "Given Id not found";
-
-    return Teacher.findByIdAndDelete(teacherId);
-  },
-  getTeacherPersonalDetailById(teacherId) {
-    return new Promise((resolve, reject) => {
-      Teacher.findOne({ _id: teacherId })
-        .then((teacherDetails) => {
-          teacherDetails = JSON.parse(JSON.stringify(teacherDetails));
-          teacherDetails.classrooms = [];
-          teacherDetails.courses = [];
-          CourseService.getAllCourseByTeacherId(teacherId)
-            .then((courseDetails) => {
-              teacherDetails.courses = courseDetails;
-              const alreadyAddedClassrooms = {};
-              (async () => {
-                for (let i of courseDetails) {
-                  if (!alreadyAddedClassrooms[i._id]) {
-                    teacherDetails.classrooms.push(
-                      await ClassroomCourseService.getAllClassroomByCourseId(
-                        i._id
-                      )
-                        .then((classroom) => classroom)
-                        .catch()
-                    );
-                  }
-                  alreadyAddedClassrooms[i._id] = "ADDED";
-                }
-                resolve(teacherDetails);
-              })();
-            })
-            .catch((err) => {
-              reject(RejectResponseMessage("Unable to find courses", 503, err));
-            });
-        })
-        .catch((err) => {
-          reject(RejectResponseMessage("Unable to find Teacher", 503, err));
-        })
-        .catch((err) => {
-          reject({
-            message: "Unable to find courses",
-            statusCode: 503,
-            trace: err,
-          });
-        });
-    });
-  },
-  getTeacherActivityById() {},
-  getAllAvailableTeachers() {
-    return new Promise((resolve, reject) => {
-      return Teacher.find({ is_available: true })
-        .then((teachers) => {
-          resolve(teachers);
-          return teachers;
-        })
-        .catch((errorInFindingTeacher) => {
-          reject(
-            RejectResponseMessage(
-              "unable to find teachers",
-              503,
-              errorInFindingTeacher
-            )
-          );
-        });
-    });
-  },
-  findTeacherByEmail(emailId) {
-    return new Promise((resolve, reject) => {
-      Teacher.findOne({ email: emailId })
-        .then((teacher) => {
-          if (!teacher) {
-            reject(
-              RejectResponseMessage("No teacher found with this email id", 400)
+    async deleteTeacherById(teacherId,userDetails={}) {
+        try {
+            const deletedTeacherDetails=await TeacherDao.deleteTeacherById(teacherId);
+            await ActivityLogger.logActivityDeleted(deletedTeacherDetails,LOG_FOR_TEACHER,userDetails).catch();
+            return deletedTeacherDetails;
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to delete teacher",e.statusCode||503,e);
+        }
+    },
+    async getTeacherPersonalDetailById(teacherId) {
+        try {
+            const teacherDetails= await TeacherDao.getTeacherById(teacherId);
+            if(!teacherDetails){
+                throw ServiceErrorMessage("no teacher found",400);
+            }
+            return teacherDetails
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to delete teacher",e.statusCode||503,e);
+        }
+    },
+    async getAllAvailableTeachers() {
+        try {
+            return await TeacherDao.getAllAvailableTeachers();
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to get all available teachers",e.statusCode||503,e);
+        }
+    },
+    async findTeacherByEmail(emailId) {
+        try {
+            return await TeacherDao.getTeacherByEmail(emailId);
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to get teacher",e.statusCode||503,e);
+        }
+    },
+    async sendMailForPasswordUpdateTeacher(email){
+        try{
+            let TeacherDetails=await TeacherDao.getTeacherByEmail(email)
+                .then((teacherDetails)=>{
+                    if(!teacherDetails){
+                        throw ServiceErrorMessage("no teacher found",400)
+                    }
+                    return teacherDetails
+                });
+            const Token=await TokenHandler.encodeWithoutRole(TeacherDetails._id,60*30);
+            const otp=await OtpDao.createNewOtp(Token.token,"teacher");
+            const MailStatus=await MailService.sendMailWithOutAttachment(TeacherDetails.email,"update password link",
+                `
+            link is active for 30 minutes only
+            your otp is ${otp}
+          <a href="http://localhost:8004/lms/api/authenticated/update/password/${Token.token}">click here to update password</a>
+          `
             );
-          }
-          resolve(teacher);
-        })
-        .catch((err) => {
-          reject(RejectResponseMessage("Unable to find teacher", 503, err));
-        });
-    });
-  },
+            return "mail sent";
+        }catch (e) {
+            throw ServiceErrorMessage(e.message||"unable to update password",e.statusCode||503,e)
+        }
+    },
+    /**
+     * @return {string}
+     */
+    async PasswordUpdateOfTeacher(newPassword,token,otp){
+        try{
+            const decodedToken=await TokenHandler.decodeToken(token);
+            await OtpDao.verifyOTP(token,otp,"teacher");
+            const updatedPassword=await TeacherDao.updateTeacherById(decodedToken.token_details,{password:newPassword},{new:true});
+            return "password updated";
+        }catch (e) {
+            return ServiceErrorMessage(e.message||"unable to update password",e.statusCode||503,e)
+        }
+    }
 };

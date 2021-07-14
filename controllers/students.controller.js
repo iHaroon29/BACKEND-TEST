@@ -3,10 +3,10 @@ const StudentsServices = require("../services/students.service");
 module.exports = {
   async addNewStudent(req, res) {
     try {
-      const student = await StudentsServices.addNewStudent(req.body);
+      const student = await StudentsServices.addNewStudent(req.body );
       return res.status(202).send(student);
     } catch (e) {
-      res.status(400).send(e);
+      return res.status(400).send(e);
     }
   },
   async getAllStudentsAndTheirCourseDetails(req, res) {
@@ -59,6 +59,18 @@ module.exports = {
         req.params.id
       );
       return res.status(202).send(deletedStudent);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  },
+
+  async addNewStudentsUsingExcelSheet(req, res) {
+    // console.log(req.file);
+    try {
+      const addedStudent = await StudentsServices.addNewStudentsUsingExcelSheet(
+        req.file
+      );
+      return res.status(202).send(addedStudent);
     } catch (e) {
       res.status(400).send(e);
     }

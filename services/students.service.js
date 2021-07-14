@@ -1,25 +1,53 @@
 const Student = require("../models/students.model");
 const Classroom = require("../models/classrooms.model");
 const StudentValidator = require("../validators/Students.validators");
-const bcrypt = require("bcrypt");
+const bcrypt = require("../modules/bcrypt");
+const xlsx = require("../modules/excel.converter");
+const ClassroomDao=require("../dao/classroom.dao");
+const StudentDao=require("../dao/students.dao");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const ActivityLogger=require("../loggers/activity.logger");
+const LOG_FOR_STUDENT=require("../config/LOGGERS_FOR").students;
+
 
 module.exports = {
-  addNewStudent(studentDetails) {
-    return StudentValidator.newStudent(studentDetails).then(
-      async (validData) => {
-        let student = await Student.findOne({ email: validData.email });
-        if (student) throw "Student already Registered";
-
-        student = new Student(validData);
-
-        const salt = await bcrypt.genSalt(10);
-        student.password = await bcrypt.hash(student.password, salt);
-        await student.save();
-        return student;
+  async addNewStudent(studentDetails,userDetails={}) {
+    try{
+      const validData=await StudentValidator.newStudent(studentDetails);
+      validData.password=await bcrypt.genHash(validData.password);
+      const createdStudent=await StudentDao.createNewStudent(validData);
+      const classroomDetails={
+        name:validData.name,
+        enrolled_students:{}
+      };
+      classroomDetails.enrolled_students[createdStudent._id]={
+        createdAt:Date.now()
+      };
+      const classroom=await ClassroomDao.createNewClassroom(classroomDetails);
+      return {
+        studentDetails:createdStudent,
+        classroomDetails:classroom
       }
-    );
+    }catch (e) {
+      throw ServiceErrorMessage("unable to create new student",503,e);
+    }
   },
-  addNewStudentsUsingExcelSheet() {},
+  async addNewStudentsUsingExcelSheet(file) {
+    const students = xlsx.excelToJson(file.path);
+
+    for (let i = 0; i < students.length; i++) {
+      const validStudent = await StudentValidator.newStudent(students[i]);
+
+      let student = await Student.findOne({ email: validStudent.email });
+      if (student) {
+        continue;
+      }
+      student = new Student(validStudent);
+
+      await student.save();
+    }
+    return "students saved successfully";
+  },
   async getAllStudentsAndTheirCourseDetails() {
     let student = await Student.find();
     if (student.length === 0) return student;
@@ -58,38 +86,45 @@ module.exports = {
 
     return studentCourse;
   },
+
   async updateStudentCourseDetailsByStudentId(studentId, newDetails) {
     console.log(studentId, newDetails);
   },
 
-  updateStudentPersonalDetailsById(studentId, updateDetails) {
-    console.log(studentId);
-    console.log(updateDetails);
-
-    return StudentValidator.updateStudentDetails(updateDetails).then(
-      (validDetails) => {
-        return Student.findByIdAndUpdate(studentId, validDetails, {
-          new: true,
-        }).then((updatedDetails) => {
-          return updatedDetails;
-        });
-      }
-    );
+  async updateStudentPersonalDetailsById(studentId, updateDetails,userDetails={}) {
+    try{
+      const oldDetails=await StudentDao.findStudentByStudentId(studentId);
+      const validDetails=await StudentValidator.updateStudentDetails(updateDetails);
+      const newDetails=await StudentDao.updateStudentByStudentId(studentId,validDetails);
+      await ActivityLogger.logActivityUpdated(oldDetails,newDetails,LOG_FOR_STUDENT,userDetails).catch();
+      return newDetails;
+    }catch (e) {
+      throw ServiceErrorMessage("unable to update students",503,e);
+    }
   },
 
   async getAllStudents() {
-    let student = await Student.find();
-    if (student.length === 0) return student;
+    try{
+      return await StudentDao.getAllStudents();
+    }catch (e) {
+      throw ServiceErrorMessage("unable to get all students", 503, e);
+    }
+  },
+
+  async deleteStudentById(studentId,userDetails={}) {
+    try{
+      const newDetails=await StudentDao.deleteStudentByStudentId(studentId);
+      await ActivityLogger.logActivityDeleted(newDetails,LOG_FOR_STUDENT,userDetails).catch();
+      return newDetails;
+    }catch (e) {
+      throw ServiceErrorMessage("unable to update students",503,e);
+    }
+  },
+
+  async getStudentPersonalDetailById(studentId){
+    const student= await Student.findOne({ _id: studentId });
+    if (!student) throw "No student with this id available";
 
     return student;
-  },
-
-  async deleteStudentById(studentId) {
-    console.log(studentId);
-    let student = await Student.findOne({ _id: studentId });
-    if (!student) throw "Given Id not found";
-
-    const deletedStudent = await Student.findByIdAndDelete(studentId);
-    return deletedStudent;
-  },
+  }
 };

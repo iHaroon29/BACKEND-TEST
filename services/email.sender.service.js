@@ -1,13 +1,8 @@
 const MailSender=require("../modules/emailSender");
-// MailSender.sendMailWithOutAttachment("kumarnocturnal@gmail.com","Test out","<b>Hello World</b>")
-// .then(data=>{
-//     console.log(data);
-// }).catch(err=>{
-//     console.log(err);
-// });
+const OtpDao=require("../dao/otp.dao");
 module.exports={
-    sendMailForForgotPassword(token){
+    sendMailForForgotPassword(sendTo,token){
     },
-    sendOtpForEmailUpdate(token){
+    sendOtpForEmailUpdate(sendTo,token){
     }
 };

@@ -13,7 +13,7 @@ module.exports={
     },
     updateTrainingDetailsByTrainingId(trainingId,TrainingDetails){
         return new Promise((resolve,reject)=>{
-            Training.findByIdAndUpdate(trainingId,TrainingDetails)
+            Training.findByIdAndUpdate(trainingId,TrainingDetails,{new:true})
                 .then(updatedTrainingDetails=>{
                     resolve(updatedTrainingDetails);
                 }).catch(err=>{
@@ -44,6 +44,16 @@ module.exports={
     getAllTraineeOfRole(trainee_role){
         return new Promise((resolve,reject)=>{
             Training.find({trainee_role:trainee_role})
+                .then(trainingDetails=>{
+                    resolve(trainingDetails);
+                }).catch(err=>{
+                reject(DAOErrors("unable to find training details",503,err));
+            })
+        })
+    },
+    findAllTraining(){
+        return new Promise((resolve,reject)=>{
+            Training.find()
                 .then(trainingDetails=>{
                     resolve(trainingDetails);
                 }).catch(err=>{

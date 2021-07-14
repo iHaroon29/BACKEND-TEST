@@ -1,49 +1,29 @@
-const AuthTokenGenerator=require("../modules/authTokens");
-const TeacherService=require("../services/teacher.services");
+const AuthToken=require("../modules/authTokens");
+const TeacherDao = require("../dao/teachers.dao")
+const LoginSchema = require("../validators/AuthenticationAndAuthorization").MakeLogin;
+const AuthErrorMessage = require("../errors/authentication.errors").getAuthErrorMessage;
 const bcrypt=require("../modules/bcrypt");
 module.exports={
-    getTeacherAuthToken(teacherEmailId,teacherPassword){
-        return new Promise((resolve,reject)=>{
-            if(!teacherEmailId||!teacherPassword){
-                reject({
-                    message:"invalid credentials",
-                    statusCode:401,
-                    trace:"No trace available"
-                })
+    async getTeacherAuthToken(loginDetails){
+        try {
+            const validLoginDetails = await LoginSchema(loginDetails);
+            console.log(validLoginDetails)
+
+            let teacher = await TeacherDao.getTeacherByEmail(validLoginDetails.username)
+            if(!teacher.length){
+                 throw AuthErrorMessage("Invalid Credentials");
+
             }
-            TeacherService.findTeacherByEmail(teacherEmailId)
-                .then(teacherDetails=>{
-                    bcrypt.compareHash(teacherPassword,teacherDetails.password)
-                        .then(()=>{
-                            AuthTokenGenerator.tokenGenerateForTeacher({
-                                id:teacherDetails._id,
-                                createdAt:new Date(),
-                            })
-                                .then(token=>{
-                                    resolve(token);
-                                }).catch(err=>{
-                                reject({
-                                    message:"unable to generate token",
-                                    statusCode:403,
-                                    trace:err
-                                })
-                            })
-                        })
-                        .catch((e)=>{
-                            reject({
-                                statusCode:401,
-                                message:"Invalid credentials",
-                                trace:e
-                            })
-                        });
-                })
-                .catch(err=>{
-                    reject({
-                        statusCode:401,
-                        message:"Invalid credentials",
-                        trace:err
-                    })
-                })
-        })
+            teacher=teacher[0];
+            
+            if (!await bcrypt.compareHash(validLoginDetails.password, teacher.password)) {
+                throw AuthErrorMessage("Invalid Credentials");
+
+            }
+            return await AuthToken.tokenGenerateForTeacher({ email: teacher.email, id: teacher._id })
+        }
+        catch (e) {
+            throw AuthErrorMessage(e.message || "Invalid Credentials");
+        }
     }
 };

@@ -3,7 +3,7 @@ module.exports = {
   addNewAdmin(adminDetails) {
     const Schema = Joi.object({
       name: Joi.string().required(),
-      email: Joi.string().required(),
+      email: Joi.string().email().required(),
       password: Joi.string().required(),
     }).options({ stripUnknown: true });
     return Schema.validateAsync(adminDetails);

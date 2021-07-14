@@ -27,7 +27,7 @@ module.exports = {
   },
   async teacherLogin(req, res) {
     try {
-      const teacherToken = await AuthenticationService.getTeacherAuthToken(req.body.email,req.body.password);
+      const teacherToken = await AuthenticationService.getTeacherAuthToken(req.body);
       return res.status(200).send(teacherToken);
     } catch (e) {
       console.log(e);

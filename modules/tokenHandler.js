@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const TOKEN_EXPIRATION_IN_SECONDS = 20 * 60;
+const TOKEN_EXPIRATION_IN_SECONDS = 20 * 60*60;
 const ALGORITHM = "HS256";
 const env = require("dotenv");
 const SECRET = process.env.TOKEN_SECRET || "SECRET";
@@ -13,7 +13,7 @@ const TokenErrorMessages={
 
 
 module.exports={
-    encodeWithRole(data,role){
+    encodeWithRole(data,role,tokenValidationTimeInSeconds=TOKEN_EXPIRATION_IN_SECONDS){
         return new Promise((resolve,reject)=>{
             jwt.sign(
                 {
@@ -22,7 +22,7 @@ module.exports={
                 },
                 SECRET,
                 {
-                    expiresIn: TOKEN_EXPIRATION_IN_SECONDS,
+                    expiresIn: tokenValidationTimeInSeconds,
                     algorithm: ALGORITHM,
                 },
                 (err, encode) => {
@@ -36,7 +36,7 @@ module.exports={
             );
         })
     },
-    encodeWithoutRole(data){
+    encodeWithoutRole(data,tokenValidationTimeInSeconds=TOKEN_EXPIRATION_IN_SECONDS){
         return new Promise((resolve,reject)=>{
             jwt.sign(
                 {
@@ -44,7 +44,7 @@ module.exports={
                 },
                 SECRET,
                 {
-                    expiresIn: TOKEN_EXPIRATION_IN_SECONDS,
+                    expiresIn: tokenValidationTimeInSeconds,
                     algorithm: ALGORITHM,
                 },
                 (err, encode) => {

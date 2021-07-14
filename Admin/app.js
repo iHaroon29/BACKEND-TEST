@@ -26,6 +26,8 @@ app.use("uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/admin/api", AdminRoutes);
 app.use("/lms/api/teacher", LMSTeacherRoutes);
+app.use("/lms/api/authenticated/teacher", require("../teacher/lms.teacher.api"));
+app.use("/lms/api/authenticated/student", require("../student/lms.student.api"));
 app.use("/lms/api/student", LMSStudentRoutes);
 app.use("/auth/api", AuthRoutes);
 

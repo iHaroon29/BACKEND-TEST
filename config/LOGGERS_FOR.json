@@ -1,0 +1,21 @@
+{
+  "course": "course",
+  "training":"training",
+  "teacher": "teacher",
+  "course_material":"course_material",
+  "course_section": "course_section",
+  "admin":"admin",
+  "assignment": "assignment",
+  "assignment_submission":"assignment_submission",
+  "classroom": "classroom",
+  "lecture":"lecture",
+  "lecture_attendance":"lecture_attendance",
+  "attendance": "attendance",
+  "meet_links":"meet_links",
+  "trainers": "trainers",
+  "notes":"notes",
+  "quiz_question":"quiz_question",
+  "quiz_submission":"quiz_submission",
+  "students":"students",
+  "quiz": "quiz"
+}

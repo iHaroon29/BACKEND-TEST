@@ -1,7 +1,8 @@
 const route = require("express").Router();
 const AdminController = require("../controllers/admin.controller");
 
-route.put("/forget/password", AdminController.updatePassword);
+route.post("/forgot/password", AdminController.resetPassword);
+route.put("/update/password/:token", AdminController.updatePassword);
 route.delete("/admin/delete/:adminId", AdminController.deleteAdmin);
 route.put("/admin/update/:adminId", AdminController.updateAdminDetails);
 route.post("/admin/new", AdminController.addNewAdmin);

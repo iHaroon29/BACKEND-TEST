@@ -1,94 +1,70 @@
-const Assignment = require("../models/assignments.model");
-const Classroom = require("../models/classrooms.model");
-const Course = require("../models/courses.model");
-const ClassroomService = require("../services/classrooms.services");
-
 const assignmentValidator = require("../validators/assignment.validators");
+const AssignmentDao=require("../dao/assignment.dao");
+const ActivityLogger=require("../loggers/activity.logger");
+const LOG_ASSIGNMENT=require("../config/LOGGERS_FOR").assignment;
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+
 
 module.exports = {
-  createAssignment(assignmentDetails) {
-    return assignmentValidator
-      .newAssignment(assignmentDetails)
-      .then(async (validData) => {
-        console.log(validData);
-        let assignment = await Assignment.findOne({
-          course_id: validData.course_id,
-          teacher_id: validData.teacher_id,
-        });
-        if (assignment)
-          throw {
-            message: "Assignment already present",
-            statusCode: 400,
-            trace: "No trace Found",
-          };
-
-        let course = await Course.findOne({
-          _id: validData.course_id,
-        });
-        if (!course)
-          throw {
-            message: "Course Doesnot exist",
-            statusCode: 204,
-            trace: "No trace Found",
-          };
-        console.log(course);
-
-        return new Assignment(validData).save();
-      });
+  async createAssignment(assignmentDetails,userDetails={}) {
+    try{
+      const validAssignmentDetails=await assignmentValidator.newAssignment(assignmentDetails);
+      const newAssignment=await AssignmentDao.createAssignment(validAssignmentDetails);
+      await ActivityLogger.logActivityCreatedNew(newAssignment,LOG_ASSIGNMENT,userDetails).catch();
+      return newAssignment;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to create new assignment",e.statusCode||503,e)
+    }
   },
 
-  updateAssignment(assignmentId, updateDetails) {
-    return assignmentValidator
-      .updateAssignmentDetails(updateDetails)
-      .then((validDetails) => {
-        return Assignment.findByIdAndUpdate(assignmentId, validDetails, {
-          new: true,
-        }).then((updatedDetails) => {
-          return updatedDetails;
-        });
-      });
+  async updateAssignment(assignmentId, updateDetails,userDetails={}) {
+    try{
+      const validAssignmentDetails=await assignmentValidator.updateAssignmentDetails(updateDetails);
+      const oldAssignment=await AssignmentDao.getAssignmentById(assignmentId);
+      if(!oldAssignment){
+        throw new Error("no assignment found to update");
+      }
+      const newAssignment=await AssignmentDao.updateAssignmentById(assignmentId,validAssignmentDetails);
+      await ActivityLogger.logActivityUpdated(oldAssignment,newAssignment,LOG_ASSIGNMENT,userDetails).catch();
+      return newAssignment;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to update assignment",e.statusCode||503,e)
+    }
   },
-  async deleteAssignmentById(assignmentId) {
-    let assignment = await Assignment.findOne({ _id: assignmentId });
-    if (!assignment) throw "Given Id not found";
-
-    const deletedAssignment = await Assignment.findByIdAndDelete(assignmentId);
-    return deletedAssignment;
+  async deleteAssignmentById(assignmentId,userDetails) {
+    try{
+      const newAssignment=await AssignmentDao.deleteAssignmentById(assignmentId);
+      if(!newAssignment){
+        throw new Error("no assignment found to update");
+      }
+      await ActivityLogger.logActivityDeleted(newAssignment,LOG_ASSIGNMENT,userDetails).catch();
+      return newAssignment;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to delete assignment",e.statusCode||503,e)
+    }
   },
 
-  getAllAssignments() {
-    return Assignment.find().then((assignments) => {
-      return assignments;
-    });
+  async getAllAssignments() {
+    try{
+      return await AssignmentDao.getAllAssignments();
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to find all assignments",e.statusCode||503,e)
+    }
   },
 
   async getAssignmentById(assignmentId) {
-    let assignment = await Assignment.findOne({ _id: assignmentId });
-    if (!assignment) throw "Given Id not found";
-
-    return assignment;
+    try{
+      return await AssignmentDao.getAssignmentById(assignmentId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to find assignment",e.statusCode||503,e)
+    }
   },
 
   async getAllAssignmentOfAClassroom(classroomId) {
-    let classroom = await Classroom.findOne({ _id: classroomId });
-    if (!classroom) throw "No such classroom for this id";
-
-    const courses = await ClassroomService.getAllCoursesInClassroom(
-      classroomId
-    );
-    let allCourses = Object.keys(courses);
-
-    if (allCourses.length === 0)
-      throw "There is no course available for this classroom";
-
-    let arr = [];
-    for (let i = 0; i < allCourses.length; i++) {
-      let assignment = await Assignment.findOne({ course_id: allCourses[i] });
-      if (assignment) arr.push(assignment);
+    try{
+      return await AssignmentDao.getAllAssignmentsOfAClassroom(classroomId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to find assignments of classroom",e.statusCode||503,e)
     }
-
-    if (arr.length === 0)
-      throw "There is no assignment alloted in any course of this classroom";
-    return arr;
   },
 };

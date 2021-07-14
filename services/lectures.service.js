@@ -1,76 +1,104 @@
-const Lecture = require("../models/lectures.model");
 const LectureValidators = require("../validators/lecturesvalidtors");
-const ClassroomService=require("../services/classrooms.services");
+const LectureDao=require("../dao/lectures.dao");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const ActivityLogger=require("../loggers/activity.logger");
+const ACTIVITY_FOR_LECTURES=require("../config/LOGGERS_FOR").lecture;
 
 module.exports = {
-  addNewLectureInClassroom(classroomId, lectureDetails) {
-    return LectureValidators.addNewLectureToClassroom(lectureDetails).then(
-      (validLectureDetails) => {
-        return new Lecture(validLectureDetails).save().then((savedDetails) => {
-          return savedDetails;
-        });
-      }
-    );
+  async addNewLectureInClassroom(lectureDetails,userDetails={}) {
+    try{
+      const validLectureDetails=await LectureValidators.addNewLectureToClassroom(lectureDetails);
+      const createdLecture=await LectureDao.createNewLecture(validLectureDetails);
+      await ActivityLogger.logActivityCreatedNew(createdLecture,ACTIVITY_FOR_LECTURES,userDetails);
+      return createdLecture;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to create lecture",e.statusCode||503,e);
+    }
   },
-  updateLectureById(classroomId, lectureId, lectureDetails) {
-    return LectureValidators.updateLecture(lectureDetails).then(
-      (validNewLectureDetails) => {
-        Lecture.findOneAndUpdate(
-          { classroom_id: classroomId, _id: lectureId },
-          validNewLectureDetails,
-          { new: true }
-        ).then((updatedDetails) => {
-          return updatedDetails;
-        });
-      }
-    );
+  async updateLectureById(lectureId, lectureDetails,userDetails={}) {
+    try{
+      const validLectureDetails=await LectureValidators.updateLecture(lectureDetails);
+      const oldLectureData=await LectureDao.getLectureById(lectureId);
+      const updatedLecture= await LectureDao.updateLectureById(lectureId,validLectureDetails);
+      await ActivityLogger.logActivityUpdated(oldLectureData,updatedLecture,ACTIVITY_FOR_LECTURES,userDetails);
+      return  updatedLecture;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to update lecture",e.statusCode||503,e);
+    }
   },
-  deleteLectureById(classroomId, lectureId) {
-    return Lecture.findOneAndDelete({
-      classroom_id: classroomId,
-      _id: lectureId,
-    }).then((deletedDetails) => {
-      return deletedDetails;
-    });
+  async  deleteLectureById(lectureId,userDetails={}) {
+    try {
+      const deletedLecture= await LectureDao.deleteLectureById(lectureId);
+      await ActivityLogger.logActivityDeleted(deletedLecture,ACTIVITY_FOR_LECTURES,userDetails);
+      return deletedLecture;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to delete lecture",e.statusCode||503,e);
+    }
   },
-  updateLectureStatusById(lectureId, lectureDetails) {
-    return Lecture.findByIdAndUpdate(lectureId, lectureDetails, {
-      new: true,
-    }).then((updatedDetails) => {
-      return updatedDetails;
-    });
+  async getAllLecturesOfClassroom(classroomId) {
+    try {
+      return await LectureDao.getLecturesByClassroomId(classroomId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to get all lectures of classroom",e.statusCode||503,e);
+    }
   },
-  getAllLecturesOfClassroom(classroomId) {
-    return Lecture.find({ classroom_id: classroomId }).then(allLectures=>{
-      allLectures=JSON.parse(JSON.stringify(allLectures));
-      return allLectures.filter(async lecture=>{
-        lecture.classroom_details=await ClassroomService.getClassroomDetailsByClassroomId(lecture.classroom_id);
-        delete lecture.classroom_id;
-        return  lecture;
-      });
-    });
-  },
-  getLectureDetailsById(lectureId) {
-    return Lecture.findById(lectureId).then((lectureDetails) => {
-      return lectureDetails;
-    });
+  async getLectureDetailsById(lectureId) {
+    try {
+      return await LectureDao.getLectureById(lectureId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to get lectures details",e.statusCode||503,e);
+    }
   },
 
   async getAllLectures() {
-    let lecture = await Lecture.find();
-    if (lecture.length === 0) throw "No Lecture Found";
-
-    return lecture;
+    try {
+      return await LectureDao.getAllLecture();
+    }catch (e) {
+      throw ServiceErrorMessage(e.message||"unable to get lectures details",e.statusCode||503,e);
+    }
   },
-
-  getTotalLecturesInClassroom(classroomId) {
-    return Lecture.find({ classroom_id: classroomId }).then((lectures) => {
-      return lectures.length;
-    });
+  async setAsAttendanceTaken(lectureId,userDetails={}){
+    try {
+      const oldLectureData=await LectureDao.getLectureById(lectureId);
+      const updatedLectureDetails= await LectureDao.markAsAttendanceDone(lectureId);
+      await ActivityLogger.logActivityUpdated(oldLectureData,updatedLectureDetails,ACTIVITY_FOR_LECTURES,userDetails);
+      return updatedLectureDetails;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to find all lectures",503,e);
+    }
   },
-  getTotalLecturesInCourse(lecture_id) {
-    return Lecture.find({ lecture_id: lecture_id }).then((lectures) => {
-      return lectures.length;
-    });
+  async getAllLecturesOfCourse(courseId){
+    try {
+      return await LectureDao.getLecturesByCourseId(courseId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to find all lectures",503,e);
+    }
   },
+  async getAllLecturesOfTeachers(teacherId){
+    try {
+      return await LectureDao.getLecturesByTeacherId(teacherId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to find all lectures",503,e);
+    }
+  },
+  async setLectureAsDone(lectureId){
+    try {
+      const oldLectureData=await LectureDao.getLectureById(lectureId);
+      const updatedLectureDetails= await LectureDao.markLectureAsCompleted(lectureId);
+      await ActivityLogger.logActivityUpdated(oldLectureData,updatedLectureDetails,ACTIVITY_FOR_LECTURES,userDetails);
+      return updatedLectureDetails;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to find all lectures",503,e);
+    }
+  },
+  async setLectureAsOngoing(lectureId){
+    try {
+      const oldLectureData=await LectureDao.getLectureById(lectureId);
+      const updatedLectureDetails= await LectureDao.markLectureAsOngoing(lectureId);
+      await ActivityLogger.logActivityUpdated(oldLectureData,updatedLectureDetails,ACTIVITY_FOR_LECTURES,userDetails);
+      return updatedLectureDetails;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to find all lectures",503,e);
+    }
+  }
 };

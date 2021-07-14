@@ -1,6 +1,11 @@
 const StudentsController = require("../controllers/students.controller");
 const route = require("express").Router();
-route.post("/student/new", StudentsController.addNewStudent);
+const upload = require("../middlewares/checkIfUploadedFileIsExcel");
+const image = require("../modules/fileUploads").StudentProfilePictureUpload;
+
+route.post(
+  "/student/new", StudentsController.addNewStudent
+);
 
 route.get(
   "/student/all/courses/all",
@@ -20,5 +25,11 @@ route.put(
 );
 
 route.delete("/student/delete/:id", StudentsController.deleteStudentById);
+
+route.post(
+  "/student/new/file",
+  upload.single("excel"),
+  StudentsController.addNewStudentsUsingExcelSheet
+);
 
 module.exports = route;

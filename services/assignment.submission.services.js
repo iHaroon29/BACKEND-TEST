@@ -1,49 +1,34 @@
-const AssignmentSubmission = require("../models/assignment.submissions.model");
-const Assignment = require("../models/assignments.model");
-const submittedAssignmentValidator = require("../validators/assignment.submission.validators");
+const AssignmentSubmissionDao = require("../dao/assignment.submission.dao");
+const AssignmentSubmissionValidator = require("../validators/assignment.submission.validators");
+const ActivityLogger = require("../loggers/activity.logger");
+const LOG_ASSIGNMENT_SUBMISSION = require("../config/LOGGERS_FOR").assignment_submission;
+const ServiceErrorMessage = require("../errors/serviceErrorMessage").getRejectResponse;
 
 module.exports = {
-  async assignmentSubmit(assignmentDetails) {
-    return submittedAssignmentValidator
-      .newSubmittedAssignment(assignmentDetails)
-      .then(async (validData) => {
-        console.log(validData);
-        let assignment = await Assignment.findOne({
-          _id: validData.assignment_id,
-        });
-        if (!assignment) throw "This assignment is not eligible now";
-
-        return new AssignmentSubmission(validData).save();
-      });
+  async assignmentSubmit(assignmentDetails,userDetails={}) {
+    try{
+      const validAssignmentDetails=await AssignmentSubmissionValidator.newSubmittedAssignment(assignmentDetails);
+      const newAssignmentSubmission=await AssignmentSubmissionDao.createNewAssignmentSubmission(validAssignmentDetails);
+      await ActivityLogger.logActivityCreatedNew(newAssignmentSubmission,LOG_ASSIGNMENT_SUBMISSION,userDetails).catch();
+      return newAssignmentSubmission;
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to create new assignment submission",503,e);
+    }
   },
 
-  getAllSubmittedAssignmentsOfClass() {
-    return AssignmentSubmission.find().then((assignments) => {
-      return assignments;
-    });
+  async getAllSubmittedAssignmentsOfClass(classroomId) {
+    try{
+     return await AssignmentSubmissionDao.getAllSubmittedAssignmentsOfClass(classroomId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to get assignment submission classroom",503,e);
+    }
   },
 
   async getAssignmentOfACourse(courseId) {
-    let assignments = await Assignment.find({
-      course_id: courseId,
-    });
-
-    if (!assignments) throw "Invalid course ID";
-    if (assignments.length === 0) throw "NO Assignments in the given course Id";
-    console.log(assignments);
-
-    let submitted = [];
-
-    for (let i = 0; i < assignments.length; i++) {
-      let submitass = await AssignmentSubmission.findOne({
-        assignment_id: assignments[i]._id,
-      });
-      if (submitass) submitted.push(submitass);
+    try{
+      return await AssignmentSubmissionDao.getSubmittedAssignmentOfACourse(courseId);
+    }catch (e) {
+      throw ServiceErrorMessage(e.message|| "unable to get assignment submission of course",503,e);
     }
-
-    if (submitted.length === 0)
-      throw "NO Submitted Assignment in the given course Id";
-
-    return submitted;
   },
 };

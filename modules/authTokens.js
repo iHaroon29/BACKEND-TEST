@@ -46,7 +46,7 @@ const verifyToken = (token, requiredRole) => {
 	return new Promise((resolve,reject)=>{
 		TokenHandler.decodeToken(token)
 			.then(decoded=>{
-				if(decoded.role && decoded.role.toLowerCase()===requiredRole.toLowerCase()){
+				if(decoded.role && decoded.role.toLowerCase()!==requiredRole.toLowerCase()){
 					reject("Not required Role")
 				}
 				resolve(decoded);

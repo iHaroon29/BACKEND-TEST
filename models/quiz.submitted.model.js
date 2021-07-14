@@ -16,7 +16,7 @@ const SubmittedQuizSchema=mongoose.Schema({
         type:Array(Object),
         required:true,
     },
-    course_id:{
+    course_section_id:{
         type:String,
         required:true
     }

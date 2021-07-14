@@ -38,7 +38,17 @@ module.exports={
             })
         })
     },
-    getTrainerDetailsByTrainerId(trainerId,trainerDetails){
+    getAllTrainers(){
+        return new Promise((resolve,reject)=>{
+            Trainer.find()
+                .then(updatedDetails=>{
+                    resolve(updatedDetails);
+                }).catch(err=>{
+                reject(DAOError("unable to get all trainers"),503,err);
+            })
+        })
+    },
+    getTrainerDetailsByTrainerId(trainerId){
         return new Promise((resolve,reject)=>{
             Trainer.findById(trainerId)
                 .then(updatedDetails=>{

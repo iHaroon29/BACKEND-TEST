@@ -1,50 +1,41 @@
 const QuizValidator=require("../validators/quiz.validators");
-const Course=require("../models/courses.model");
-const RejectErrorResponse=require("../errors/serviceErrorMessage").getRejectResponse;
+const CourseSectionDao=require("../dao/course.section.dao");
+const QuizDao=require("../dao/quiz.dao");
+const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
+const ActivityLogger=require("../loggers/activity.logger");
+const logForQuiz=require("../config/LOGGERS_FOR").quiz;
 
 module.exports={
-    updateQuiz(courseId,QuizDetails){
-        return Course.findByIdAndUpdate(courseId,{quiz:QuizDetails},{new:true})
-            .then(updatedCourseDetails=> updatedCourseDetails.quiz)
+    async updateQuiz(courseSectionId,QuizDetails,userDetails={}){
+        try{
+            const validQuizData=await QuizValidator.newQuiz(QuizDetails);
+            const oldData=await CourseSectionDao.getCourseSectionByCourseSectionId(courseSectionId);
+            const savedQuiz=await QuizDao.updateQuiz(courseSectionId,validQuizData.quiz_details);
+            await ActivityLogger.logActivityUpdated(oldData,savedQuiz,logForQuiz,userDetails);
+            return savedQuiz;
+        }catch (e) {
+            throw ServiceErrorMessage("unable to create new quiz",503,e);
+        }
 
     },
-    addNewQuiz(courseId,QuizDetails){
-        return new Promise((resolve,reject)=>{
-            Course.findById(courseId)
-                .then(course=>{
-                    if(course && course.quiz && course.quiz.length>0){
-                        reject(RejectErrorResponse("quiz already present",400))
-                    }
-                    QuizValidator.newQuiz(QuizDetails)
-                        .then(validQuizData=>{
-                            return Course.findByIdAndUpdate(courseId,{quiz:validQuizData.quiz_details},{new:true})
-                                .then(updatedCourseDetails=> resolve(updatedCourseDetails.quiz))
-                                .catch(err=>{
-                                    reject(RejectErrorResponse("unable to add quiz ",503,err))
-                                })
-                        }).catch(err=>{
-                        reject(RejectErrorResponse("Invalid data",503,err))
-                    })
-                }).catch(err=>{
-                    reject(RejectErrorResponse("unable to find course",503,err))
-            })
-        })
-
+    async addNewQuiz(courseSectionId,QuizDetails,userDetails={}){
+        try{
+            const validQuizData=await QuizValidator.newQuiz(QuizDetails);
+            const oldData=await CourseSectionDao.getCourseSectionByCourseSectionId(courseSectionId);
+            const savedQuiz=await QuizDao.addNewQuiz(courseSectionId,validQuizData.quiz_details);
+            await ActivityLogger.logActivityUpdated(oldData,savedQuiz,logForQuiz,userDetails);
+            return savedQuiz;
+        }catch (e) {
+            throw ServiceErrorMessage("unable to create new quiz",503,e);
+        }
     },
-    deleteQuizByCourseId(courseId){
-        return new Promise((resolve,reject)=>{
-            Course.findByIdAndUpdate(courseId,{quiz:[]})
-                .then(deletedQuizDetails=>{
-                    if(!deletedQuizDetails.quiz){
-                        reject(RejectErrorResponse("no course found",400));
-                    }
-                    if(deletedQuizDetails.quiz.length<1){
-                        reject(RejectErrorResponse("no quiz found",400));
-                    }
-                    resolve(deletedQuizDetails.quiz)
-                }).catch(err=> {
-                reject(RejectErrorResponse("unable to remove quiz", 503, err));
-            })
-        })
+    async deleteQuizByCourseId(courseSectionId,userDetails={}){
+        try{
+            const savedQuiz=await QuizDao.deleteQuizByCourseId(courseSectionId);
+            await ActivityLogger.logActivityDeleted(savedQuiz,logForQuiz,userDetails);
+            return savedQuiz;
+        }catch (e) {
+            throw ServiceErrorMessage("unable to delete quiz",503,e);
+        }
     },
 };
