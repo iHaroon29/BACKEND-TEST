@@ -165,6 +165,12 @@ module.exports = {
 					delete studentData.password;
 					classroomDetails.lectures[currentLectureDetails._id].presentStudents[presentStudentId]=studentData;
 				}
+				if(classroomDetails.enrolled_courses[currentLectureDetails.course_id]){
+					// classroomDetails.enrolled_courses[currentLectureDetails.course_id].lecturesDetails=currentLectureDetails||{};
+					classroomDetails.enrolled_courses[currentLectureDetails.course_id].lecturesDetails=classroomDetails.lectures[currentLectureDetails._id];
+					classroomDetails.enrolled_courses[currentLectureDetails.course_id].course_details=classroomDetails.lectures[currentLectureDetails._id].course_details;
+					delete classroomDetails.enrolled_courses[currentLectureDetails.course_id].lecturesDetails.course_details;
+				}
 			}
 			return JSON.parse(JSON.stringify(classroomDetails));
 		}catch (e) {
