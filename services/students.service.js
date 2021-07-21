@@ -8,6 +8,11 @@ const StudentDao=require("../dao/students.dao");
 const ServiceErrorMessage=require("../errors/serviceErrorMessage").getRejectResponse;
 const ActivityLogger=require("../loggers/activity.logger");
 const LOG_FOR_STUDENT=require("../config/LOGGERS_FOR").students;
+const OtpDao = require("../dao/otp.dao")
+const TokenHandler = require("../modules/tokenHandler");
+// const MailService = require("../services/email.sender.service")
+const MailService=require("../modules/emailSender");
+
 
 
 module.exports = {
@@ -126,5 +131,36 @@ module.exports = {
     if (!student) throw "No student with this id available";
 
     return student;
+  },
+
+  async sendMailForPasswordUpdateStudent(email){
+    try{
+        let studentDetails=await StudentDao.getStudentByEmail(email)
+            
+        const Token=await TokenHandler.encodeWithoutRole(studentDetails._id,60*30);
+        const otp=await OtpDao.createNewOtp(Token.token,"student");
+        console.log(studentDetails.email)
+        const MailStatus=await MailService.sendMailWithOutAttachment(studentDetails.email,"update password link",
+            `
+        link is active for 30 minutes only
+        your otp is ${otp}
+      <a href="http://localhost:8004/lms/api/authenticated/update/password/${Token.token}">click here to update password</a>
+      `
+        );
+        return "mail sent";
+    }catch (e) {
+        throw ServiceErrorMessage(e.message||"unable to update password",e.statusCode||503,e)
+    }
+},
+
+async PasswordUpdateOfStudent(newPassword,token,otp){
+  try{
+      const decodedToken=await TokenHandler.decodeToken(token);
+      await OtpDao.verifyOTP(token,otp,"student");
+      const updatedPassword=await StudentDao.updateStudentByStudentId(decodedToken.token_details,{password:newPassword},{new:true});
+      return "password updated";
+  }catch (e) {
+      return ServiceErrorMessage(e.message||"unable to update password",e.statusCode||503,e)
   }
+}
 };

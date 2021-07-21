@@ -12,5 +12,7 @@ route.get("/assignment/:id", AssignmentController.getAssignmentById);
 route.get("/assignment/course/:id", AssignmentController.getAssignmentOfACourse);
 route.get("/assignment/classroom/:id", AssignmentController.getAllAssignmentOfAClassroom);
 route.get("/classroom/details/:classroomId",ClassroomController.getClassroomByClassroomId);
+route.post("/forgot/password/", StudentController.forgetPasswordOfStudentByStudentId);
+route.post("/update/password/:token", StudentController.updatePasswordOfStudentByStudentId);
 
 module.exports=route;
