@@ -13,7 +13,7 @@ module.exports={
                     if(!studentDetails){
                         reject(DaoError("no student found",400))
                     }
-                    resolve(studentDetails);
+                    resolve(studentDetails[0]);
                 }).catch((err)=>{
                 reject(DaoError("unable to find student",503,err));
             })
