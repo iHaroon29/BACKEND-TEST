@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npm install && npm run startAdmin",
+    "start": "npm run startLMS ",
     "startLMS": "node LMS/bin/www",
     "devLMS": "nodemon LMS/bin/www",
     "startAdmin": "node Admin/bin/www",
