@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run devAdmin",
+    "start": "npm install && npm run devAdmin",
     "startLMS": "node LMS/bin/www",
     "devLMS": "nodemon LMS/bin/www",
     "startAdmin": "node Admin/bin/www",
@@ -39,6 +39,6 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "fs": "*",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.15"
   }
 }
